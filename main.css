@@ -1,0 +1,106 @@
+.my-nav{
+    padding: 20px 0;
+    background-color: rgb(110, 76, 12);
+
+}
+.h1-text{
+    color: white;
+}
+.cover{
+    background-image: url("/image/furniture.jpg");
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 80vh;
+}
+.my-form{
+    background: white;
+    padding: 50px 50px 50px;
+    width: 400px;
+}
+.my-form h2{
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+.cover .container{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-start;
+}
+.cover .my-form .btn{
+    width: 100%;
+}
+.benefit{
+    padding: 50px 0;
+}
+.flex{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.flex-item{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.flex-item img{
+    
+   margin-bottom: 10px;
+}
+.T1{
+    font-size: 24px;
+    font-weight: bold;
+
+}
+.T2{
+    text-align: center;
+}
+
+.header img{
+    width: 200px;
+    margin: 0 auto 15px;
+    display: block;
+
+}
+.title{
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+.T3{
+    font-size: 20px;
+    text-align: center;
+}
+.list-container{
+    list-style: none;
+    padding: 50px 0 ;
+    display:flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+.list-container .list-item{
+    flex: 0 30%;
+    text-align: center;
+}
+.thumb img{
+    width: 100%;
+}
+.colored_button_div{
+    padding: 15px 0;
+    width: 50%;   
+    border-radius: 30px;
+    margin: 0 auto; 
+    border: 1px solid rgb(50, 115, 255);
+    color: rgb(0, 132, 255)
+    
+}   
+.colored_button_div:hover{
+    background-color: rgb(0, 132, 255);
+    cursor: pointer;
+}
+.colored_button_div:hover a{
+    color:white;
+    text-decoration: none;
+}
