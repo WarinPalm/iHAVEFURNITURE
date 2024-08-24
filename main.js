@@ -9,7 +9,7 @@
         {
             title : "Sofa2",
             text : "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
-            image : "image/sofa1.avif",
+            image : "image/sofa2.avif",
             link : "#",
         },
         {
