@@ -4,7 +4,13 @@
 
 }
 .h1-text{
+    float: left;
     color: white;
+}
+.search-bar{
+    display: flex;
+    justify-content: space-between;
+    
 }
 .cover{
     background-image: url("/image/furniture.jpg");
