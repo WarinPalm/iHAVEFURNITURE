@@ -1,17 +1,39 @@
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+}
+/* nav */
 .my-nav{
-    padding: 20px 0;
-    background-color: rgb(110, 76, 12);
-
-}
-.h1-text{
-    float: left;
-    color: white;
-}
-.search-bar{
-    display: flex;
-    justify-content: space-between;
+    padding: 5px 0;
+    background-color: rgb(0, 0, 0);
     
 }
+.my-nav2{
+    padding: 5px 0;
+    background-color: rgb(255, 255, 255);
+    
+}
+.nav-content{
+    padding-right: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.h1-text{
+    color: white;
+}
+.circle-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    
+}
+/* form login */
 .cover{
     background-image: url("/image/furniture.jpg");
     background-size: cover;
@@ -37,76 +59,75 @@
 }
 .cover .my-form .btn{
     width: 100%;
+}   
+
+
+/* Aside Show Product*/
+.hov-primary {
+    transition: all 0.2s ease-in-out;
 }
-.benefit{
+.hov-primary:hover {
+    background-color: #000000;
+    color: white !important;
+    cursor: pointer;
+   
+}
+.nav-aside{
+    padding: 30px 0;
+}
+
+.show-product{
     padding: 50px 0;
 }
-.flex{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+a{
+    text-decoration: none;
+    color: black;
 }
-.flex-item{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+aside li {
+    list-style: none;
+    text-decoration: none;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
 }
-.flex-item img{
-    
-   margin-bottom: 10px;
+.full-height-overflow {
+    height: 100vh;
+    overflow: auto;
 }
-.T1{
-    font-size: 24px;
-    font-weight: bold;
-
-}
-.T2{
-    text-align: center;
-}
-
-.header img{
-    width: 200px;
-    margin: 0 auto 15px;
-    display: block;
-
-}
-.title{
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-}
-.T3{
-    font-size: 20px;
-    text-align: center;
+  
+/* Main Show Product*/
+.list-product{
+    background-color: rgb(255, 237, 211);
 }
 .list-container{
     list-style: none;
-    padding: 50px 0 ;
-    display:flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
 }
-.list-container .list-item{
-    flex: 0 30%;
-    text-align: center;
+.card{
+    padding-left: 30px;
+    padding-right: 30px;
 }
 .thumb img{
-    width: 100%;
+    width: 50%;
 }
 .colored_button_div{
     padding: 15px 0;
     width: 50%;   
     border-radius: 30px;
     margin: 0 auto; 
-    border: 1px solid rgb(50, 115, 255);
-    color: rgb(0, 132, 255)
+    border: 1px solid rgb(0, 0, 0);
+    color: rgb(0, 0, 0)
     
 }   
 .colored_button_div:hover{
-    background-color: rgb(0, 132, 255);
+    background-color: rgb(0, 0, 0);
     cursor: pointer;
 }
 .colored_button_div:hover a{
     color:white;
     text-decoration: none;
+}
+.colored_button{
+    color: #000000;
 }

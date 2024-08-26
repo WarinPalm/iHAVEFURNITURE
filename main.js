@@ -44,18 +44,17 @@ var innerHTML = "";
 for(let i = 0 ; i < myBlog.length; i++){
     let data = myBlog[i];
     innerHTML += `
-        <li class="list-item">
-            <div class="thumb">
-              <a href="${data.image}" class="lightbox">
-                <img src="${data.image}" alt="" class="info_img">
-            </a>
-            </div>
-            <h3 class="head_color before">${data.title}</h3>
-            <p>${data.text}</p>
+
+        <div class="card" style="width: 18rem;">
+          <img src="${data.image}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">${data.title}</h5>
+            <p class="card-text">${data.text}</p>
             <div class="colored_button_div">
               <a href="${data.link}" style="text-decoration: none" class="colored_button">Add to cart</a>
-            </div>
-          </li>
+          </div>
+          </div>
+        </div>  
     `;
 }   
 blog.innerHTML = innerHTML;
