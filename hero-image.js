@@ -7,12 +7,12 @@
             banner4: "/image/hero-image/banner4.jpg"
         };
 
-        var buttons = document.querySelectorAll(".btn-hero-image button");
-        var prevNextButtons = document.querySelectorAll(".next-prev-btnhero button");
+        // var buttons = document.querySelectorAll(".btn-hero-image button");
+        // var prevNextButtons = document.querySelectorAll(".next-prev-btnhero button");
 
         var heroImage = document.querySelector(".hero-image");
         var currentIndex = 0;
-        var direction = 1; // ตัวแปรสำหรับเก็บทิศทาง (1 คือ ไปข้างหน้า, -1 คือ ย้อนกลับ)
+        var direction = 1;
         var autoSlideInterval;
 
         // การเปลี่ยนภาพ
@@ -24,7 +24,7 @@
 
         // อัปเดตสีของปุ่ม
         function updateButtonStyles(index) {
-            var buttons = document.querySelectorAll('.btn-banner'); // รับปุ่มทั้งหมดใหม่
+            var buttons = document.querySelectorAll('.btn-banner');
             buttons.forEach(function(button, i) {
                 // รีเซ็ตสีของปุ่มทั้งหมด
                 button.style.backgroundColor = 'transparent';
@@ -33,7 +33,7 @@
 
                 // เปลี่ยนสีปุ่มที่ตรงกับภาพที่แสดงอยู่
                 if (i === index) {
-                    button.style.backgroundColor = '#ffffff'; // สีที่ปุ่มจะเปลี่ยนเมื่อคลิก
+                    button.style.backgroundColor = '#ffffff'; // จะเปลี่ยนสีที่ปุ่มเมื่อคลิก
                     button.style.borderColor = '#ffffff';
                     button.style.color = '#ffffff';
                 }
