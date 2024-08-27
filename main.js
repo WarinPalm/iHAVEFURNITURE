@@ -1,35 +1,38 @@
 (function() {
     document.addEventListener("DOMContentLoaded", function() {
-        var myBlog = {
+        var myProduct = {
             sofa: [
-                { title: "Sofa1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/sofa1.avif", link: "#" },
-                { title: "Sofa2", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/sofa2.avif", link: "#" },
-                { title: "Sofa3", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/sofa1.avif", link: "#" },
-                { title: "Sofa4", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/sofa1.avif", link: "#" },
-                { title: "Sofa5", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/sofa1.avif", link: "#" },
-                { title: "Sofa6", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/sofa1.avif", link: "#" }
+                { title: "Sofa1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa1.avif", link: "#" }
             ],
             bed: [
-                { title: "Bed1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/bed/bed1.avif", link: "#" },
-                { title: "Bed2", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/bed/bed1.avif", link: "#" },
-                { title: "Bed3", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/bed/bed1.avif", link: "#" },
-                { title: "Bed4", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/bed/bed1.avif", link: "#" },
-                { title: "Bed5", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/bed/bed1.avif", link: "#" },
-                { title: "Bed6", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/bed/bed1.avif", link: "#" }
+                { title: "Bed1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Bed/bed1.avif", link: "#" }     
+            ],
+            chair: [
+                { title: "Chair1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Chair/chair1.avif", link: "#" }     
+            ],
+            table: [
+                { title: "Table1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Table/table1.avif", link: "#" }     
+            ],
+            lamp: [
+                { title: "Lamp1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Lamp/lamp1.avif", link: "#" }     
+            ],
+            kitchen: [
+                { title: "kitchen1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/kitchen/kitchen1.avif", link: "#" }     
             ],
 
         };
-
         var itemsPerPage = 6; // Number of items to display on the index page
         var currentCategory = 'sofa'; // Default category
 
         function renderPage() {
-            var items = myBlog[currentCategory] || [];
-            var pageItems = items.slice(0, itemsPerPage); // Display only the first 6 items
-
+            var items = myProduct[currentCategory];
             var showProduct = document.getElementById("show-product");
             var innerHTML = "";
-            pageItems.forEach(function(data) {
+            
+            for (var i = 0; i < itemsPerPage; i++) {
+                // ใช้ % (modulus) เพื่อวนลูปกลับไปที่สินค้าชิ้นแรกเมื่อสิ้นสุดรายการสินค้า
+                var data = items[i % items.length]; 
+                
                 innerHTML += `
                     <div class="col-4 mb-3">
                         <div class="card" style="width: 18rem;">
@@ -44,7 +47,7 @@
                         </div>
                     </div>
                 `;
-            });
+            }
             showProduct.innerHTML = innerHTML;
         }
 
