@@ -9,7 +9,7 @@
 
         var buttons = document.querySelectorAll(".btn-hero-image button");
         var prevNextButtons = document.querySelectorAll(".next-prev-btnhero button");
-        
+
         var heroImage = document.querySelector(".hero-image");
         var currentIndex = 0;
 
@@ -26,9 +26,10 @@
                 var bannerValue = this.value;
                 var index = Object.keys(myBanner).indexOf(bannerValue);
                 updateImage(index);
-                currentIndex = index; // อัปเดตดัชนีปัจจุบัน
+                currentIndex = index;
             });
         });
+
         prevNextButtons.forEach(function(button) {
             button.addEventListener("click", function() {
                 if (this.value === "next") {
@@ -40,7 +41,7 @@
             });
         });
 
-        // ตั้งค่าบันเนอร์เริ่มต้น
+        // set default
         updateImage(currentIndex);
     });
 })();

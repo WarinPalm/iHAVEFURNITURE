@@ -64,13 +64,14 @@
     transform: translateX(-50%); /* เลื่อนปุ่มให้ตรงกลางคอนเทนเนอร์ */
     width: auto; /* กำหนดความกว้างตามเนื้อหาของปุ่ม */
     padding: 10px; /* เพิ่มช่องว่างรอบ ๆ ปุ่ม */
-    box-sizing: border-box; /* รวม padding ในการคำนวณความกว้าง */
     flex-wrap: wrap; /* อนุญาตให้ปุ่มสามารถแสดงในหลายแถวได้ */
 }
 
 .btn-hero-image button {
     margin: 0 5px; /* เพิ่มช่องว่างระหว่างปุ่ม */
 }
+
+
 .my-form {
     background: white;
     padding: 40px 40px 50px;
