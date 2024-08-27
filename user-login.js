@@ -1,12 +1,24 @@
 (function() {
     document.getElementById('forgot-password-btn').addEventListener('click', function() {
         // Hide the login modal
-        var loginModal = bootstrap.Modal.getInstance(document.getElementById('user-login'));
-        loginModal.hide();
+        var modal = bootstrap.Modal.getInstance(document.getElementById('user-login'));
+        modal.hide();
 
         // Show the forgot password modal after the login modal is completely hidden
-        loginModal._element.addEventListener('hidden.bs.modal', function() {
+        modal._element.addEventListener('hidden.bs.modal', function() {
             var forgotPasswordModal = new bootstrap.Modal(document.getElementById('forgot-password-modal'));
+            forgotPasswordModal.show();
+        }, { once: true });
+    });
+
+    document.getElementById('submit-forgot-password-btn').addEventListener('click', function() {
+        // Hide the login modal
+        var modal = bootstrap.Modal.getInstance(document.getElementById('forgot-password-modal'));
+        modal.hide();
+
+        // Show the forgot password modal after the login modal is completely hidden
+        modal._element.addEventListener('hidden.bs.modal', function() {
+            var forgotPasswordModal = new bootstrap.Modal(document.getElementById('reset-password-modal'));
             forgotPasswordModal.show();
         }, { once: true });
     });
