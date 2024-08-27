@@ -1,11 +1,11 @@
 (function() {
     document.addEventListener("DOMContentLoaded", function() {
-        var myBanner = [{
+        var myBanner = {
             banner1: "/image/hero-image/banner1.jpg",
             banner2: "/image/hero-image/banner2.jpg",
             banner3: "/image/hero-image/banner3.jpg",
             banner4: "/image/hero-image/banner4.jpg"
-        }];
+        };
 
         var buttons = document.querySelectorAll(".btn-hero-image button");
         var prevNextButtons = document.querySelectorAll(".next-prev-btnhero button");
@@ -26,10 +26,9 @@
                 var bannerValue = this.value;
                 var index = Object.keys(myBanner).indexOf(bannerValue);
                 updateImage(index);
-                currentIndex = index;
+                currentIndex = index; // อัปเดตดัชนีปัจจุบัน
             });
         });
-
         prevNextButtons.forEach(function(button) {
             button.addEventListener("click", function() {
                 if (this.value === "next") {
