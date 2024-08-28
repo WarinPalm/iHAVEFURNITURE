@@ -11,4 +11,4 @@
 
 // };
 // console.log(myProduct["sofa"].length);
-console.log(2%4)
+// กด category

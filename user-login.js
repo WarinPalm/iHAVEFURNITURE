@@ -15,8 +15,8 @@
     var formResetPass = document.getElementsByClassName("reset-password-form")[0];
     var submitButton = document.getElementById("submit-button");
 
-    function ChangeForm(event) {
-        event.preventDefault(); // ป้องกันการส่งฟอร์มแบบปกติ
+    function ChangeForm() {
+
         formForgotPass.style.display = "none";
         formResetPass.style.display = "block";
     }

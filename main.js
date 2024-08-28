@@ -59,6 +59,7 @@
         // กด category 
         let categoryLinks = document.querySelectorAll(".nav-aside a");
         categoryLinks.forEach(function(link) {
+            categoryLinks
             link.addEventListener("click", function(event) {
                 event.preventDefault();
                 currentCategory = this.getAttribute("data-category");
