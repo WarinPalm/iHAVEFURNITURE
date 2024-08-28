@@ -70,7 +70,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="reset-password-form">
+                    <form class="forgot-password-form">
                         <p>Enter your username to reset your password.</p>
                         <div class="mb-3">
                             <label for="usernameInput" class="form-label">Username</label>
@@ -90,63 +90,43 @@
                             <label for="answerInput" class="form-label">Your Answer</label>
                             <input type="text" class="form-control" id="answerInput" placeholder="Enter your answer" required>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <!-- id="submit-forgot-password-btn" -->
-                        </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal reset password -->
-    <div class="modal fade" id="reset-password-modal" tabindex="-1" aria-labelledby="reset-password" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Forgot Password</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <p>enter new password.</p><br>
-                    <input type="password" class="form-control" placeholder="Enter your username" required><br>
-                    <p>confirm password.</p><br>
-                    <input type="password" class="form-control" placeholder="Enter your username" required><br>
-
-
-
-                    <div id="answer-container"></div>
-
+                    <!-- reset password form-->
+                    <form class="reset-password-form" style="display: none;">
+                        <p>Enter new password.</p><br>
+                        <input type="password" class="form-control" placeholder="Enter your new password" required><br>
+                        <p>Confirm password.</p><br>
+                        <input type="password" class="form-control" placeholder="Confirm your new password" required><br>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">submit</button>
+                    <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
                 </div>
             </div>
         </div>
     </div>
+
+
     <section>
-        <nav class="my-nav2">
-            <div class="container nav-content">
+        <nav class="my-nav2 ">
+            <div class="container nav-content ">
                 <div>
-                    <span class="material-symbols-outlined">storefront</span>
+                    <span class="material-symbols-outlined ">storefront</span>
                 </div>
 
-                <ul class="nav justify-content-center">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <ul class="nav justify-content-center ">
+                    <li class="nav-item ">
+                        <a class="nav-link active " aria-current="page " href="# ">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Product</a>
+                    <li class="nav-item ">
+                        <a class="nav-link " href="# ">Product</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                    <li class="nav-item ">
+                        <a class="nav-link " href="# ">About</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">My Profile</a>
+                    <li class="nav-item ">
+                        <a class="nav-link disabled " aria-disabled="true ">My Profile</a>
                     </li>
                 </ul>
             </div>
@@ -155,75 +135,75 @@
 
 
     <!-- hero-image -->
-    <section class="cover">
-        <div class="container">
-            <div class="col-12 hero-image">
-                <!-- <div class="d-flex justify-content-between align-items-center next-prev-btnhero">
-                    <button class="btn btn-dark" value="prev"><<</button>
-                    <button class="btn btn-dark" value="next">>></button>
+    <section class="cover ">
+        <div class="container ">
+            <div class="col-12 hero-image ">
+                <!-- <div class="d-flex justify-content-between align-items-center next-prev-btnhero ">
+                    <button class="btn btn-dark " value="prev "><<</button>
+                    <button class="btn btn-dark " value="next ">>></button>
                 </div> -->
             </div>
 
 
-            <div class="btn-hero-image">
-                <button class="btn btn-dark btn-banner" value="banner1"></button>
-                <button class="btn btn-dark btn-banner" value="banner2"></button>
-                <button class="btn btn-dark btn-banner" value="banner3"></button>
-                <button class="btn btn-dark btn-banner" value="banner4"></button>
+            <div class="btn-hero-image ">
+                <button class="btn btn-dark btn-banner " value="banner1 "></button>
+                <button class="btn btn-dark btn-banner " value="banner2 "></button>
+                <button class="btn btn-dark btn-banner " value="banner3 "></button>
+                <button class="btn btn-dark btn-banner " value="banner4 "></button>
             </div>
         </div>
     </section>
 
 
-    <section class="list-product">
-        <div class="container text-center">
-            <div class="col-2">
-                <h1 style="padding-top: 30px;" class="fs-2">Category</h1>
+    <section class="list-product ">
+        <div class="container text-center ">
+            <div class="col-2 ">
+                <h1 style="padding-top: 30px; " class="fs-2 ">Category</h1>
             </div>
-            <div class="col-10 btn-seeall">
-                <a class="d-flex justify-content-end" href="seeall.html">see all</a>
+            <div class="col-10 btn-seeall ">
+                <a class="d-flex justify-content-end " href="seeall.html ">see all</a>
             </div>
-            <div class="row">
-                <aside class="col-2 full-height-overflow">
-                    <ul class="nav-aside">
-                        <a href="#" data-category="sofa">
-                            <li class="hov-primary">Sofa</li>
+            <div class="row ">
+                <aside class="col-2 full-height-overflow ">
+                    <ul class="nav-aside ">
+                        <a href="# " data-category="sofa ">
+                            <li class="hov-primary ">Sofa</li>
                         </a>
-                        <a href="#" data-category="bed">
-                            <li class="hov-primary">Bed</li>
+                        <a href="# " data-category="bed ">
+                            <li class="hov-primary ">Bed</li>
                         </a>
-                        <a href="#" data-category="chair">
-                            <li class="hov-primary">Chair</li>
+                        <a href="# " data-category="chair ">
+                            <li class="hov-primary ">Chair</li>
                         </a>
-                        <a href="#" data-category="table">
-                            <li class="hov-primary">Table</li>
+                        <a href="# " data-category="table ">
+                            <li class="hov-primary ">Table</li>
                         </a>
-                        <a href="#" data-category="lamp">
-                            <li class="hov-primary">Lamp</li>
+                        <a href="# " data-category="lamp ">
+                            <li class="hov-primary ">Lamp</li>
                         </a>
-                        <a href="#" data-category="kitchen">
-                            <li class="hov-primary">Kitchen</li>
+                        <a href="# " data-category="kitchen ">
+                            <li class="hov-primary ">Kitchen</li>
                         </a>
                     </ul>
                 </aside>
 
-                <div class="col-1"></div>
+                <div class="col-1 "></div>
 
-                <main class="row col-9 row-gap-3" id="show-product"></main>
-                <div id="pagination" class="d-flex justify-content-center mt-3">
+                <main class="row col-9 row-gap-3 " id="show-product "></main>
+                <div id="pagination " class="d-flex justify-content-center mt-3 ">
                 </div>
             </div>
         </div>
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.2.0/jquery.magnific-popup.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.2.0/jquery.magnific-popup.min.js"></script>
-    <script src="main.js"></script>
-    <script src="hero-image.js"></script>
-    <script src="user-login.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js " integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz " crossorigin="anonymous "></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js "></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.2.0/jquery.magnific-popup.min.js "></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.2.0/jquery.magnific-popup.min.js "></script>
+    <script src="main.js "></script>
+    <script src="hero-image.js "></script>
+    <script src="user-login.js "></script>
 
 </body>
 

@@ -17,14 +17,14 @@
 
         // การเปลี่ยนภาพ
         function updateImage(index) {
-            var bannerKey = Object.keys(myBanner)[index];
-            var imageUrl = myBanner[bannerKey];
+            let bannerKey = Object.keys(myBanner)[index];
+            let imageUrl = myBanner[bannerKey];
             heroImage.style.backgroundImage = `url('${imageUrl}')`;
         }
 
         // อัปเดตสีของปุ่ม
         function updateButtonStyles(index) {
-            var buttons = document.querySelectorAll('.btn-banner');
+            let buttons = document.querySelectorAll('.btn-banner');
             buttons.forEach(function(button, i) {
                 // รีเซ็ตสีของปุ่มทั้งหมด
                 button.style.backgroundColor = 'transparent';

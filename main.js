@@ -30,13 +30,13 @@
         }
 
         function renderPage() {
-            var items = myProduct[currentCategory];
-            var showProduct = document.getElementById("show-product");
-            var innerHTML = "";
+            let items = myProduct[currentCategory];
+            let showProduct = document.getElementById("show-product");
+            let innerHTML = "";
 
-            for (var i = 0; i < itemsPerPage; i++) {
+            for (let i = 0; i < itemsPerPage; i++) {
                 // ใช้ % (modulus) เพื่อวนลูปกลับไปที่สินค้าชิ้นแรกเมื่อสิ้นสุดรายการสินค้า
-                var product = items[i % items.length];
+                let product = items[i % items.length];
 
                 innerHTML += `
                     <div class="col-4 mb-3">
@@ -57,7 +57,7 @@
         }
 
         // กด category 
-        var categoryLinks = document.querySelectorAll(".nav-aside a");
+        let categoryLinks = document.querySelectorAll(".nav-aside a");
         categoryLinks.forEach(function(link) {
             link.addEventListener("click", function(event) {
                 event.preventDefault();
