@@ -99,22 +99,6 @@
     color: white;
 }
 
-.btn-banner {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border-width: 3px;
-    border-color: white;
-    background-color: transparent;
-    cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-.btn-banner:hover {
-    background-color: #ffffff;
-    border-color: white;
-}
-
 
 /* สีที่ปุ่มจะคงไว้เมื่อถูกกด */
 

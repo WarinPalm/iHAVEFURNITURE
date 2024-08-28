@@ -1,6 +1,6 @@
 (function() {
     document.getElementById('forgot-password-btn').addEventListener('click', function() {
-        // Hide the login modal
+        // ซ่อน modal
         var modal = bootstrap.Modal.getInstance(document.getElementById('user-login'));
         modal.hide();
 
@@ -34,11 +34,10 @@
         // สร้างฟอร์มใหม่ตามตัวเลือกที่เลือก
         if (selectedValue) {
             var formHtml = `
-                <form>
-                    <div class="mb-3">
-                        <input style= "margin-top:20px" type="text" placeholder="กรอกคำตอบของคุณที่นี่" class="form-control" required>
-                    </div>
-                </form>
+                <div class="mb-3">
+                    <label for="answerInput" class="form-label">Your Answer</label>
+                    <input type="text" class="form-control" id="answerInput" placeholder="Enter your answer" required>
+                </div>
             `;
             answerContainer.innerHTML = formHtml;
         }

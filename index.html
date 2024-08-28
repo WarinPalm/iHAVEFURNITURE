@@ -62,36 +62,45 @@
     </div>
 
     <!-- Modal forgot password -->
-    <div class="modal fade" id="forgot-password-modal" tabindex="-1" aria-labelledby="forgot-password" aria-hidden="true">
+    <div class="modal fade" id="forgot-password-modal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Forgot Password</h1>
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">Forgot Password</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
                 <div class="modal-body">
-                    <p>Enter your username to reset your password.</p>
-                    <input type="text" class="form-control" placeholder="Enter your username" required><br>
-
-                    <select name="" id="question-select" required>
-                        <option value="">--กรุณาเลือกคำถาม--</option>
-                        <option value="fav-dog">หมาที่ชอบ</option>
-                        <option value="fav-song">เพลงที่ชอบ</option>
-                        <option value="fav-person">บุคคลที่ชอบ</option>
-                        <option value="hobby">งานอดิเรกชอบทำอะไร</option>
-                    </select>
-
-                    <div id="answer-container"></div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="submit-forgot-password-btn">submit</button>
+                    <form class="reset-password-form">
+                        <p>Enter your username to reset your password.</p>
+                        <div class="mb-3">
+                            <label for="usernameInput" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="usernameInput" placeholder="Enter your username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="securityQuestionSelect" class="form-label">Security Question</label>
+                            <select class="form-select" id="securityQuestionSelect" required>
+                                <option value="" selected>--กรุณาเลือกคำถาม--</option>
+                                <option value="fav-dog">หมาที่ชอบ</option>
+                                <option value="fav-song">เพลงที่ชอบ</option>
+                                <option value="fav-person">บุคคลที่ชอบ</option>
+                                <option value="hobby">งานอดิเรกชอบทำอะไร</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="answerInput" class="form-label">Your Answer</label>
+                            <input type="text" class="form-control" id="answerInput" placeholder="Enter your answer" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <!-- id="submit-forgot-password-btn" -->
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Modal reset password -->
     <div class="modal fade" id="reset-password-modal" tabindex="-1" aria-labelledby="reset-password" aria-hidden="true">
         <div class="modal-dialog">
@@ -154,14 +163,14 @@
                     <button class="btn btn-dark" value="next">>></button>
                 </div> -->
             </div>
-            
-            
+
+
             <div class="btn-hero-image">
                 <button class="btn btn-dark btn-banner" value="banner1"></button>
                 <button class="btn btn-dark btn-banner" value="banner2"></button>
                 <button class="btn btn-dark btn-banner" value="banner3"></button>
                 <button class="btn btn-dark btn-banner" value="banner4"></button>
-            </div>  
+            </div>
         </div>
     </section>
 
@@ -171,8 +180,8 @@
             <div class="col-2">
                 <h1 style="padding-top: 30px;" class="fs-2">Category</h1>
             </div>
-            <div class="col-10">
-                <span><a class="d-flex justify-content-end" href="all.html">see all</a></span>
+            <div class="col-10 btn-seeall">
+                <a class="d-flex justify-content-end" href="seeall.html">see all</a>
             </div>
             <div class="row">
                 <aside class="col-2 full-height-overflow">
@@ -201,6 +210,8 @@
                 <div class="col-1"></div>
 
                 <main class="row col-9 row-gap-3" id="show-product"></main>
+                <div id="pagination" class="d-flex justify-content-center mt-3">
+                </div>
             </div>
         </div>
     </section>
