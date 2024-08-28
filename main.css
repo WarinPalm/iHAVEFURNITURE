@@ -14,9 +14,11 @@
     padding: 5px 0;
     background-color: #BAA495;
 }
-.nav-link{
+
+.nav-link {
     color: black;
 }
+
 .nav-content {
     padding-right: 50px;
     display: flex;
@@ -45,31 +47,39 @@
 .cover {
     position: relative;
     background-color: white;
-
     width: 100%;
     height: 80vh;
 }
+
 .cover .hero-image {
     width: 100%;
     height: 100%;
-    background-image: url('/image/hero-image/banner1.jpg'); 
+    background-image: url('/image/hero-image/banner1.jpg');
     background-size: cover;
     background-position: center;
-    
 }
+
 .btn-hero-image {
     display: flex;
-    justify-content: center; /* จัดปุ่มให้เรียงกลางแนวนอน */
-    position: absolute; /* ใช้ absolute positioning เพื่อจัดตำแหน่ง */
-    bottom: 0; /* วางปุ่มที่ด้านล่างของคอนเทนเนอร์ */
-    left: 50%; /* ตำแหน่งแนวนอนตรงกลาง */
-    transform: translateX(-50%); /* เลื่อนปุ่มให้ตรงกลางคอนเทนเนอร์ */
-    padding: 10px; /* เพิ่มช่องว่างรอบ ๆ ปุ่ม */
-    flex-wrap: wrap; /* อนุญาตให้ปุ่มสามารถแสดงในหลายแถวได้ */
+    justify-content: center;
+    /* จัดปุ่มให้เรียงกลางแนวนอน */
+    position: absolute;
+    /* ใช้ absolute positioning เพื่อจัดตำแหน่ง */
+    bottom: 0;
+    /* วางปุ่มที่ด้านล่างของคอนเทนเนอร์ */
+    left: 50%;
+    /* ตำแหน่งแนวนอนตรงกลาง */
+    transform: translateX(-50%);
+    /* เลื่อนปุ่มให้ตรงกลางคอนเทนเนอร์ */
+    padding: 10px;
+    /* เพิ่มช่องว่างรอบ ๆ ปุ่ม */
+    flex-wrap: wrap;
+    /* อนุญาตให้ปุ่มสามารถแสดงในหลายแถวได้ */
 }
 
 .btn-hero-image button {
-    margin: 13px; /* เพิ่มช่องว่างระหว่างปุ่ม */
+    margin: 13px;
+    /* เพิ่มช่องว่างระหว่างปุ่ม */
 }
 
 .btn-banner {
@@ -103,10 +113,11 @@
 .btn-banner:hover {
     background-color: #ffffff;
     border-color: white;
-
 }
 
+
 /* สีที่ปุ่มจะคงไว้เมื่อถูกกด */
+
 .btn-banner.active {
     background-color: #ffffff;
     border-color: white;

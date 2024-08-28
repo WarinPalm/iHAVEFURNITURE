@@ -95,12 +95,12 @@
 
 
 // prevNextButtons.forEach(function(button) {
-        //     button.addEventListener("click", function() {
-        //         if (this.value === "next") {
-        //             currentIndex = (currentIndex + 1) % Object.keys(myBanner).length;
-        //         } else if (this.value === "prev") {
-        //             currentIndex = (currentIndex - 1 + Object.keys(myBanner).length) % Object.keys(myBanner).length;
-        //         }
-        //         updateImage(currentIndex);
-        //     });
-        // });
+//     button.addEventListener("click", function() {
+//         if (this.value === "next") {
+//             currentIndex = (currentIndex + 1) % Object.keys(myBanner).length;
+//         } else if (this.value === "prev") {
+//             currentIndex = (currentIndex - 1 + Object.keys(myBanner).length) % Object.keys(myBanner).length;
+//         }
+//         updateImage(currentIndex);
+//     });
+// });
