@@ -67,7 +67,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="forgotPasswordModalLabel">Forgot Password</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModalButton"></button>
                 </div>
                 <div class="modal-body">
                     <form class="forgot-password-form">
@@ -76,7 +76,7 @@
                             <label for="usernameInput" class="form-label">Username</label>
                             <input type="text" class="form-control" id="usernameInput" placeholder="Enter your username" required>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3" id="securityQuestionContainer" style="display:none;">
                             <label for="securityQuestionSelect" class="form-label">Security Question</label>
                             <select class="form-select" id="securityQuestionSelect" required>
                                 <option value="" selected>--กรุณาเลือกคำถาม--</option>
@@ -98,7 +98,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalButton">Close</button>
                     <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
                 </div>
             </div>
