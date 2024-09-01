@@ -2,8 +2,22 @@
     document.addEventListener("DOMContentLoaded", function() {
         var myProduct = {
             sofa: [
-                { title: "Sofa1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa1.avif", link: "#" }
-            ],
+                { title: "Sofa1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa1.avif", link: "#" },
+                { title: "Sofa2", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa2.avif", link: "#" },
+                { title: "Sofa3", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa3.avif", link: "#" },
+                { title: "Sofa4", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa4.avif", link: "#" },
+                { title: "Sofa5", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa5.avif", link: "#" },
+                { title: "Sofa6", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa6.avif", link: "#" },
+                { title: "Sofa7", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa7.avif", link: "#" },
+                { title: "Sofa8", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa8.avif", link: "#" },
+                { title: "Sofa9", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa9.avif", link: "#" },
+                { title: "Sofa10", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa10.avif", link: "#" },
+                { title: "Sofa11", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa11.avif", link: "#" },
+                { title: "Sofa12", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa12.avif", link: "#" },
+                { title: "Sofa13", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa13.avif", link: "#" },
+                { title: "Sofa14", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa14.avif", link: "#" },
+                
+            ],  
             bed: [
                 { title: "Bed1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Bed/bed1.avif", link: "#" }
             ],
@@ -23,7 +37,8 @@
         };
         var itemsPerPage = 6; // Number of items to display on the index page
         var currentCategory = 'sofa'; // Default category
-        var currentPage = 1;
+        var currentPage = 1; // Current page number
+        var totalPages = 0; // Total number of pages
 
         if (window.location.pathname.includes('seeall.html')) {
             itemsPerPage = 12;
@@ -32,12 +47,17 @@
         function renderPage() {
             let items = myProduct[currentCategory];
             let showProduct = document.getElementById("show-product");
+            let paginationDiv = document.getElementById("pagination");
             let innerHTML = "";
 
-            for (let i = 0; i < itemsPerPage; i++) {
-                // ใช้ % (modulus) เพื่อวนลูปกลับไปที่สินค้าชิ้นแรกเมื่อสิ้นสุดรายการสินค้า
-                let product = items[i % items.length];
-
+            // Calculate total pages
+            totalPages = Math.ceil(items.length / itemsPerPage);
+            
+            let startIndex = (currentPage - 1) * itemsPerPage;
+            let endIndex = Math.min(startIndex + itemsPerPage, items.length);
+            
+            for (let i = startIndex; i < endIndex; i++) {
+                let product = items[i];
                 innerHTML += `
                     <div class="col-4 mb-3">
                         <div class="card" style="width: 18rem;">
@@ -53,9 +73,40 @@
                     </div>
                 `;
             }
+
             showProduct.innerHTML = innerHTML;
+
+            // Update pagination buttons
+            if (paginationDiv) {
+                paginationDiv.innerHTML = '';
+                if (currentPage > 1) {
+                    paginationDiv.innerHTML += `
+                        <button onclick="prevPage()" class="pagination-button">Previous Page</button>
+                    `;
+                }
+                if (currentPage < totalPages) {
+                    paginationDiv.innerHTML += `
+                        <button onclick="nextPage()" class="pagination-button">Next Page</button>
+                    `;
+                }
+            }
         }
 
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderPage();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderPage();
+            }
+        }
+
+        
         // กด category 
         let categoryLinks = document.querySelectorAll(".nav-aside a");
         categoryLinks.forEach(function(link) {
