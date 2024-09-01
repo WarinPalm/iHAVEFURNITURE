@@ -15,8 +15,7 @@
                 { title: "Sofa11", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa11.avif", link: "#" },
                 { title: "Sofa12", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa12.avif", link: "#" },
                 { title: "Sofa13", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa13.avif", link: "#" },
-                { title: "Sofa14", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa14.avif", link: "#" },
-                
+                { title: "Sofa14", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa14.avif", link: "#" },    
             ],  
             bed: [
                 { title: "Bed1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Bed/bed1.avif", link: "#" }
@@ -44,13 +43,12 @@
             itemsPerPage = 12;
         }
 
-        function renderPage() {
+        function RenderPage() {
             let items = myProduct[currentCategory];
             let showProduct = document.getElementById("show-product");
-            let paginationDiv = document.getElementById("pagination");
             let innerHTML = "";
 
-            // Calculate total pages
+            // นับจำนวนหน้า
             totalPages = Math.ceil(items.length / itemsPerPage);
             
             let startIndex = (currentPage - 1) * itemsPerPage;
@@ -75,52 +73,63 @@
             }
 
             showProduct.innerHTML = innerHTML;
+            updatePaginationButtons(); // update ปุ่มตอนโหลดหน้าโชว์สินค้า
+        }
 
-            // Update pagination buttons
+        function updatePaginationButtons() {
+            const paginationDiv = document.getElementById('pagination');
             if (paginationDiv) {
                 paginationDiv.innerHTML = '';
-                if (currentPage > 1) {
-                    paginationDiv.innerHTML += `
-                        <button onclick="prevPage()" class="pagination-button">Previous Page</button>
-                    `;
-                }
+
                 if (currentPage < totalPages) {
                     paginationDiv.innerHTML += `
-                        <button onclick="nextPage()" class="pagination-button">Next Page</button>
+                        <button id="next-pagination-button">Next Page</button>
+                    `;
+                }
+
+                if (currentPage > 1) {
+                    paginationDiv.innerHTML += `
+                        <button id="prev-pagination-button">Previous Page</button>
                     `;
                 }
             }
+            checkPaginationButtonClick(); //update การทำงานของปุ่มหลังสร้างใหม่
         }
 
-        function nextPage() {
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderPage();
+        function checkPaginationButtonClick() {
+            const nextButton = document.getElementById('next-pagination-button');
+            const prevButton = document.getElementById('prev-pagination-button');
+
+            if (nextButton) {
+                nextButton.addEventListener('click', function() {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        RenderPage();
+                    }
+                });
+            }
+            if (prevButton) {
+                prevButton.addEventListener('click', function() {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        RenderPage();
+                    }
+                });
             }
         }
 
-        function prevPage() {
-            if (currentPage > 1) {
-                currentPage--;
-                renderPage();
-            }
-        }
-
-        
-        // กด category 
+        // Handling category click 
         let categoryLinks = document.querySelectorAll(".nav-aside a");
         categoryLinks.forEach(function(link) {
-            categoryLinks
             link.addEventListener("click", function(event) {
                 event.preventDefault();
                 currentCategory = this.getAttribute("data-category");
-                renderPage();
+                RenderPage();
             });
         });
 
-
-
         // Initial render
-        renderPage();
+        RenderPage();
+
     });
 })();

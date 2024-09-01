@@ -16,7 +16,7 @@
         const securityQuestionContainer = document.getElementById("securityQuestionContainer");
         const closeModalButton = document.getElementById("closeModalButton"); // ปุ่มปิด modal
     
-        // แสดงกล่องคำถามรักษาความปลอดภัยเมื่อ username ถูกต้อง
+        // แสดงคำถามเมื่อ username ถูกต้อง
         usernameInput.addEventListener("blur", function() {
             const username = this.value;
             
