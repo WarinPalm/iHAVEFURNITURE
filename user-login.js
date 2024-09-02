@@ -13,7 +13,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         const usernameInput = document.getElementById("usernameInput");
-        const securityQuestionContainer = document.getElementById("securityQuestionContainer");
+        const securityQuestionContainer = document.getElementById("securityQuestion");
         const closeModalButton = document.getElementById("closeModalButton"); // ปุ่มปิด modal
     
         // แสดงคำถามเมื่อ username ถูกต้อง
@@ -38,6 +38,18 @@
     
     });
 
+    function SelectRecovery(){
+        let q = document.getElementById('securityQuestion');
+        let ans = document.getElementById('answer-container');
+        if (q.value != ""){
+            ans.style.display = 'block';
+            console.log("hello")
+        }else{
+            ans.style.display = 'none'
+        }
+    };
+
+    
     var formForgotPass = document.getElementsByClassName("forgot-password-form")[0];
     var formResetPass = document.getElementsByClassName("reset-password-form")[0];
     var submitButton = document.getElementById("submit-button");

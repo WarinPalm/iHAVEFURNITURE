@@ -76,17 +76,19 @@
                             <label for="usernameInput" class="form-label">Username</label>
                             <input type="text" class="form-control" id="usernameInput" placeholder="Enter your username" required>
                         </div>
-                        <div class="mb-3" id="securityQuestionContainer" style="display:none;">
-                            <label for="securityQuestionSelect" class="form-label">Security Question</label>
-                            <select class="form-select" id="securityQuestionSelect" required>
+
+                        <div class="mb-3" id="securityQuestion" style="display:none;">
+                            <label for="securityQuestion" class="form-label">Security Question</label>
+                            <select onclick="SelectRecovery()" class="form-select" id="question-select" required>
                                 <option value="" selected>--กรุณาเลือกคำถาม--</option>
                                 <option value="fav-dog">หมาที่ชอบ</option>
                                 <option value="fav-song">เพลงที่ชอบ</option>
                                 <option value="fav-person">บุคคลที่ชอบ</option>
                                 <option value="hobby">งานอดิเรกชอบทำอะไร</option>
                             </select>
-                        </div>
-                        <div id="answer-container"></div>
+                        </div> 
+
+                        <div id="answer-container""></div>
                         
                     </form>
                     <!-- reset password form-->
