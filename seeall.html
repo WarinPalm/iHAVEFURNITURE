@@ -38,7 +38,7 @@
                     <form class="my-form">
                         <h2>LOGIN</h2>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Email address</label>
+                            <label for="exampleInputEmail1" class="form-label">Username</label>
                             <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
                         </div>
                         <div class="mb-3">
@@ -47,13 +47,13 @@
                         </div>
                         <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            <label class="form-check-label" for="exampleCheck1">Remember Me</label>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" id="forgot-password-btn">
-                            Forgot password
-                        </button>
+                            Forgot password</button>
                             <button type="submit" class="btn btn-primary">Save changes</button>
+                            <a href="register.html" id="register-btn">Register</a>
                         </div>
                     </form>
                 </div>
@@ -62,63 +62,51 @@
     </div>
 
     <!-- Modal forgot password -->
-    <div class="modal fade" id="forgot-password-modal" tabindex="-1" aria-labelledby="forgot-password" aria-hidden="true">
+    <div class="modal fade" id="forgot-password-modal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Forgot Password</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">Forgot Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModalButton"></button>
                 </div>
-
                 <div class="modal-body">
-                    <p>Enter your username to reset your password.</p>
-                    <input type="text" class="form-control" placeholder="Enter your username" required><br>
+                    <form class="forgot-password-form">
+                        <p>Enter your username to reset your password.</p>
+                        <div class="mb-3">
+                            <label for="usernameInput" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="usernameInput" placeholder="Enter your username" required>
+                        </div>
 
-                    <select name="" id="question-select" required>
-                        <option value="">--กรุณาเลือกคำถาม--</option>
-                        <option value="fav-dog">หมาที่ชอบ</option>
-                        <option value="fav-song">เพลงที่ชอบ</option>
-                        <option value="fav-person">บุคคลที่ชอบ</option>
-                        <option value="hobby">งานอดิเรกชอบทำอะไร</option>
-                    </select>
+                        <div class="mb-3" id="securityQuestion" style="display:none;">
+                            <label for="securityQuestion" class="form-label">Security Question</label>
+                            <select onclick="SelectRecovery()" class="form-select" id="question-select" required>
+                                <option value="" selected>--กรุณาเลือกคำถาม--</option>
+                                <option value="fav-dog">หมาที่ชอบ</option>
+                                <option value="fav-song">เพลงที่ชอบ</option>
+                                <option value="fav-person">บุคคลที่ชอบ</option>
+                                <option value="hobby">งานอดิเรกชอบทำอะไร</option>
+                            </select>
+                        </div> 
 
-                    <div id="answer-container"></div>
-
+                        <div id="answer-container""></div>
+                        
+                    </form>
+                    <!-- reset password form-->
+                    <form class="reset-password-form" style="display: none;">
+                        <p>Enter new password.</p><br>
+                        <input type="password" class="form-control" placeholder="Enter your new password" required><br>
+                        <p>Confirm password.</p><br>
+                        <input type="password" class="form-control" placeholder="Confirm your new password" required><br>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="submit-forgot-password-btn">submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalButton">Close</button>
+                    <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Modal reset password -->
-    <div class="modal fade" id="reset-password-modal" tabindex="-1" aria-labelledby="reset-password" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Forgot Password</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <p>enter new password.</p><br>
-                    <input type="password" class="form-control" placeholder="Enter your username" required><br>
-                    <p>confirm password.</p><br>
-                    <input type="password" class="form-control" placeholder="Enter your username" required><br>
-
-
-
-                    <div id="answer-container"></div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <section>
         <nav class="my-nav2">
             <div class="container nav-content">
