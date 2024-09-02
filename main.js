@@ -118,8 +118,7 @@
                 });
             }
         }
-
-        // Handling category click 
+        // Handling category click  
         let categoryLinks = document.querySelectorAll(".nav-aside a");
         categoryLinks.forEach(function(link) {
             link.addEventListener("click", function(event) {
@@ -132,5 +131,20 @@
         // Initial render
         RenderPage();
 
+        var questionSelect = document.getElementById('question-select');
+
+        function selectRecovery() {
+            let answerContainer = document.getElementById('answer-container');
+            if (questionSelect.value !== "") {
+                answerContainer.style.display = 'block';
+            } else {
+                answerContainer.style.display = 'none';
+            }
+        }
+        if (questionSelect) {
+            questionSelect.addEventListener('change', selectRecovery);
+        }
+        
     });
+    
 })();

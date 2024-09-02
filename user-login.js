@@ -38,16 +38,17 @@
     
     });
 
-    function SelectRecovery(){
-        let q = document.getElementById('securityQuestion');
-        let ans = document.getElementById('answer-container');
-        if (q.value != ""){
-            ans.style.display = 'block';
-            console.log("hello")
-        }else{
-            ans.style.display = 'none'
+    function selectRecovery(){
+        let questionSelect = document.getElementById('question-select');
+        let answerContainer = document.getElementById('answer-container');
+
+        if (questionSelect.value !== "") {
+            answerContainer.style.display = 'block';
+            console.log("Question selected");
+        } else {
+            answerContainer.style.display = 'none';
         }
-    };
+    }
 
     
     var formForgotPass = document.getElementsByClassName("forgot-password-form")[0];

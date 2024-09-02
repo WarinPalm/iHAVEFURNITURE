@@ -74,13 +74,12 @@
                         <p>Enter your username to reset your password.</p>
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
-                            <input type="text" name="username" class="form-control" id="usernameInput" placeholder="Enter your username"
-                                required>
+                            <input type="text" name="username" class="form-control" id="usernameInput" placeholder="Enter your username" required>
                         </div>
-
+    
                         <div class="mb-3" id="securityQuestion" style="display:none;">
-                            <label for="securityQuestion" class="form-label">Security Question</label>
-                            <select onclick="SelectRecovery()" class="form-select" id="question-select" required>
+                            <label for="question-select" class="form-label">Security Question</label>
+                            <select  class="form-select" id="question-select" required>
                                 <option value="" selected>--กรุณาเลือกคำถาม--</option>
                                 <option value="fav-dog">หมาที่ชอบ</option>
                                 <option value="fav-song">เพลงที่ชอบ</option>
@@ -88,9 +87,13 @@
                                 <option value="hobby">งานอดิเรกชอบทำอะไร</option>
                             </select>
                         </div> 
-
-                        <div id="answer-container""></div>
-                        
+    
+                        <div id="answer-container" style="display:none;">
+                            <div class="mb-3">
+                                <label for="answer" class="form-label">Your Answer</label>
+                                <input type="text" name="answer" class="form-control" id="answer" placeholder="Enter your answer" required>
+                            </div>
+                        </div>
                     </form>
                     <!-- reset password form-->
                     <form class="reset-password-form" style="display: none;">
@@ -107,7 +110,6 @@
             </div>
         </div>
     </div>
-    
     <section>
         <nav class="my-nav2">
             <div class="container nav-content">

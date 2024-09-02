@@ -64,35 +64,38 @@
     </div>
 
     <!-- Modal forgot password -->
-    <div class="modal fade" id="forgot-password-modal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="forgot-password-modal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="forgotPasswordModalLabel">Forgot Password</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        id="closeModalButton"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModalButton"></button>
                 </div>
                 <div class="modal-body">
                     <form class="forgot-password-form">
                         <p>Enter your username to reset your password.</p>
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
-                            <input type="text" name="username" class="form-control" id="usernameInput" placeholder="Enter your username"
-                                required>
+                            <input type="text" name="username" class="form-control" id="usernameInput" placeholder="Enter your username" required>
                         </div>
-                        <div class="mb-3" id="securityQuestionContainer" style="display:none;">
-                            <label for="securityQuestionSelect" class="form-label">Security Question</label>
-                            <select class="form-select" id="securityQuestionSelect" required>
+    
+                        <div class="mb-3" id="securityQuestion" style="display:none;">
+                            <label for="question-select" class="form-label">Security Question</label>
+                            <select  class="form-select" id="question-select" required>
                                 <option value="" selected>--กรุณาเลือกคำถาม--</option>
                                 <option value="fav-dog">หมาที่ชอบ</option>
                                 <option value="fav-song">เพลงที่ชอบ</option>
                                 <option value="fav-person">บุคคลที่ชอบ</option>
                                 <option value="hobby">งานอดิเรกชอบทำอะไร</option>
                             </select>
+                        </div> 
+    
+                        <div id="answer-container" style="display:none;">
+                            <div class="mb-3">
+                                <label for="answer" class="form-label">Your Answer</label>
+                                <input type="text" name="answer" class="form-control" id="answer" placeholder="Enter your answer" required>
+                            </div>
                         </div>
-                        <div id="answer-container"></div>
-
                     </form>
                     <!-- reset password form-->
                     <form class="reset-password-form" style="display: none;">
@@ -103,14 +106,12 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                        id="closeModalButton">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalButton">Close</button>
                     <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
                 </div>
             </div>
         </div>
     </div>
-
     <section>
         <nav class="my-nav2 ">
             <div class="container nav-content">
@@ -147,26 +148,22 @@
                         <div class=" row ">
                             <div class=" mb-3 col-md-4">
                                 <label for=" firstname-Input " class=" form-label ">Firstname</label>
-                                <input type=" text " class=" form-control " id=" firstname-Input" placeholder=" first
-                        name" required>
+                                <input type=" text " class=" form-control " id=" firstname-Input" placeholder=" firstname" required>
                             </div>
                             <div class=" mb-3 col-md-4 ">
                                 <label for=" lastname-Input " class=" form-label ">Lastname</label>
-                                <input type=" text " class=" form-control " id=" lastnameInput" placeholder=" last
-                        name" required>
+                                <input type=" text " class=" form-control " id=" lastnameInput" placeholder=" lastname" required>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class=" mb-3 col-md-4">
                                 <label for=" phone-number-Input" class="form-label">Phonenumber</label>
-                                <input type=" number " class=" form-control " id="phone-number-Input" placeholder="
-                        phone number" required>
+                                <input type=" number " class=" form-control " id="phone-number-Input" placeholder="phone number" required>
                             </div>
                             <div class=" mb-3 col-md-4 ">
                                 <label for="dateofbirth-Input" class="form-label">Date of birth</label>
-                                <input type="text" class="form-control" id="dateofbirth-Input" placeholder="
-                        Enter your username" required>
+                                <input type="text" class="form-control" id="dateofbirth-Input" placeholder="Enter your username" required>
                             </div>
                         </div>
 

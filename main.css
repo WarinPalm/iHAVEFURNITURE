@@ -107,6 +107,10 @@
     border-color: white;
 }
 
+#user-login .modal-dialog {
+    max-width: 450px; /* ปรับค่าตามที่คุณต้องการ */
+
+}
 .my-form {
     background: white;
     padding: 40px 40px 50px;
