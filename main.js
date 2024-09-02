@@ -35,35 +35,31 @@
 
         };
 
-        // Handling category click  
-        let categoryLinks = document.querySelectorAll(".nav-aside a");
-        categoryLinks.forEach(function(link) {
-            link.addEventListener("click", function(event) {
-                event.preventDefault();
-                currentCategory = this.getAttribute("data-category");
-                localStorage.setItem('currentCategory', currentCategory); // Save หมวดหมู่ล่าสุด
-                RenderPage();
-            });
-        });
-        
-        var itemsPerPage = 6; 
-        var currentCategory = localStorage.getItem('currentCategory') || 'sofa'; // Default to 'sofa' if not found
-
-        var currentPage = 1; 
-        var totalPages = 0; 
+        var itemsPerPage = 6;
+        var currentCategory = localStorage.getItem('currentCategory') || 'sofa';
+        var currentPage = 1;
+        var totalPages = 0;
 
         if (window.location.pathname.includes('seeall.html')) {
             itemsPerPage = 12;
         }
+        // Handling category click  
+        document.querySelectorAll(".nav-aside a").forEach(link => {
+            link.addEventListener("click", event => {
+                event.preventDefault();
+                currentCategory = link.getAttribute("data-category");
+                localStorage.setItem('currentCategory', currentCategory);
+                RenderPage();
+            });
+        });
 
         function RenderPage() {
             let items = myProduct[currentCategory];
             let showProduct = document.getElementById("show-product");
             let innerHTML = "";
 
-            // นับจำนวนหน้า
+            // Calculate total pages
             totalPages = Math.ceil(items.length / itemsPerPage);
-
             let startIndex = (currentPage - 1) * itemsPerPage;
             let endIndex = Math.min(startIndex + itemsPerPage, items.length);
 
@@ -72,12 +68,12 @@
                 innerHTML += `
                     <div class="col-4 mb-3">
                         <div class="card" style="width: 18rem;">
-                            <img src="${product.image}" class="card-img-top" alt="...">
+                            <img src="${product.image}" class="card-img-top" alt="${product.title}">
                             <div class="card-body">
                                 <h5 class="card-title">${product.title}</h5>
                                 <p class="card-text">${product.text}</p>
                                 <div class="colored_button_div">
-                                    <a href="${product.link}" style="text-decoration: none" class="colored_button">Add to cart</a>
+                                    <a href="${product.link}" class="colored_button">Add to cart</a>
                                 </div>
                             </div>
                         </div>
@@ -86,68 +82,39 @@
             }
 
             showProduct.innerHTML = innerHTML;
-            updatePaginationButtons(); // update ปุ่มตอนโหลดหน้าโชว์สินค้า
+            updatePaginationButtons();
         }
 
         function updatePaginationButtons() {
             const paginationDiv = document.getElementById('pagination');
             if (paginationDiv) {
-                paginationDiv.innerHTML = '';
-
-                if (currentPage < totalPages) {
-                    paginationDiv.innerHTML += `
-                        <button id="next-pagination-button">Next Page</button>
-                    `;
-                }
-
-                if (currentPage > 1) {
-                    paginationDiv.innerHTML += `
-                        <button id="prev-pagination-button">Previous Page</button>
-                    `;
-                }
+                paginationDiv.innerHTML = `
+                    ${currentPage > 1 ? '<button id="prev-pagination-button">Previous Page</button>' : ''}
+                    ${currentPage < totalPages ? '<button id="next-pagination-button">Next Page</button>' : ''}
+                `;
+                checkPaginationButtonClick();
             }
-            checkPaginationButtonClick(); //update การทำงานของปุ่มหลังสร้างใหม่
         }
 
         function checkPaginationButtonClick() {
-            const nextButton = document.getElementById('next-pagination-button');
-            const prevButton = document.getElementById('prev-pagination-button');
+            document.getElementById('next-pagination-button')?.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    RenderPage();
+                }
+            });
 
-            if (nextButton) {
-                nextButton.addEventListener('click', function() {
-                    if (currentPage < totalPages) {
-                        currentPage++;
-                        RenderPage();
-                    }
-                });
-            }
-            if (prevButton) {
-                prevButton.addEventListener('click', function() {
-                    if (currentPage > 1) {
-                        currentPage--;
-                        RenderPage();
-                    }
-                });
-            }
+            document.getElementById('prev-pagination-button')?.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    RenderPage();
+                }
+            });
         }
-        
+
         // Initial render
         RenderPage();
 
-        var questionSelect = document.getElementById('question-select');
-
-        function selectRecovery() {
-            let answerContainer = document.getElementById('answer-container');
-            if (questionSelect.value !== "") {
-                answerContainer.style.display = 'block';
-            } else {
-                answerContainer.style.display = 'none';
-            }
-        }
-        if (questionSelect) {
-            questionSelect.addEventListener('change', selectRecovery);
-        }
-        
     });
     
 })();

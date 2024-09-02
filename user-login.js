@@ -38,28 +38,16 @@
     
     });
 
-    function selectRecovery(){
-        let questionSelect = document.getElementById('question-select');
-        let answerContainer = document.getElementById('answer-container');
-
-        if (questionSelect.value !== "") {
-            answerContainer.style.display = 'block';
-            console.log("Question selected");
-        } else {
-            answerContainer.style.display = 'none';
-        }
-    }
+    var questionSelect = document.getElementById('question-select');
+        questionSelect?.addEventListener('change', () => {
+        document.getElementById('answer-container').style.display = questionSelect.value ? 'block' : 'none';
+    });
 
     
-    var formForgotPass = document.getElementsByClassName("forgot-password-form")[0];
-    var formResetPass = document.getElementsByClassName("reset-password-form")[0];
-    var submitButton = document.getElementById("submit-button");
-
-    function ChangeForm() {
-        formForgotPass.style.display = "none";
-        formResetPass.style.display = "block";
-    }
-    submitButton.addEventListener("click", ChangeForm);
+    document.getElementById("submit-button")?.addEventListener("click", () => {
+        document.getElementsByClassName("forgotpass-form")[0].style.display = "none";
+        document.getElementsByClassName("resetpass-form")[0].style.display = "block";
+    });
 
 
 })();

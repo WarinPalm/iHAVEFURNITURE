@@ -68,11 +68,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="forgotPasswordModalLabel">Forgot Password</h5>
+                    <h5>Forgot Password</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModalButton"></button>
                 </div>
+
                 <div class="modal-body">
-                    <form class="forgot-password-form">
+                     <!-- forgot password form-->
+                    <form class="forgotpass-form">
                         <p>Enter your username to reset your password.</p>
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
@@ -95,16 +97,19 @@
                                 <label for="answer" class="form-label">Your Answer</label>
                                 <input type="text" name="answer" class="form-control" id="answer" placeholder="Enter your answer" required>
                             </div>
-                        </div>
+                        </div> 
                     </form>
+
                     <!-- reset password form-->
-                    <form class="reset-password-form" style="display: none;">
+                    <form class="resetpass-form" style="display: none;">
                         <p>Enter new password.</p><br>
                         <input type="password" name="new-password" class="form-control" placeholder="Enter your new password" required><br>
                         <p>Confirm password.</p><br>
                         <input type="password" name="confirm-new-password" class="form-control" placeholder="Confirm your new password" required><br>
                     </form>
+
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalButton">Close</button>
                     <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
@@ -112,6 +117,7 @@
             </div>
         </div>
     </div>
+    
     <section>
         <nav class="my-nav2 ">
             <div class="container nav-content">
