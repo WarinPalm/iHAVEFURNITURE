@@ -1,14 +1,7 @@
-// var myProduct = {
-//     sofa: [
-//         { title: "Sofa1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/sofa1.avif", link: "#" },
-//         { title: "Sofa1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/sofa1.avif", link: "#" },
-//         { title: "Sofa1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/sofa1.avif", link: "#" },
-//         { title: "Sofa1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/sofa1.avif", link: "#" },
-//     ],
-//     bed: [
-//         { title: "Bed1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/bed/bed1.avif", link: "#" }     
-//     ],
-
-// };
-// console.log(myProduct["sofa"].length);
-// กด category
+const myBanner = {
+    banner1: "/image/hero-image/banner1.jpg",
+    banner2: "/image/hero-image/banner2.jpg",
+    banner3: "/image/hero-image/banner3.jpg",
+    banner4: "/image/hero-image/banner4.jpg"
+};
+console.log(Object.values(myBanner)[0]);
