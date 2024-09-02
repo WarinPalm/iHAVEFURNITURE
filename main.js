@@ -35,10 +35,22 @@
 
         };
 
-        var itemsPerPage = 6; // Number of items to display on the index page
-        var currentCategory = 'sofa'; // Default category
-        var currentPage = 1; // Current page number
-        var totalPages = 0; // Total number of pages
+        // Handling category click  
+        let categoryLinks = document.querySelectorAll(".nav-aside a");
+        categoryLinks.forEach(function(link) {
+            link.addEventListener("click", function(event) {
+                event.preventDefault();
+                currentCategory = this.getAttribute("data-category");
+                localStorage.setItem('currentCategory', currentCategory); // Save หมวดหมู่ล่าสุด
+                RenderPage();
+            });
+        });
+        
+        var itemsPerPage = 6; 
+        var currentCategory = localStorage.getItem('currentCategory') || 'sofa'; // Default to 'sofa' if not found
+
+        var currentPage = 1; 
+        var totalPages = 0; 
 
         if (window.location.pathname.includes('seeall.html')) {
             itemsPerPage = 12;
@@ -118,16 +130,7 @@
                 });
             }
         }
-        // Handling category click  
-        let categoryLinks = document.querySelectorAll(".nav-aside a");
-        categoryLinks.forEach(function(link) {
-            link.addEventListener("click", function(event) {
-                event.preventDefault();
-                currentCategory = this.getAttribute("data-category");
-                RenderPage();
-            });
-        });
-
+        
         // Initial render
         RenderPage();
 

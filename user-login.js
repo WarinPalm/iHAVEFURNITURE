@@ -13,7 +13,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         const usernameInput = document.getElementById("usernameInput");
-        const securityQuestionContainer = document.getElementById("securityQuestion");
+        const questionContainer = document.getElementById("question");
         const closeModalButton = document.getElementById("closeModalButton"); // ปุ่มปิด modal
     
         // แสดงคำถามเมื่อ username ถูกต้อง
@@ -21,9 +21,9 @@
             const username = this.value;
             
             if (username === "warinpalm") {
-                securityQuestionContainer.style.display = "block";
+                questionContainer.style.display = "block";
             } else {
-                securityQuestionContainer.style.display = "none";
+                questionContainer.style.display = "none";
                 alert("Username ไม่ถูกต้อง กรุณาลองใหม่");
                 usernameInput.value = "";
             }
@@ -33,7 +33,7 @@
         closeModalButton.addEventListener("click", function() {
             // รีเซ็ตค่า input และซ่อน security question container
             usernameInput.value = "";
-            securityQuestionContainer.style.display = "none";
+            questionContainer.style.display = "none";
         });
     
     });
