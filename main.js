@@ -15,8 +15,8 @@
                 { title: "Sofa11", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa11.avif", link: "#" },
                 { title: "Sofa12", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa12.avif", link: "#" },
                 { title: "Sofa13", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa13.avif", link: "#" },
-                { title: "Sofa14", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa14.avif", link: "#" },    
-            ],  
+                { title: "Sofa14", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa14.avif", link: "#" },
+            ],
             bed: [
                 { title: "Bed1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Bed/bed1.avif", link: "#" }
             ],
@@ -34,6 +34,7 @@
             ],
 
         };
+
         var itemsPerPage = 6; // Number of items to display on the index page
         var currentCategory = 'sofa'; // Default category
         var currentPage = 1; // Current page number
@@ -50,10 +51,10 @@
 
             // นับจำนวนหน้า
             totalPages = Math.ceil(items.length / itemsPerPage);
-            
+
             let startIndex = (currentPage - 1) * itemsPerPage;
             let endIndex = Math.min(startIndex + itemsPerPage, items.length);
-            
+
             for (let i = startIndex; i < endIndex; i++) {
                 let product = items[i];
                 innerHTML += `
