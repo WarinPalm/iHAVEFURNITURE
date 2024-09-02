@@ -38,12 +38,12 @@
                     <form class="my-form">
                         <h2>LOGIN</h2>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" required>
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name= "password" class="form-control" id="exampleInputPassword1" required>
                         </div>
                         <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
@@ -73,8 +73,9 @@
                     <form class="forgot-password-form">
                         <p>Enter your username to reset your password.</p>
                         <div class="mb-3">
-                            <label for="usernameInput" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="usernameInput" placeholder="Enter your username" required>
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" id="usernameInput" placeholder="Enter your username"
+                                required>
                         </div>
 
                         <div class="mb-3" id="securityQuestion" style="display:none;">
@@ -94,9 +95,9 @@
                     <!-- reset password form-->
                     <form class="reset-password-form" style="display: none;">
                         <p>Enter new password.</p><br>
-                        <input type="password" class="form-control" placeholder="Enter your new password" required><br>
+                        <input type="password" name="new-password" class="form-control" placeholder="Enter your new password" required><br>
                         <p>Confirm password.</p><br>
-                        <input type="password" class="form-control" placeholder="Confirm your new password" required><br>
+                        <input type="password" name="confirm-new-password" class="form-control" placeholder="Confirm your new password" required><br>
                     </form>
                 </div>
                 <div class="modal-footer">
