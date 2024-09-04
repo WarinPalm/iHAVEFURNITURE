@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Navbar from '../Navbar/Navbar';
-import LoginModal from '../Modal/LoginModal';
-import ForgotPasswordModal from '../Modal/ForgotPasswordModal';
-import HeroImage from '../HeroImage';
-import Category from '../Aside/Category';
+
+import { Link } from "react-router-dom"
+import Navbar from './Navbar';
+import LoginModal from './Modal/LoginModal';
+import ForgotPasswordModal from './Modal/ForgotPasswordModal';
+import HeroImage from './HeroImage';
+import Category from './Category';
 
 const Home = () => {
     const [currentCategory, setCurrentCategory] = useState(localStorage.getItem('currentCategory') || 'sofa');
@@ -107,7 +109,8 @@ const Home = () => {
                     </div>
                     <div className="col-10">
                         <img src="./sofa1.avif" alt="" />
-                        <a className="d-flex justify-content-end" id="seeall-btn" href="seeall.html">See All</a>
+                        <Link to="viewall" className="d-flex justify-content-end" id="seeall-btn">seeall</Link>
+                        {/* <a className="d-flex justify-content-end" id="seeall-btn" href="seeall.html">See All</a> */}
                     </div>
                     <img src="../../../../public/image/sofa/sofa1.svg" alt="" />
                     <img src="./assets/react.svg" alt="" />

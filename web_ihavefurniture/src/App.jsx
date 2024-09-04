@@ -1,13 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 import React from 'react';
 
-import Home from './components/Main/home';
+import Home from './components/home';
 
 
 const App = () => {
-    return (
+    return (    
         <>
         <Home/>
         </>

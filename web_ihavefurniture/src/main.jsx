@@ -1,6 +1,23 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import{createBrowserRouter, RouterProvider, Route, Link} from 'react-router-dom'
+
+import Home from './components/home.jsx'
+import ViewAll from './components/viewall.jsx'
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home/>
+  },
+  {
+    path: "viewall",
+    element:<ViewAll/>
+  }
+]);
+
+
 import './CSS/header.css'
 import './CSS/hero-image.css'
 import './CSS/style.css'
@@ -8,7 +25,7 @@ import './CSS/style.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <RouterProvider router={router}/>
   </StrictMode>,
 )
   
