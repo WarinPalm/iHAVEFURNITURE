@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../Navbar/Navbar';
 import LoginModal from '../Modal/LoginModal';
 import ForgotPasswordModal from '../Modal/ForgotPasswordModal';
 import HeroImage from '../HeroImage';
 import Category from '../Aside/Category';
-import Register from './register';
 
 const Home = () => {
     const [currentCategory, setCurrentCategory] = useState(localStorage.getItem('currentCategory') || 'sofa');
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(6);
+    const [itemsPerPage, setItemsPerPage] = useState(window.location.pathname.includes('seeall.html') ? 12 : 6);
     const [products, setProducts] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
 
     const myProduct = {
         sofa: [
-            { title: "Sofa1", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa1.avif", link: "#" },
+            { title: "Sofa1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa1.avif", link: "#" },
             { title: "Sofa2", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa2.avif", link: "#" },
             { title: "Sofa3", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa3.avif", link: "#" },
             { title: "Sofa4", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa4.avif", link: "#" },
@@ -44,25 +42,23 @@ const Home = () => {
             { title: "Lamp1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Lamp/lamp1.avif", link: "#" }
         ],
         kitchen: [
-            { title: "kitchen1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/kitchen/kitchen1.avif", link: "#" }
+            { title: "kitchen1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Kitchen/kitchen1.avif", link: "#" }
         ],
     };
 
     useEffect(() => {
-        const path = window.location.pathname;
-        if (path.includes('seeall.html')) {
-            setItemsPerPage(12);
-        }
-
+        // Ensure that itemsPerPage is valid and calculate total pages correctly
         const categoryItems = myProduct[currentCategory] || [];
+        const itemsPerPageLocal = window.location.pathname.includes('seeall.html') ? 12 : 6;
+        setItemsPerPage(itemsPerPageLocal);
         setProducts(categoryItems);
-        setTotalPages(Math.ceil(categoryItems.length / itemsPerPage));
-    }, [currentCategory, itemsPerPage]);
+        setTotalPages(Math.ceil(categoryItems.length / itemsPerPageLocal));
+    }, [currentCategory]);
 
     const handleCategoryClick = (category) => {
         setCurrentCategory(category);
         localStorage.setItem('currentCategory', category);
-        setCurrentPage(1); // Reset to the first page on category change
+        setCurrentPage(1); 
     };
 
     const handleNextPage = () => {
@@ -82,7 +78,7 @@ const Home = () => {
         const endIndex = Math.min(startIndex + itemsPerPage, products.length);
 
         return products.slice(startIndex, endIndex).map((product, index) => (
-            <div className="col-4 mb-5" key={index}>
+            <div className="col-4 mb-3" key={index}>
                 <div className="card" style={{ width: '18rem' }}>
                     <img src={product.image} className="card-img-top" alt={product.title} />
                     <div className="card-body">
@@ -106,33 +102,28 @@ const Home = () => {
 
             <section className="list-product">
                 <div className="container text-center">
-
                     <div className="col-2">
                         <h1 style={{ paddingTop: '30px' }} className="fs-2">Category</h1>
                     </div>
                     <div className="col-10">
                         <img src="./sofa1.avif" alt="" />
-                        <a className="d-flex justify-content-end" id="seeall-btn" href="seeall.html">see all</a>
+                        <a className="d-flex justify-content-end" id="seeall-btn" href="seeall.html">See All</a>
                     </div>
-                    <img src="../../../../public/vite.svg" alt="" />
-                    <img src="../../../assets/react.svg" alt="" />
+                    <img src="../../../../public/image/sofa/sofa1.svg" alt="" />
+                    <img src="./assets/react.svg" alt="" />
                     <div className="row">
-                        
                         <Category onCategoryClick={handleCategoryClick} />
-                        
-                        <div className="col-1">
-
-                        </div>
+                        <div className="col-1"></div>
                         <div className="col-9 row-gap-2">
                             <div className="row" id="show-product">
                                 {renderProducts()}
                             </div>
                         </div>
                     </div>
-                    <div id="pagination">
+                    {/* <div id="pagination">
                         {currentPage > 1 && <button onClick={handlePrevPage}>Previous Page</button>}
                         {currentPage < totalPages && <button onClick={handleNextPage}>Next Page</button>}
-                    </div>
+                    </div> */}
                 </div>
             </section>
         </>

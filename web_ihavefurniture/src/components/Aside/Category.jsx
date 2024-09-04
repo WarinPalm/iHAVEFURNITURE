@@ -1,27 +1,15 @@
 import React from 'react';
 
-const Category = () => {
+const Category = ({ onCategoryClick }) => {
     return (
         <aside className="col-2 full-height-overflow">
             <ul className="nav-aside">
-                <a href="#" data-category="sofa">
-                    <li className="hov-primary">Sofa</li>
-                </a>
-                <a href="#" data-category="bed">
-                    <li className="hov-primary">Bed</li>
-                </a>
-                <a href="#" data-category="chair">
-                    <li className="hov-primary">Chair</li>
-                </a>
-                <a href="#" data-category="table">
-                    <li className="hov-primary">Table</li>
-                </a>
-                <a href="#" data-category="lamp">
-                    <li className="hov-primary">Lamp</li>
-                </a>
-                <a href="#" data-category="kitchen">
-                    <li className="hov-primary">Kitchen</li>
-                </a>
+                <li className="hov-primary" onClick={() => onCategoryClick('sofa')}>Sofa</li>
+                <li className="hov-primary" onClick={() => onCategoryClick('bed')}>Bed</li>
+                <li className="hov-primary" onClick={() => onCategoryClick('chair')}>Chair</li>
+                <li className="hov-primary" onClick={() => onCategoryClick('table')}>Table</li>
+                <li className="hov-primary" onClick={() => onCategoryClick('lamp')}>Lamp</li>
+                <li className="hov-primary" onClick={() => onCategoryClick('kitchen')}>Kitchen</li>
             </ul>
         </aside>
     );

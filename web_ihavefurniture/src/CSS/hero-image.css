@@ -8,7 +8,7 @@
 .cover .hero-image {
     width: 100%;
     height: 100%;
-    background-image: url('../assets/image/hero-image/banner1.jpg');
+    background-image: url('../../public/image/hero-image/banner1.jpg');
     background-size: cover;
     background-position: center;
 }
