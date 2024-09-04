@@ -5,7 +5,7 @@ import React from 'react';
 const Navbar = () => {
     return (
         <>
-        <nav className="my-nav">
+        <nav style={{position:'sticky',top:"0", zIndex:"100"}} className="my-nav">
             <div className="container nav-content">
                 <h1 className="h1-text">iHAVEFurniture</h1>
                 <span className="button-login">
