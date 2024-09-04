@@ -6,7 +6,7 @@ import{createBrowserRouter, RouterProvider, Route, Link} from 'react-router-dom'
 
 import Home from './components/home.jsx'
 import ViewAll from './components/viewall.jsx'
-
+import Register from './components/register.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: "viewall",
     element:<ViewAll/>
+  },
+  {
+    path: "register",
+    element:<Register/>
   }
 ]);
 

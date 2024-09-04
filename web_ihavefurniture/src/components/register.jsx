@@ -1,8 +1,15 @@
 import React from 'react';
+import Navbar from './Navbar';
+import LoginModal from './Modal/LoginModal';
+import ForgotPasswordModal from './Modal/ForgotPasswordModal';
 
 const Register = () => {
 
     return (
+        <>
+        <Navbar/>
+        <LoginModal />
+        <ForgotPasswordModal />
         <section className="register">
             <div className="container">
                 <div className="row">
@@ -57,12 +64,12 @@ const Register = () => {
                             </div>
                            
                         </form>
-
-                        
+ 
                     </div>
                 </div>
             </div>
         </section>
+        </>
     );
 };
 

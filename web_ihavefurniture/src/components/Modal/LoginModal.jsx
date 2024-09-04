@@ -1,7 +1,15 @@
-
 import React from 'react';
+import { Link } from "react-router-dom"
 
 const LoginModal = () => {
+    
+    const closeModal = () => {
+        const modal = document.getElementById('user-login');
+        if (modal) {
+            const modalInstance = new window.bootstrap.Modal(modal);
+            modalInstance.hide();
+        }
+    };
     return (
         <div className="modal fade" id="user-login" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
@@ -25,7 +33,8 @@ const LoginModal = () => {
                                     Forgot password
                                 </button>
                                 <button type="submit" className="btn btn-primary">Save changes</button>
-                                <a href="register.jsx" id="register-btn">Register</a>
+                                <Link to="register" onClick={closeModal} id="register-btn" >register</Link>
+                                
                             </div>
                         </form>
                     </div>

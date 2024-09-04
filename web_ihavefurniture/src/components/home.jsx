@@ -55,9 +55,11 @@ const Home = () => {
 
             <section className="list-product">
                 <div className="container text-center">
+                    
                     <div className="col-2">
                         <h1 style={{ paddingTop: '30px' }} className="fs-2">Category</h1>
                     </div>
+
                     <div className="col-10">
                         <Link to="viewall" className="d-flex justify-content-end" id="seeall-btn">viewall</Link>
                     </div>

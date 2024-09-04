@@ -67,7 +67,6 @@ const ViewAll = () => {
                     </div>
 
                     <div className="row">
-                        <Category onCategoryClick={handleCategoryClick} />
                         <div className="col-1"></div>
                         <div className="col-9 row-gap-2">
                             <div className="row" id="show-product">
