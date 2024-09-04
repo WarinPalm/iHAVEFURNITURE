@@ -42,22 +42,13 @@
 }
 
 .hov-primary:hover {
-    background-color: #000000;
+    background-color: #3A3129;
     color: white !important;
     cursor: pointer;
 }
 
 .nav-aside {
     padding: 30px 0;
-}
-
-.show-product {
-    padding: 50px 0;
-}
-
-.nav-aside a {
-    text-decoration: none;
-    color: black;
 }
 
 aside li {
@@ -103,9 +94,13 @@ aside li {
     border: 1px solid rgb(0, 0, 0);
     color: rgb(0, 0, 0)
 }
+.colored_button {
+    text-decoration: none;
+    color: #000000;
+}
 
 .colored_button_div:hover {
-    background-color: rgb(0, 0, 0);
+    background-color: #3A3129;
     cursor: pointer;
 }
 
@@ -114,6 +109,3 @@ aside li {
     text-decoration: none;
 }
 
-.colored_button {
-    color: #000000;
-}

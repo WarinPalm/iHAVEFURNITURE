@@ -25,6 +25,14 @@
     justify-content: space-between;
     align-items: center;
 }
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+.dropdown-item:hover{
+    background-color: #3A3129;
+    color: white;
+    text-decoration: none;
+}
 
 .h1-text {
     color: white;
