@@ -41,14 +41,14 @@ const ViewAll = () => {
         const endIndex = Math.min(startIndex + itemsPerPage, products.length);
 
         return products.slice(startIndex, endIndex).map((product, index) => (
-            <div className="col-4 mb-3" key={index}>
-                <div className="card" style={{ width: '18rem' }}>
-                    <img src={product.image} className="card-img-top" alt={product.title} />
+            <div className="col-3 mb-4 " key={index}>
+                <div className="card card-hover">
+                    <img src={product.image} className="card-img-top" alt={product.title} style={{ borderTopLeftRadius: '15px', borderTopRightRadius: '15px' }} />
                     <div className="card-body">
                         <h5 className="card-title">{product.title}</h5>
-                        <p className="card-text">{product.text}</p>
-                        <div className="colored_button_div">
-                            <a href={product.link} className="colored_button">Add to cart</a>
+                        <p className="card-text text-muted">{product.text}</p>
+                        <div className="colored_button_div d-flex justify-content-center">
+                            <a href={product.link} className="btn colored_button">Add to cart</a>
                         </div>
                     </div>
                 </div>
@@ -60,15 +60,13 @@ const ViewAll = () => {
         <Navbar onCategoryClick={handleCategoryClick} />
         <section className="list-product">
                 <div className="container text-center">
-                <div className="col-2">
-                        <h1 style={{ paddingTop: '30px' }} className="fs-2">Category</h1>
-                    </div>
-                    <div className="col-10">
+
+                    <div className="col-2 pt-5">
+                        <h1 className="fs-2">Category</h1>
                     </div>
 
-                    <div className="row">
-                        <div className="col-1"></div>
-                        <div className="col-9 row-gap-2">
+                    <div className="row mt-5 pt-5">
+                        <div className="col-12 row-gap-2">
                             <div className="row" id="show-product">
                                 {renderProducts()}
                             </div>

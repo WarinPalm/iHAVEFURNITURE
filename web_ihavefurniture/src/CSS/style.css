@@ -86,6 +86,21 @@ aside li {
     width: 50%;
 }
 
+/* ส่วนของ show product*/
+.card-hover {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 15px;
+    overflow: hidden;  /*ป้องกันการล้นเมื่อขยาย */
+}
+
+.card-hover:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); 
+}
+
+.card-hover img {
+    transition: transform 0.3s ease-in-out; /* ไม่ให้ขยายไปด้วย */
+}
 .colored_button_div {
     padding: 15px 0;
     width: 50%;
