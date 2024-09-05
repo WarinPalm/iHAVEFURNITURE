@@ -25,13 +25,26 @@
     justify-content: space-between;
     align-items: center;
 }
-.dropdown:hover .dropdown-menu {
-    display: block;
-}
-.dropdown-item:hover{
-    background-color: #3A3129;
-    color: white;
+
+/* ป้องกันขีดเส้นใต้จากลิงก์ใน dropdown-item */
+.nav-item .dropdown-menu .dropdown-item a {
     text-decoration: none;
+    color: inherit; /* ใช้สีของข้อความที่ถูกกำหนดไว้ใน .dropdown-item */
+}
+
+.nav-item .dropdown-menu .dropdown-item a:hover {
+    color: white; /* สีที่ต้องการเมื่อ hover */
+}
+
+/* แน่ใจว่าขีดเส้นใต้ไม่มีเมื่อ hover */
+.nav-item .dropdown-menu .dropdown-item {
+    text-decoration: none;
+}
+
+/* เปลี่ยนสีพื้นหลังและข้อความเมื่อ hover */
+.nav-item .dropdown-menu .dropdown-item:hover {
+    background-color: #3A3129; /* เปลี่ยนสีพื้นหลังตามที่ต้องการ */
+    color: white; /* เปลี่ยนสีข้อความตามที่ต้องการ */
 }
 
 .h1-text {

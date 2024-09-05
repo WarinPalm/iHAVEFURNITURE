@@ -29,18 +29,23 @@ const HeroImage = () => {
     };
 
     useEffect(() => {
+        // Ensure that updateButtonStyles is called after state has been updated
         updateButtonStyles(currentIndex);
-        if (!autoSlideInterval) {
-            const interval = setInterval(autoSlide, 3000);
-            setAutoSlideInterval(interval);
-        }
-        return () => clearInterval(autoSlideInterval);
-    }, [currentIndex, autoSlideInterval]);
+    }, [currentIndex]);
+
+    useEffect(() => {
+        // Set up the auto slide interval when component mounts
+        const interval = setInterval(autoSlide, 3000);
+        setAutoSlideInterval(interval);
+
+        // Clean up interval on component unmount
+        return () => clearInterval(interval);
+    }, []);
 
     const handleButtonClick = (index) => {
         setCurrentIndex(index);
-        clearInterval(autoSlideInterval);
-        const newInterval = setInterval(autoSlide, 3000);
+        clearInterval(autoSlideInterval); // Clear the current interval
+        const newInterval = setInterval(autoSlide, 3000); // Set a new interval
         setAutoSlideInterval(newInterval);
     };
 

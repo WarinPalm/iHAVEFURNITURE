@@ -37,14 +37,25 @@
 
 /* Aside Show Product*/
 
-.hov-primary {
+.category-nav {
     transition: all 0.2s ease-in-out;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    overflow: hidden;
 }
 
-.hov-primary:hover {
-    background-color: #3A3129;
-    color: white !important;
+.category-nav:hover {
+    background-color: #C8C6C2;
+
     cursor: pointer;
+    transform: scale(1.05); 
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); 
+}
+
+.category-nav.active {
+    background-color: #C8C6C2; /* สีที่คุณต้องการแสดงเมื่อเลือก */
+
+    transform: scale(1.05); 
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); 
 }
 
 .nav-aside {
@@ -58,13 +69,14 @@ aside li {
     font-size: 1.2rem;
     font-weight: 600;
     border-radius: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .full-height-overflow {
     height: 100vh;
     overflow: auto;
 }
+
 
 
 /* Main Show Product*/
