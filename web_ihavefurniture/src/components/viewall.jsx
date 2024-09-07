@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Navbar from './Navbar';
 import { myProduct } from './MyProduct';
+import LoginModal from "./Modal/LoginModal";
+import ForgotPasswordModal from "./Modal/ForgotPasswordModal";
 
 const ViewAll = () => {
     const [currentCategory, setCurrentCategory] = useState(() => {
@@ -59,6 +61,9 @@ const ViewAll = () => {
     return (
         <>
             <Navbar onCategoryClick={handleCategoryClick} />
+            <LoginModal />
+            <ForgotPasswordModal />
+
             <section className="list-product">
                 <div className="container text-center">
                     <div className="col-2 pt-5">

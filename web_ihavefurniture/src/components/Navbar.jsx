@@ -32,12 +32,12 @@ const Navbar = ({ onCategoryClick }) => {
                             Product
                         </a>
                         <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <Link to="/"><li className="dropdown-item" onClick={() => onCategoryClick('sofa')}>Sofa</li></Link>
-                            <Link to="/"><li className="dropdown-item" onClick={() => onCategoryClick('bed')}>Bed</li></Link>
-                            <Link to="/"><li className="dropdown-item" onClick={() => onCategoryClick('chair')}>Chair</li></Link>
-                            <Link to="/"><li className="dropdown-item" onClick={() => onCategoryClick('table')}>Table</li></Link>
-                            <Link to="/"><li className="dropdown-item" onClick={() => onCategoryClick('lamp')}>Lamp</li></Link>
-                            <Link to="/"><li className="dropdown-item" onClick={() => onCategoryClick('kitchen')}>Kitchen</li></Link>
+                            <li className="dropdown-item" onClick={() => onCategoryClick('sofa')}>Sofa</li>
+                            <li className="dropdown-item" onClick={() => onCategoryClick('bed')}>Bed</li>
+                            <li className="dropdown-item" onClick={() => onCategoryClick('chair')}>Chair</li>
+                            <li className="dropdown-item" onClick={() => onCategoryClick('table')}>Table</li>
+                            <li className="dropdown-item" onClick={() => onCategoryClick('lamp')}>Lamp</li>
+                            <li className="dropdown-item" onClick={() => onCategoryClick('kitchen')}>Kitchen</li>
                         </ul>
                     </li>
                 <li className="nav-item">
