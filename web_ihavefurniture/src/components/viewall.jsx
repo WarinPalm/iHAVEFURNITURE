@@ -49,9 +49,10 @@ const ViewAll = () => {
                     <div className="card-body">
                         <h5 className="card-title">{product.title}</h5>
                         <p className="card-text text-muted">{product.text}</p>
-                        <div className="colored_button_div d-flex justify-content-center">
+                        {/* <div className="colored_button_div d-flex justify-content-center">
                             <a href={product.link} className="btn colored_button">Add to cart</a>
-                        </div>
+                        </div> */}
+                        <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
                     </div>
                 </div>
             </div>
