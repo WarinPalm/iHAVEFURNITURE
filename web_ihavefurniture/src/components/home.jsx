@@ -5,6 +5,7 @@ import LoginModal from './Modal/LoginModal';
 import ForgotPasswordModal from './Modal/ForgotPasswordModal';
 import HeroImage from './HeroImage';
 import Category from './Category';
+import ProductModal from './Modal/ProductModal'
 import { myProduct } from './MyProduct';
 
 const Home = () => {
@@ -33,8 +34,8 @@ const Home = () => {
 
         return products.slice(startIndex, endIndex).map((product, index) => (
             <div className="col-4 mb-4" key={index}>
-                <div className="card card-hover">
-                    <img src={product.image} className="card-img-top" alt={product.title} style={{ borderTopLeftRadius: '15px', borderTopRightRadius: '15px' }} />
+                <div className="card card-hover"data-bs-toggle="modal" data-bs-target="#product-detail">
+                    <img src={product.image} className="card-img-top" alt={product.title}/>
                     <div className="card-body">
                         <h5 className="card-title">{product.title}</h5>
                         <p className="mt-4 card-text text-muted">{product.text}</p>
@@ -54,6 +55,7 @@ const Home = () => {
             <Navbar onCategoryClick={handleCategoryClick} />
             <LoginModal />
             <ForgotPasswordModal />
+            <ProductModal/>
             <HeroImage />
 
             <section className="list-product">

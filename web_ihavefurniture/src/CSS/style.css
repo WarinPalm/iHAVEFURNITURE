@@ -135,4 +135,11 @@ aside li {
     color: white;
     text-decoration: none;
 }
+/*product */
+.custom-img {
+    width: 150px; /* กำหนดขนาดภาพ */
+    height: auto; /* ให้ความสูงปรับตามสัดส่วนของภาพ */
+    float: left; /* ทำให้ภาพชิดซ้าย */
+    margin-right: 10px; /* เพิ่มระยะห่างระหว่างภาพและเนื้อหาอื่น */
 
+}
