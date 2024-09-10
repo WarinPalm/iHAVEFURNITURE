@@ -39,12 +39,18 @@ const Navbar = ({ onCategoryClick, activeCategory }) => {
                                 Product
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li className={`dropdown-item ${activeCategory === 'sofa' ? 'active' : ''}`} onClick={() => onCategoryClick('sofa')}>Sofa</li>
-                                <li className={`dropdown-item ${activeCategory === 'bed' ? 'active' : ''}`} onClick={() => onCategoryClick('bed')}>Bed</li>
-                                <li className={`dropdown-item ${activeCategory === 'chair' ? 'active' : ''}`} onClick={() => onCategoryClick('chair')}>Chair</li>
-                                <li className={`dropdown-item ${activeCategory === 'table' ? 'active' : ''}`} onClick={() => onCategoryClick('table')}>Table</li>
-                                <li className={`dropdown-item ${activeCategory === 'lamp' ? 'active' : ''}`} onClick={() => onCategoryClick('lamp')}>Lamp</li>
-                                <li className={`dropdown-item ${activeCategory === 'kitchen' ? 'active' : ''}`} onClick={() => onCategoryClick('kitchen')}>Kitchen</li>
+                                <li className={`dropdown-item ${activeCategory === 'sofa' ? 'active' : ''}`} 
+                                onClick={() => onCategoryClick('sofa')}>Sofa</li>
+                                <li className={`dropdown-item ${activeCategory === 'bed' ? 'active' : ''}`} 
+                                onClick={() => onCategoryClick('bed')}>Bed</li>
+                                <li className={`dropdown-item ${activeCategory === 'chair' ? 'active' : ''}`} 
+                                onClick={() => onCategoryClick('chair')}>Chair</li>
+                                <li className={`dropdown-item ${activeCategory === 'table' ? 'active' : ''}`} 
+                                onClick={() => onCategoryClick('table')}>Table</li>
+                                <li className={`dropdown-item ${activeCategory === 'lamp' ? 'active' : ''}`} 
+                                onClick={() => onCategoryClick('lamp')}>Lamp</li>
+                                <li className={`dropdown-item ${activeCategory === 'kitchen' ? 'active' : ''}`} 
+                                onClick={() => onCategoryClick('kitchen')}>Kitchen</li>
                             </ul>
                         </li>
                         <li className="nav-item">

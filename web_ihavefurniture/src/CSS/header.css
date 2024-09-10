@@ -46,6 +46,9 @@
     background-color: #3A3129; /* เปลี่ยนสีพื้นหลังตามที่ต้องการ */
     color: white; /* เปลี่ยนสีข้อความตามที่ต้องการ */
 }
+.dropdown-item.active{
+    background-color: #3A3129;
+}
 
 .h1-text {
     color: white;
