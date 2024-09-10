@@ -33,7 +33,7 @@ const LoginModal = () => {
                                     Forgot password
                                 </button>
                                 <button type="submit" className="btn btn-primary">Save changes</button>
-                                <Link to="register" onClick={closeModal} id="register-btn" >register</Link>
+                                <Link to="../register" onClick={closeModal} id="register-btn" >register</Link>
                                 
                             </div>
                         </form>

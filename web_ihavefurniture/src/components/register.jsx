@@ -53,14 +53,8 @@ const Register = () => {
                             </div>
 
                             <div className="mb-3 col-md-8" id="question">
-                                <label htmlFor="question" className="form-label">Security Question</label>
-                                <select className="form-select" required>
-                                    <option value="" selected>--กรุณาเลือกคำถาม--</option>
-                                    <option value="fav-dog">หมาที่ชอบ</option>
-                                    <option value="fav-song">เพลงที่ชอบ</option>
-                                    <option value="fav-person">บุคคลที่ชอบ</option>
-                                    <option value="hobby">งานอดิเรกชอบทำอะไร</option>
-                                </select>
+                                
+
                             </div>
                            
                         </form>

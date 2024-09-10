@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import { myProduct } from './MyProduct';
 import LoginModal from "./Modal/LoginModal";
 import ForgotPasswordModal from "./Modal/ForgotPasswordModal";
+import ProductModal from './Modal/ProductModal'
 
 const ViewAll = () => {
     const [currentCategory, setCurrentCategory] = useState(() => {
@@ -63,7 +64,8 @@ const ViewAll = () => {
         <>
             <Navbar onCategoryClick={handleCategoryClick} />
             <LoginModal />
-            <ForgotPasswordModal />
+            {/* <ForgotPasswordModal /> */}
+            <ProductModal/>
 
             <section className="list-product">
                 <div className="container text-center">
