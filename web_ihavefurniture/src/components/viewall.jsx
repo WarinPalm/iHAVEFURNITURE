@@ -16,13 +16,13 @@ const ViewAll = () => {
     const [totalPages, setTotalPages] = useState(0);
     
 
-    useEffect(() => {
+    useEffect(() => { //เข้าถึงสินค้า จาก array ผ่านเข้ามาเป็น หมวดหมู่สินค้า และคำนวณจำนวนหน้า
         const categoryItems = myProduct[currentCategory] || [];
         setProducts(categoryItems);
         setTotalPages(Math.ceil(categoryItems.length / itemsPerPage));
     }, [currentCategory, itemsPerPage]);
 
-    const handleCategoryClick = (category) => {
+    const handleCategoryClick = (category) => { //เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
         setCurrentCategory(category);
         localStorage.setItem('currentCategory', category);
         setCurrentPage(1);

@@ -17,12 +17,12 @@ const Home = () => {
     const [products, setProducts] = useState([]);
     const [currentImage, setCurrentImage] = useState('');
 
-    useEffect(() => {
+    useEffect(() => { //เข้าถึงสินค้า จาก array ผ่านเข้ามาเป็น หมวดหมู่สินค้า
         const categoryItems = myProduct[currentCategory] || [];
-        setProducts(categoryItems);
+        setProducts(categoryItems); //สำหรับนำไปคำนวณจำนวนสินค้า products.length
     }, [currentCategory]);
 
-    const handleCategoryClick = (category) => {
+    const handleCategoryClick = (category) => { //เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
         setCurrentCategory(category);
         localStorage.setItem('currentCategory', category);
         setCurrentPage(1);
