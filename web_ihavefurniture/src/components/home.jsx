@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
-import ForgotPasswordModal from './Modal/ForgotPasswordModal';
 import HeroImage from './HeroImage';
 import Category from './Category';
-import ProductModal from './Modal/ProductModal'
+import ProductModal from './Modal/ProductModal';
 import { myProduct } from './MyProduct';
 
 const Home = () => {
@@ -13,6 +12,7 @@ const Home = () => {
         const savedCategory = localStorage.getItem('currentCategory');
         return savedCategory ? savedCategory : 'sofa';
     });
+    
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(6);
     const [products, setProducts] = useState([]);
@@ -34,15 +34,11 @@ const Home = () => {
 
         return products.slice(startIndex, endIndex).map((product, index) => (
             <div className="col-4 mb-4" key={index}>
-                <div className="card card-hover"data-bs-toggle="modal" data-bs-target="#product-detail">
+                <div className="card card-hover" data-bs-toggle="modal" data-bs-target="#product-detail">
                     <img src={product.image} className="card-img-top" alt={product.title}/>
                     <div className="card-body">
                         <h5 className="card-title">{product.title}</h5>
                         <p className="mt-4 card-text text-muted">{product.text}</p>
-                        {/* <div className="colored_button_div d-flex justify-content-center">
-                            <a href={product.link} className="btn colored_button">Add to cart</a>
-                            
-                        </div> */}
                         <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
                     </div>
                 </div>
@@ -52,10 +48,9 @@ const Home = () => {
 
     return (
         <>
-            <Navbar onCategoryClick={handleCategoryClick} />
+            <Navbar activeCategory={currentCategory} onCategoryClick={handleCategoryClick} />
             <LoginModal />
-            <ForgotPasswordModal />
-            <ProductModal/>
+            <ProductModal />
             <HeroImage />
 
             <section className="list-product">
@@ -64,7 +59,7 @@ const Home = () => {
                         <h1 className="fs-2">Category</h1>
                     </div>
                     <div className="row mt-2 pt-5">
-                        <Category onCategoryClick={handleCategoryClick} />
+                        <Category activeCategory={currentCategory} onCategoryClick={handleCategoryClick} />
                         <div className="col-1"></div>
                         <div className="col-9 row-gap-2">
                             <div className="row" id="show-product">

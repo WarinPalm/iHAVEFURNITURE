@@ -1,55 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React from 'react';
 
-const Category = ({ onCategoryClick }) => {
-    const [activeCategory, setActiveCategory] = useState('');
-
-    useEffect(() => {
-        // ใช้ค่าเริ่มต้นจาก localStorage หรือจากค่าเริ่มต้นที่คุณต้องการ
-        const savedCategory = localStorage.getItem('currentCategory') || 'sofa';
-        setActiveCategory(savedCategory);
-    }, []);
-
-    const handleCategoryClick = (category) => {
-        setActiveCategory(category);
-        onCategoryClick(category);
-    };
-
+const Category = ({ onCategoryClick, activeCategory }) => {
     return (
         <aside className="col-2 full-height-overflow">
             <ul className="nav-aside">
                 <li
                     className={`category-nav ${activeCategory === 'sofa' ? 'active' : ''}`}
-                    onClick={() => handleCategoryClick('sofa')}
+                    onClick={() => onCategoryClick('sofa')}
                 >
                     Sofa
                 </li>
                 <li
                     className={`category-nav ${activeCategory === 'bed' ? 'active' : ''}`}
-                    onClick={() => handleCategoryClick('bed')}
+                    onClick={() => onCategoryClick('bed')}
                 >
                     Bed
                 </li>
                 <li
                     className={`category-nav ${activeCategory === 'chair' ? 'active' : ''}`}
-                    onClick={() => handleCategoryClick('chair')}
+                    onClick={() => onCategoryClick('chair')}
                 >
                     Chair
                 </li>
                 <li
                     className={`category-nav ${activeCategory === 'table' ? 'active' : ''}`}
-                    onClick={() => handleCategoryClick('table')}
+                    onClick={() => onCategoryClick('table')}
                 >
                     Table
                 </li>
                 <li
                     className={`category-nav ${activeCategory === 'lamp' ? 'active' : ''}`}
-                    onClick={() => handleCategoryClick('lamp')}
+                    onClick={() => onCategoryClick('lamp')}
                 >
                     Lamp
                 </li>
                 <li
                     className={`category-nav ${activeCategory === 'kitchen' ? 'active' : ''}`}
-                    onClick={() => handleCategoryClick('kitchen')}
+                    onClick={() => onCategoryClick('kitchen')}
                 >
                     Kitchen
                 </li>
