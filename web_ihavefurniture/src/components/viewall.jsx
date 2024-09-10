@@ -12,7 +12,9 @@ const ViewAll = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(12);
     const [products, setProducts] = useState([]);
+    const [currentImage, setCurrentImage] = useState('');
     const [totalPages, setTotalPages] = useState(0);
+    
 
     useEffect(() => {
         const categoryItems = myProduct[currentCategory] || [];
@@ -44,7 +46,12 @@ const ViewAll = () => {
 
         return products.slice(startIndex, endIndex).map((product, index) => (
             <div className="col-3 mb-4" key={index}>
-                <div className="card card-hover" data-bs-toggle="modal" data-bs-target="#product-detail">
+                <div
+                    className="card card-hover"
+                    data-bs-toggle="modal"
+                    data-bs-target="#product-detail"
+                    onClick={() => setCurrentImage(product.image)} // Set the current image
+                >
                     <img src={product.image} className="card-img-top" alt={product.title}/>
                     <div className="card-body">
                         <h5 className="card-title">{product.title}</h5>
@@ -63,7 +70,7 @@ const ViewAll = () => {
         <>
             <Navbar onCategoryClick={handleCategoryClick} />
             <LoginModal />
-            <ProductModal/>
+            <ProductModal currentImage={currentImage} /> 
 
             <section className="list-product">
                 <div className="container text-center">

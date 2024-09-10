@@ -12,10 +12,10 @@ const Home = () => {
         const savedCategory = localStorage.getItem('currentCategory');
         return savedCategory ? savedCategory : 'sofa';
     });
-    
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(6);
     const [products, setProducts] = useState([]);
+    const [currentImage, setCurrentImage] = useState('');
 
     useEffect(() => {
         const categoryItems = myProduct[currentCategory] || [];
@@ -34,8 +34,13 @@ const Home = () => {
 
         return products.slice(startIndex, endIndex).map((product, index) => (
             <div className="col-4 mb-4" key={index}>
-                <div className="card card-hover" data-bs-toggle="modal" data-bs-target="#product-detail">
-                    <img src={product.image} className="card-img-top" alt={product.title}/>
+                <div
+                    className="card card-hover"
+                    data-bs-toggle="modal"
+                    data-bs-target="#product-detail"
+                    onClick={() => setCurrentImage(product.image)} // Set the current image
+                >
+                    <img src={product.image} className="card-img-top" alt={product.title} />
                     <div className="card-body">
                         <h5 className="card-title">{product.title}</h5>
                         <p className="mt-4 card-text text-muted">{product.text}</p>
@@ -50,7 +55,7 @@ const Home = () => {
         <>
             <Navbar activeCategory={currentCategory} onCategoryClick={handleCategoryClick} />
             <LoginModal />
-            <ProductModal />
+            <ProductModal currentImage={currentImage} /> 
             <HeroImage />
 
             <section className="list-product">
