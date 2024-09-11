@@ -138,13 +138,6 @@ aside li {
 /*product */
 .custom-modal-dialog {
     max-width: 60%; 
-    margin: 1.75rem auto; /* ปรับตำแหน่งกลาง */
+    margin: 1rem auto; /* ปรับตำแหน่งกลาง */
 }
 
-
-.custom-img {
-    width: 35%; /* กำหนดขนาดภาพ */
-    float: left; /* ทำให้ภาพชิดซ้าย */
-    margin-right: 10px; /* เพิ่มระยะห่างระหว่างภาพและเนื้อหาอื่น */
-
-}

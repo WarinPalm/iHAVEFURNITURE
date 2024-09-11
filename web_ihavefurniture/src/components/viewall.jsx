@@ -12,8 +12,13 @@ const ViewAll = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(12);
     const [products, setProducts] = useState([]);
-    const [currentImage, setCurrentImage] = useState('');
     const [totalPages, setTotalPages] = useState(0);
+    
+    //ส่งค่าไปให้ popup show product
+    const [currentImage, setCurrentImage] = useState('');
+    const [currentName, setCurrentName] = useState('');
+    const [currentDetail, setCurrentDetail] = useState('');
+    const [currentPrice, setCurrentPrice] = useState('');
     
 
     useEffect(() => { //เข้าถึงสินค้า จาก array ผ่านเข้ามาเป็น หมวดหมู่สินค้า และคำนวณจำนวนหน้า
@@ -50,17 +55,19 @@ const ViewAll = () => {
                     className="card card-hover"
                     data-bs-toggle="modal"
                     data-bs-target="#product-detail"
-                    onClick={() => setCurrentImage(product.image)} // Set the current image
+                    onClick={() => {
+                        setCurrentImage(product.image),
+                        setCurrentName(product.title),
+                        setCurrentDetail(product.text),
+                        setCurrentPrice(product.price)
+                    }} 
                 >
                     <img src={product.image} className="card-img-top" alt={product.title}/>
                     <div className="card-body">
                         <h5 className="card-title">{product.title}</h5>
                         <p className="card-text text-muted">{product.text}</p>
-                        {/* <div className="colored_button_div d-flex justify-content-center">
-                            <a href={product.link} className="btn colored_button">Add to cart</a>
-                        </div> */}
-                        <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
-                    </div>
+                        <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>{product.price}</h5>
+                    </div>              
                 </div>
             </div>
         ));
@@ -70,7 +77,7 @@ const ViewAll = () => {
         <>
             <Navbar onCategoryClick={handleCategoryClick} />
             <LoginModal />
-            <ProductModal currentImage={currentImage} /> 
+            <ProductModal currentImage={currentImage} currentName={currentName} currentDetail={currentDetail} currentPrice={currentPrice} /> 
 
             <section className="list-product">
                 <div className="container text-center">
