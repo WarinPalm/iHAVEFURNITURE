@@ -75,7 +75,7 @@ const ViewAll = () => {
 
     return (
         <>
-            <Navbar onCategoryClick={handleCategoryClick} />
+            <Navbar onCategoryClick={handleCategoryClick} activeCategory={currentCategory}/>
             <LoginModal />
             <ProductModal currentImage={currentImage} currentName={currentName} currentDetail={currentDetail} currentPrice={currentPrice} /> 
 

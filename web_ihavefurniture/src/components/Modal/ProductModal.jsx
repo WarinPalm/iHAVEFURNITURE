@@ -1,6 +1,7 @@
 import React from 'react';
 
 const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }) => {
+    
     const closeModal = () => {
         const modal = document.getElementById('product-detail');
         if (modal) {
@@ -8,6 +9,25 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }
             modalInstance.hide();
         }
     };
+
+    const handleAddToCart = () => {
+        const product = {
+            image: currentImage,
+            name: currentName,
+            detail: currentDetail,
+            price: currentPrice,
+        };
+        
+        // ดึงข้อมูลตะกร้าจาก localStorage ถ้ามีอยู่
+        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        // เพิ่มสินค้าใหม่ไปยังตะกร้า
+        cartItems.push(product);
+
+        // เก็บข้อมูลตะกร้าลงใน localStorage
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    };
+    
 
     return (
         <div className="modal fade" tabIndex="-1" id="product-detail">
@@ -30,7 +50,7 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }
                                 <div className="row mt-5">
                                     <div className="col-3"></div>
                                     <div className="col-9">
-                                        <button type="button" className="btn btn-primary">Add to cart</button>
+                                        <button type="button" className="btn btn-primary" onClick={handleAddToCart}>Add to cart</button>
                                     </div>
                                 </div>
                                 <button type="button" className="col-8 btn btn-primary mt-5" onClick={closeModal} data-bs-dismiss="modal">BUY NOW</button>

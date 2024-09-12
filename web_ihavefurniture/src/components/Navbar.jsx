@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 
 const Navbar = ({ onCategoryClick, activeCategory }) => {
     return (
-        <>
-            <nav style={{position: 'sticky', top: "0", zIndex: "100"}} className="my-nav">
+        
+        <div style={{position: 'sticky', top: "0", zIndex: "100"}}>
+            <nav className="my-nav">
                 <div className="container nav-content">
                     <h1 className="h1-text">iHAVEFurniture</h1>
                     <span className="button-login">
@@ -13,7 +14,7 @@ const Navbar = ({ onCategoryClick, activeCategory }) => {
                             <span className="material-symbols-outlined pt-1">person</span>
                         </button>
                         <button className="circle-button">
-                            <span className="material-symbols-outlined pt-1">shopping_cart</span>
+                            <Link to='../cart'><span className="material-symbols-outlined pt-1">shopping_cart</span></Link>
                         </button>
                     </span>
                 </div>
@@ -26,7 +27,7 @@ const Navbar = ({ onCategoryClick, activeCategory }) => {
                     </div>
                     <ul className="nav justify-content-center">
                         <li className="nav-item">
-                            <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+                            <Link className="nav-link active" aria-current="page" to="../">Home</Link>
                         </li>
                         <li className="nav-item dropdown">
                             <a
@@ -39,19 +40,37 @@ const Navbar = ({ onCategoryClick, activeCategory }) => {
                                 Product
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li className={`dropdown-item ${activeCategory === 'sofa' ? 'active' : ''}`} 
-                                onClick={() => onCategoryClick('sofa')}>Sofa</li>
-                                <li className={`dropdown-item ${activeCategory === 'bed' ? 'active' : ''}`} 
-                                onClick={() => onCategoryClick('bed')}>Bed</li>
-                                <li className={`dropdown-item ${activeCategory === 'chair' ? 'active' : ''}`} 
-                                onClick={() => onCategoryClick('chair')}>Chair</li>
-                                <li className={`dropdown-item ${activeCategory === 'table' ? 'active' : ''}`} 
-                                onClick={() => onCategoryClick('table')}>Table</li>
-                                <li className={`dropdown-item ${activeCategory === 'lamp' ? 'active' : ''}`} 
-                                onClick={() => onCategoryClick('lamp')}>Lamp</li>
-                                <li className={`dropdown-item ${activeCategory === 'kitchen' ? 'active' : ''}`} 
-                                onClick={() => onCategoryClick('kitchen')}>Kitchen</li>
+                                <Link to='../viewall' className={`dropdown-item ${activeCategory === 'sofa' ? 'active' : ''}`} 
+                                    onClick={() => onCategoryClick('sofa')}>
+                                    <li>Sofa</li>
+                                </Link>
+
+                                <Link to='../viewall' className={`dropdown-item ${activeCategory === 'bed' ? 'active' : ''}`} 
+                                    onClick={() => onCategoryClick('bed')}>
+                                    <li>Bed</li>
+                                </Link>
+
+                                <Link to='../viewall' className={`dropdown-item ${activeCategory === 'chair' ? 'active' : ''}`} 
+                                    onClick={() => onCategoryClick('chair')}>
+                                    <li>Chair</li>
+                                </Link>
+
+                                <Link to='../viewall' className={`dropdown-item ${activeCategory === 'table' ? 'active' : ''}`} 
+                                    onClick={() => onCategoryClick('table')}>
+                                    <li>Table</li>
+                                </Link>
+                                
+                                <Link to='../viewall' className={`dropdown-item ${activeCategory === 'lamp' ? 'active' : ''}`} 
+                                    onClick={() => onCategoryClick('lamp')}>
+                                    <li>Lamp</li>
+                                </Link>
+                                
+                                <Link to='../viewall' className={`dropdown-item ${activeCategory === 'kitchen' ? 'active' : ''}`} 
+                                    onClick={() => onCategoryClick('kitchen')}>
+                                    <li>Kitchen</li>
+                                </Link>
                             </ul>
+
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#about">About</a>
@@ -62,7 +81,9 @@ const Navbar = ({ onCategoryClick, activeCategory }) => {
                     </ul>
                 </div>
             </nav>
-        </>
+        </div>
+            
+        
     );
 };
 

@@ -11,6 +11,7 @@ import './CSS/style.css'
 import Home from './components/home.jsx'
 import ViewAll from './components/viewall.jsx'
 import Register from './components/register.jsx';
+import Cart from './components/Cart.jsx';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "register",
     element:<Register/>
+  },
+  {
+    path: "cart",
+    element:<Cart/>
   }
 ]);
 
