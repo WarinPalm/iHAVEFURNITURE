@@ -23,7 +23,7 @@ const Cart = () => {
 
     const renderCartItems = () => {
         if (cartItems.length === 0) {
-            return <p>Your cart is empty</p>;
+            return <div className='col-8'>Your cart is empty</div>;
         } else {
             return cartItems.map((item, index) => (
                 <div key={index} className="card mb-3 col-8">
