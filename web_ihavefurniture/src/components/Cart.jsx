@@ -54,11 +54,19 @@ const Cart = () => {
             <div className="container">
                 <h2 className='mt-5 mb-5'>Your Cart</h2>
                 <div className="row">
-                    {renderCartItems()}
-
-                    <div className="card col-4"></div>
+                    <div className="col-8">
+                        {renderCartItems()}
+                    </div>
+    
+                    <div className="col-4">
+                        <div className="card" style={{ position: 'sticky', top: '10px' }}>
+                            {/* Content of the fixed card */}
+                            <h4>Order Summary</h4>
+                            <p>Total: $XXX.XX</p>
+                            {/* Add additional summary or checkout button here */}
+                        </div>
+                    </div>
                 </div>
-                
             </div>
         </>
     );
