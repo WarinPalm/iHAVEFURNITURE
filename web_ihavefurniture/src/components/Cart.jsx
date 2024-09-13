@@ -23,20 +23,28 @@ const Cart = () => {
 
     const renderCartItems = () => {
         if (cartItems.length === 0) {
-            return <div className='col-8'>Your cart is empty</div>;
+            return <div className='col-12'>Your cart is empty</div>;
         } else {
             return cartItems.map((item, index) => (
-                <div key={index} className="card mb-3 col-8">
+                <div key={index} className="card mb-3">
                     <div className="row">
                         <div className="col-4">
-                            <img src={item.image} className="img-fluid rounded-start" alt={item.name} style={{ height: '100%', objectFit: 'cover' }} />
+                            <img 
+                                src={item.image} 
+                                className="img-fluid rounded-start" 
+                                alt={item.name} 
+                                style={{ height: '100%', objectFit: 'cover' }} 
+                            />
                         </div>
                         <div className="col-8">
                             <div className="card-body">
                                 <h5 className="card-title">{item.name}</h5>
                                 <p className="card-text">{item.detail}</p>
                                 <p className="card-text text-muted">{item.price}</p>
-                                <button onClick={() => handleRemoveItem(index)} className="btn btn-danger">
+                                <button 
+                                    onClick={() => handleRemoveItem(index)} 
+                                    className="btn btn-danger"
+                                >
                                     Remove
                                 </button>
                             </div>
@@ -46,7 +54,7 @@ const Cart = () => {
             ));
         }
     };
-
+    
     return (
         <>
             <Navbar />
@@ -54,10 +62,12 @@ const Cart = () => {
             <div className="container">
                 <h2 className='mt-5 mb-5'>Your Cart</h2>
                 <div className="row">
+                    {/* Left section: Render Cart Items */}
                     <div className="col-8">
                         {renderCartItems()}
                     </div>
     
+                    {/* Right section: Fixed Card */}
                     <div className="col-4">
                         <div className="card" style={{ position: 'sticky', top: '10px' }}>
                             {/* Content of the fixed card */}
@@ -70,6 +80,7 @@ const Cart = () => {
             </div>
         </>
     );
+    
 };
 
 export default Cart;
