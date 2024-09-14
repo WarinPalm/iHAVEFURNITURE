@@ -44,17 +44,17 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }
                                 <img src={currentImage} className="img-fluid custom-img mt-5 mb-5" alt="Product Image" />
                             </div>
                             <div className="col-1"></div>
-                            <div className="col-6">
-                                <div className="col-12 mb-5">{currentName}</div>
-                                <div className="col-12">{currentDetail}</div>
-                                <div className="col-12">{currentPrice}</div>
-                                <div className="row mt-5">
-                                    <div className="col-3"></div>
-                                    <div className="col-9">
-                                        <button type="button" className="btn btn-primary" onClick={handleAddToCart}>Add to cart</button>
-                                    </div>
-                                </div>
+                            <div className="col-6 d-flex flex-column">
+                                <div style={{ fontSize: '40px', fontWeight: '500' }} className="col-12 mb-4 mt-2">{currentName}</div>
 
+                                <div style={{ fontSize: '15px'}} className="col-12 mb-5">{currentDetail}</div>
+
+                                <div style={{ fontSize: '30px', fontWeight: '500' }} className="col-12 mb-5">฿{currentPrice}</div>
+                                
+                                <div className="mt-5 pb-5 row">
+                                    <div className="col-5"></div>
+                                    <button type="button" className=" col-3 btn btn-primary" onClick={handleAddToCart}>Add to cart</button>
+                                </div>
                             </div>   
                         </div>
                     </div>

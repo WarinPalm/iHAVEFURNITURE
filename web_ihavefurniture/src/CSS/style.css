@@ -137,7 +137,12 @@ aside li {
 }
 /*product */
 .custom-modal-dialog {
+    padding-left: 20px;
+    padding-right: 20px;
     max-width: 60%; 
     margin: 1rem auto; /* ปรับตำแหน่งกลาง */
 }
 
+/* .modal-content{
+    background-color: bisque;
+} */

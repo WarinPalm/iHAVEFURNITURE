@@ -39,10 +39,34 @@ const Cart = () => {
         localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     };
 
+    const vat = 0.07; // 7% VAT 
+    let totalPrice = 0;
+
+    const calTotal = () => {
+        totalPrice = 0;
+        cartItems.forEach(item => {
+            totalPrice += item.price;
+        });
+        return totalPrice.toFixed(2); 
+    };
+
+    const calVat = () => {
+        calTotal();
+        const vatPrice = totalPrice * vat;
+        return vatPrice.toFixed(2); 
+    };
+
+    const calProductPrice = () => {
+        calTotal();
+        const productPrice = totalPrice - (totalPrice * vat);
+        return productPrice.toFixed(2); 
+    };
+
     const renderCartItems = () => {
         if (cartItems.length === 0) {
             return <div className='col-12'>Your cart is empty</div>;
-        } else {
+        } 
+        else {
             return cartItems.map((item, index) => (
                 <div key={index} className="card mb-3">
                     <div className="row">
@@ -65,14 +89,6 @@ const Cart = () => {
             ));
         }
     };
-
-    const calculateTotal = () => {
-        let total = 0;
-        cartItems.forEach(item => {
-            total += item.price; // item.price is already a number
-        });
-        return total;
-    };
     
     return (
         <>
@@ -86,15 +102,30 @@ const Cart = () => {
                     <div className="col-8">
                         {renderCartItems()}
                     </div>
-    
+
                     <div className="col-4">
                         <div className="card" style={{ position: 'sticky', top: '10px' }}>
-                            <div className="card-body">
-                                <h4>Order Summary</h4>
-                                <p>Total: ฿{calculateTotal()}</p> 
+                            <div className="card-body m">
+                                <h4 className='mb-4'>Order Summary</h4>
+                                <div className="d-flex justify-content-between mb-4">
+                                    <span>Product Price:</span>
+                                    <span>฿{calProductPrice()}</span>
+                                </div>
+                                <div className="d-flex justify-content-between mb-4">
+                                    <span>VAT 7%:</span>
+                                    <span>฿{calVat()}</span>
+                                </div>
+                                <div className="d-flex justify-content-between mb-3">
+                                    <span>NET:</span>
+                                    <span>฿{calTotal()}</span>
+                                </div>
                             </div>
                         </div>
+                        <button onClick={() => handleRemoveItem(index)} className="col-12 mt-3 btn btn-primary">
+                            BUY
+                         </button>
                     </div>
+
                 </div>
             </div>
         </>
