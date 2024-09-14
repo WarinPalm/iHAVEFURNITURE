@@ -14,7 +14,7 @@ const Navbar = ({ onCategoryClick, activeCategory }) => {
                             <span className="material-symbols-outlined pt-1">person</span>
                         </button>
                         <button className="circle-button">
-                            <Link to='../cart'><span className="material-symbols-outlined pt-1">shopping_cart</span></Link>
+                            <Link style={{color:'black'}} to='../cart'><span className="material-symbols-outlined pt-1">shopping_cart</span></Link>
                         </button>
                     </span>
                 </div>

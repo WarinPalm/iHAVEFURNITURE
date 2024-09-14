@@ -26,6 +26,7 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }
 
         // เก็บข้อมูลตะกร้าลงใน localStorage
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        alert('Add to cart success!')
     };
     
 
@@ -53,7 +54,7 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }
                                         <button type="button" className="btn btn-primary" onClick={handleAddToCart}>Add to cart</button>
                                     </div>
                                 </div>
-                                <button type="button" className="col-8 btn btn-primary mt-5" onClick={closeModal} data-bs-dismiss="modal">BUY NOW</button>
+
                             </div>   
                         </div>
                     </div>
