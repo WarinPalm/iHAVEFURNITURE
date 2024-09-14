@@ -13,16 +13,15 @@ const Cart = () => {
         return savedCategory ? savedCategory : 'sofa';
     });
     
-    useEffect(() => { //เข้าถึงสินค้า จาก array ผ่านเข้ามาเป็น หมวดหมู่สินค้า
-        const categoryItems = myProduct[currentCategory] || [];
-        setProducts(categoryItems); //สำหรับนำไปคำนวณจำนวนสินค้า products.length
-    }, [currentCategory]);
-
     useEffect(() => {
+        // เข้าถึงสินค้า จาก array ผ่านเข้ามาเป็น หมวดหมู่สินค้า
+        const categoryItems = myProduct[currentCategory] || [];
+        setProducts(categoryItems); // สำหรับนำไปคำนวณจำนวนสินค้า products.length
+    
         // ดึงข้อมูลสินค้าจาก localStorage
         const items = JSON.parse(localStorage.getItem('cartItems')) || [];
         setCartItems(items);
-    }, []);
+    }, [currentCategory]);
 
     const handleCategoryClick = (category) => { //เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
         setCurrentCategory(category);
@@ -43,7 +42,8 @@ const Cart = () => {
     const renderCartItems = () => {
         if (cartItems.length === 0) {
             return <div className='col-12'>Your cart is empty</div>;
-        } else {
+        } 
+        else {
             return cartItems.map((item, index) => (
                 <div key={index} className="card mb-3">
                     <div className="row">
