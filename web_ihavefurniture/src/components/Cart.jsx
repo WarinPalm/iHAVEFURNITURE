@@ -1,15 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
+import { myProduct } from './MyProduct';
+
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
+    const [products, setProducts] = useState([]);
+
+    const [currentCategory, setCurrentCategory] = useState(() => {
+        const savedCategory = localStorage.getItem('currentCategory');
+        return savedCategory ? savedCategory : 'sofa';
+    });
+    
+    useEffect(() => { //เข้าถึงสินค้า จาก array ผ่านเข้ามาเป็น หมวดหมู่สินค้า
+        const categoryItems = myProduct[currentCategory] || [];
+        setProducts(categoryItems); //สำหรับนำไปคำนวณจำนวนสินค้า products.length
+    }, [currentCategory]);
 
     useEffect(() => {
         // ดึงข้อมูลสินค้าจาก localStorage
         const items = JSON.parse(localStorage.getItem('cartItems')) || [];
         setCartItems(items);
     }, []);
+
+    const handleCategoryClick = (category) => { //เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
+        setCurrentCategory(category);
+        localStorage.setItem('currentCategory', category);
+        setCurrentPage(1);
+    };
 
     // สำหรับลบสินค้า
     const handleRemoveItem = (index) => {
@@ -57,7 +76,7 @@ const Cart = () => {
     
     return (
         <>
-            <Navbar />
+            <Navbar onCategoryClick={handleCategoryClick}/>            
             <LoginModal />
             <div className="container">
                 <h2 className='mt-5 mb-5'>Your Cart</h2>
