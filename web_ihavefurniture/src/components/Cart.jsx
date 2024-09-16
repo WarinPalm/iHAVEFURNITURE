@@ -47,19 +47,19 @@ const Cart = () => {
         cartItems.forEach(item => {
             totalPrice += item.price;
         });
-        return totalPrice.toFixed(2); 
+        return totalPrice; 
     };
 
     const calVat = () => {
         calTotal();
         const vatPrice = totalPrice * vat;
-        return vatPrice.toFixed(2); 
+        return vatPrice; 
     };
 
     const calProductPrice = () => {
         calTotal();
         const productPrice = totalPrice - (totalPrice * vat);
-        return productPrice.toFixed(2); 
+        return productPrice; 
     };
 
     const renderCartItems = () => {
