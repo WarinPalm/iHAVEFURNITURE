@@ -77,29 +77,10 @@ aside li {
     overflow: auto;
 }
 
-
-
-/* Main Show Product*/
-
-.list-product {
-    background-color: white;
-}
-
-.list-container {
-    list-style: none;
-}
-
-.card {
-    padding-left: 30px;
-    padding-right: 30px;
-}
-
-.thumb img {
-    width: 50%;
-}
-
 /* ส่วนของ show product*/
 .card-hover {
+    padding-left: 30px;
+    padding-right: 30px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     border-radius: 15px;
     overflow: hidden;  /*ป้องกันการล้นเมื่อขยาย */
@@ -111,38 +92,46 @@ aside li {
 }
 
 .card-hover img {
-    transition: transform 0.3s ease-in-out; /* ไม่ให้ขยายไปด้วย */
-}
-.colored_button_div {
-    padding: 15px 0;
-    width: 50%;
-    border-radius: 30px;
-    margin: 0 auto;
-    border: 1px solid rgb(0, 0, 0);
-    color: rgb(0, 0, 0)
-}
-.colored_button {
-    text-decoration: none;
-    color: #000000;
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    margin: 0 auto; 
 }
 
-.colored_button_div:hover {
-    background-color: #3A3129;
-    cursor: pointer;
-}
-
-.colored_button_div:hover a {
-    color: white;
-    text-decoration: none;
-}
 /*product */
-.custom-modal-dialog {
+.custom-modal-dialog {  /*popup show */
     padding-left: 20px;
     padding-right: 20px;
     max-width: 60%; 
-    margin: 1rem auto; /* ปรับตำแหน่งกลาง */
+    margin: 0 auto;
 }
 
-/* .modal-content{
-    background-color: bisque;
-} */
+.custom-img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    margin: 0 auto; 
+}
+/* ปุ่ม pagination */
+.btn-custom {
+    background-color: #C8C6C2; /* เปลี่ยนเป็นสีที่ต้องการ */
+    color: black;
+}
+
+.btn-custom:hover {
+    background-color: #BAA495; /* สีเมื่อวางเมาส์บนปุ่ม */
+    color: white;
+    cursor: pointer;
+}
+.btn-custom2{
+    background-color: #BAA495; /* เปลี่ยนเป็นสีที่ต้องการ */
+    color: black;
+}
+
+.custom-cart-img{
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+}

@@ -7,6 +7,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './CSS/header.css'
 import './CSS/hero-image.css'
 import './CSS/style.css'
+import './CSS/loginModal.css'
 
 import Home from './components/home.jsx'
 import ViewAll from './components/viewall.jsx'

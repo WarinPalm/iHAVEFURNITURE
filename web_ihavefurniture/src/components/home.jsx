@@ -44,20 +44,25 @@ const Home = () => {
                     data-bs-toggle="modal"
                     data-bs-target="#product-detail"
                     onClick={() => {
-                        setCurrentImage(product.image),
-                        setCurrentName(product.title),
-                        setCurrentDetail(product.text),
-                        setCurrentPrice(product.price)
+                    setCurrentImage(product.image),
+                    setCurrentName(product.title),
+                    setCurrentDetail(product.text),
+                    setCurrentPrice(product.price)
                     }} 
                 >
-                    <img src={product.image} className="card-img-top" alt={product.title} />
+                    <img 
+                    src={product.image} 
+                    className="card-img-top" 
+                    alt={product.title} 
+                    />
                     <div className="card-body">
-                        <h5 className="card-title">{product.title}</h5>
-                        <p className="mt-4 card-text text-muted">{product.text}</p>
-                        <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
+                    <h5 className="card-title">{product.title}</h5>
+                    <p className="mt-4 card-text text-muted">{product.text}</p>
+                    <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
                     </div>
                 </div>
             </div>
+
         ));
     };
 
@@ -83,7 +88,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="col-10">
-                        <Link to="viewall" className="d-flex justify-content-end" id="seeall-btn">viewall</Link>
+                        <Link to="viewall" className="btn btn-custom" id="seeall-btn">viewall</Link>
                     </div>
                 </div>
             </section>

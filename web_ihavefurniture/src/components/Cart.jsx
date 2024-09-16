@@ -71,14 +71,14 @@ const Cart = () => {
                 <div key={index} className="card mb-3">
                     <div className="row">
                         <div className="col-4">
-                            <img src={item.image} className="img-fluid rounded-start" alt={item.name} style={{ height: '100%', objectFit: 'cover' }} />
+                            <img src={item.image} className="img-fluid custom-cart-img rounded-start" alt={item.name} />
                         </div>
                         <div className="col-8">
                             <div className="card-body">
                                 <h5 className="card-title">{item.name}</h5>
                                 <p className="card-text">{item.detail}</p>
                                 <p className="card-text text-muted">฿{item.price}</p>
-    
+
                                 <button onClick={() => handleRemoveItem(index)} className="btn btn-danger">
                                     Remove
                                 </button>
@@ -86,6 +86,7 @@ const Cart = () => {
                         </div>
                     </div>
                 </div>
+
             ));
         }
     };
