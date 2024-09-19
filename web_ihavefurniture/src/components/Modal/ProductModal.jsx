@@ -41,7 +41,7 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }
                         <div className="row">
                             <div className="col-1"></div>
                             <div className="col-4"> 
-                                <img src={currentImage} className="img-fluid custom-img mt-5 mb-5" alt="Product Image" />
+                                <img src={currentImage} className="img-fluid custom-modal-img mt-5 mb-5" alt="Product Image" />
                             </div>
                             <div className="col-1"></div>
                             <div className="col-6 d-flex flex-column">

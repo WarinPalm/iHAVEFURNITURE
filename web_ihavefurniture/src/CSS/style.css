@@ -106,7 +106,7 @@ aside li {
     margin: 0 auto;
 }
 
-.custom-img {
+.custom-modal-img { 
     width: 100%;
     height: auto;
     max-height: 400px;
@@ -129,9 +129,11 @@ aside li {
     color: black;
 }
 
-.custom-cart-img{
+.custom-cart-img {
     width: 100%;
-    height: auto;
-    max-height: 400px;
-    object-fit: contain;
+    height: 200px; /* กำหนดความสูงที่แน่นอน */
+    object-fit: contain; /* รักษาอัตราส่วนของภาพ */
+    margin: 0 auto;
+    padding: 20px;
 }
+

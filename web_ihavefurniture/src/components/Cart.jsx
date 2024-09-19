@@ -78,7 +78,6 @@ const Cart = () => {
                                 <h5 className="card-title">{item.name}</h5>
                                 <p className="card-text">{item.detail}</p>
                                 <p className="card-text text-muted">฿{item.price}</p>
-
                                 <button onClick={() => handleRemoveItem(index)} className="btn btn-danger">
                                     Remove
                                 </button>
@@ -86,6 +85,8 @@ const Cart = () => {
                         </div>
                     </div>
                 </div>
+
+
 
             ));
         }
