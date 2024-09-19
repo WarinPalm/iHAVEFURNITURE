@@ -96,6 +96,7 @@ aside li {
     height: 250px;
     object-fit: contain;
     margin: 0 auto; 
+    padding: 10px;
 }
 
 /*product */
