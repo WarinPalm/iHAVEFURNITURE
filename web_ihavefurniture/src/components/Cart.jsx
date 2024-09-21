@@ -5,29 +5,26 @@ import { myProduct } from './MyProduct';
 
 
 const Cart = () => {
-    const [cartItems, setCartItems] = useState([]);
-    const [products, setProducts] = useState([]);
 
     const [currentCategory, setCurrentCategory] = useState(() => {
         const savedCategory = localStorage.getItem('currentCategory');
         return savedCategory ? savedCategory : 'sofa';
     });
     
-    useEffect(() => {
-        // เข้าถึงสินค้า จาก array ผ่านเข้ามาเป็น หมวดหมู่สินค้า
-        const categoryItems = myProduct[currentCategory] || [];
-        setProducts(categoryItems); // สำหรับนำไปคำนวณจำนวนสินค้า products.length
-    
-        // ดึงข้อมูลสินค้าจาก localStorage
-        const items = JSON.parse(localStorage.getItem('cartItems')) || [];
-        setCartItems(items);
-    }, [currentCategory]);
-
     const handleCategoryClick = (category) => { //เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
         setCurrentCategory(category);
         localStorage.setItem('currentCategory', category);
         setCurrentPage(1);
     };
+
+    const [cartItems, setCartItems] = useState([]);
+
+    useEffect(() => {
+        // ดึงข้อมูลสินค้าจาก localStorage
+        const items = JSON.parse(localStorage.getItem('cartItems')) || [];
+        setCartItems(items);
+    }, [currentCategory]);
+
 
     // สำหรับลบสินค้า
     const handleRemoveItem = (index) => {
