@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
+import { myProduct } from './MyProduct';
 import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
 import HeroImage from './HeroImage';
 import Category from './Category';
 import ProductModal from './Modal/ProductModal';
-import { myProduct } from './MyProduct';
 
 const Home = () => {
     const [currentCategory, setCurrentCategory] = useState(() => {

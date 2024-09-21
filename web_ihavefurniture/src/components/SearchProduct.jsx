@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Navbar from './Navbar';
+import { useLocation } from 'react-router-dom';
+
 import { myProduct } from './MyProduct';
+import Navbar from './Navbar';
 import LoginModal from "./Modal/LoginModal";
 import ProductModal from './Modal/ProductModal';
-import { useLocation } from 'react-router-dom';
+
 
 const SearchProduct = () => {
     const [currentCategory, setCurrentCategory] = useState(() => {
