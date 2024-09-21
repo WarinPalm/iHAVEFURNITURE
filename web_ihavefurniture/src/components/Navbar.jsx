@@ -7,11 +7,11 @@ const Navbar = ({ onCategoryClick, activeCategory }) => {
         <div style={{position: 'sticky', top: "0", zIndex: "100"}}>
             <nav className="my-nav">
                 <div className="container nav-content">
-                    
+
                     <h1 className="h1-text m-0">iHAVEFurniture</h1>
 
                     {/* Search Bar */}
-                    <div className="input-group w-50">
+                    <div className="input-group w-25 ms-auto">
                         <input
                             type="text"
                             className="form-control"
@@ -25,7 +25,7 @@ const Navbar = ({ onCategoryClick, activeCategory }) => {
 
             
                     <span className="button-login">
-                        <button style={{ marginRight: '10px' }} className="circle-button" data-bs-toggle="modal"
+                        <button style={{ marginRight: '10px',marginLeft: '20px' }} className="circle-button" data-bs-toggle="modal"
                             data-bs-target="#user-login">
                             <span className="material-symbols-outlined pt-1">person</span>
                         </button>
