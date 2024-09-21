@@ -13,6 +13,7 @@ import Home from './components/home.jsx'
 import ViewAll from './components/viewall.jsx'
 import Register from './components/register.jsx';
 import Cart from './components/Cart.jsx';
+import SearchProduct from './components/SearchProduct.jsx';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "cart",
     element:<Cart/>
+  },
+  {
+    path: "searchProduct",
+    element:<SearchProduct/>
   }
 ]);
 

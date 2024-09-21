@@ -1,36 +1,44 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 
-const Navbar = ({ onCategoryClick, activeCategory }) => {
+const Navbar = ({ onCategoryClick, activeCategory}) => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const navigate = useNavigate();
+
+    const handleSearch = (event) => {
+        event.preventDefault(); // ป้องกันการส่งแบบฟอร์ม
+        if (searchTerm) {
+            navigate(`/searchProduct?query=${searchTerm}`); // เปลี่ยน path ไปที่หน้า searchProduct
+        }
+    };
     return (
         
         <div style={{position: 'sticky', top: "0", zIndex: "100"}}>
             <nav className="my-nav">
                 <div className="container nav-content">
-
                     <h1 className="h1-text m-0">iHAVEFurniture</h1>
 
                     {/* Search Bar */}
-                    <div className="input-group w-25 ms-auto">
+                    <form onSubmit={handleSearch} className="input-group w-25 ms-auto">
                         <input
                             type="text"
                             className="form-control"
                             placeholder="Search for products..."
                             aria-label="Search"
+                            value={searchTerm}
+                            onChange={(event) => setSearchTerm(event.target.value)} // อัปเดตค่าเมื่อมีการพิมพ์
                         />
                         <button className="btn search-btn" type="submit">
                             <span className="material-symbols-outlined">search</span>
                         </button>
-                    </div>
+                    </form>
 
-            
                     <span className="button-login">
-                        <button style={{ marginRight: '10px',marginLeft: '20px' }} className="circle-button" data-bs-toggle="modal"
-                            data-bs-target="#user-login">
+                        <button style={{ marginRight: '10px', marginLeft: '20px' }} className="circle-button" data-bs-toggle="modal" data-bs-target="#user-login">
                             <span className="material-symbols-outlined pt-1">person</span>
                         </button>
                         <button className="circle-button">
-                            <Link style={{color:'black'}} to='../cart'><span className="material-symbols-outlined pt-1">shopping_cart</span></Link>
+                            <Link style={{ color: 'black' }} to='../cart'><span className="material-symbols-outlined pt-1">shopping_cart</span></Link>
                         </button>
                     </span>
                 </div>
@@ -95,8 +103,9 @@ const Navbar = ({ onCategoryClick, activeCategory }) => {
                             <a className="nav-link" href="#about">About</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link disabled" aria-disabled="true">My Profile</a>
+                            <a className="nav-link" href="#Contact">Contact</a>
                         </li>
+                        
                     </ul>
                 </div>
             </nav>
