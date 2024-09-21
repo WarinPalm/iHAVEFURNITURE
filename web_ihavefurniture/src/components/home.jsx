@@ -68,7 +68,7 @@ const Home = () => {
 
     return (
         <>
-            <Navbar onCategoryClick={handleCategoryClick} activeCategory={currentCategory}/>            
+            <Navbar onCategoryClick={handleCategoryClick}/>            
             <LoginModal />
             <ProductModal currentImage={currentImage} currentName={currentName} currentDetail={currentDetail} currentPrice={currentPrice} /> 
             <HeroImage />

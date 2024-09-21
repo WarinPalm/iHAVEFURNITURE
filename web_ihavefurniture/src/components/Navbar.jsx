@@ -7,7 +7,23 @@ const Navbar = ({ onCategoryClick, activeCategory }) => {
         <div style={{position: 'sticky', top: "0", zIndex: "100"}}>
             <nav className="my-nav">
                 <div className="container nav-content">
-                    <h1 className="h1-text">iHAVEFurniture</h1>
+                    
+                    <h1 className="h1-text m-0">iHAVEFurniture</h1>
+
+                    {/* Search Bar */}
+                    <div className="input-group w-50">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search for products..."
+                            aria-label="Search"
+                        />
+                        <button className="btn search-btn" type="submit">
+                            <span className="material-symbols-outlined">search</span>
+                        </button>
+                    </div>
+
+            
                     <span className="button-login">
                         <button style={{ marginRight: '10px' }} className="circle-button" data-bs-toggle="modal"
                             data-bs-target="#user-login">
@@ -19,6 +35,9 @@ const Navbar = ({ onCategoryClick, activeCategory }) => {
                     </span>
                 </div>
             </nav>
+
+            
+            
 
             <nav className="my-nav2">
                 <div className="container nav-content">

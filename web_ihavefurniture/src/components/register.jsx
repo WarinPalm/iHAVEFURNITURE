@@ -1,12 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
+import { myProduct } from './MyProduct';
 
 const Register = () => {
+    const [cartItems, setCartItems] = useState([]);
+    const [products, setProducts] = useState([]);
+
+    const [currentCategory, setCurrentCategory] = useState(() => {
+        const savedCategory = localStorage.getItem('currentCategory');
+        return savedCategory ? savedCategory : 'sofa';
+    });
+    
+    useEffect(() => {
+        // เข้าถึงสินค้า จาก array ผ่านเข้ามาเป็น หมวดหมู่สินค้า
+        const categoryItems = myProduct[currentCategory] || [];
+        setProducts(categoryItems); // สำหรับนำไปคำนวณจำนวนสินค้า products.length
+    
+    }, [currentCategory]);
+
+    const handleCategoryClick = (category) => { //เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
+        setCurrentCategory(category);
+        localStorage.setItem('currentCategory', category);
+        setCurrentPage(1);
+    };
 
     return (
         <>
-        <Navbar/>
+        <Navbar onCategoryClick={handleCategoryClick} />
         <LoginModal />
         <section className="register">
             <div className="container">
