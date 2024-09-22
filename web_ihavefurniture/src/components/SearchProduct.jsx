@@ -64,17 +64,13 @@ const SearchProduct = () => {
 
         return products.slice(startIndex, endIndex).map((product, index) => (
             <div className="col-3 mb-4" key={index}>
-                <div
-                    className="card card-hover"
-                    data-bs-toggle="modal"
-                    data-bs-target="#product-detail"
+                <div className="card card-hover" data-bs-toggle="modal" data-bs-target="#product-detail"
                     onClick={() => {
                         setCurrentImage(product.image);
                         setCurrentName(product.title);
                         setCurrentDetail(product.text);
-                        setCurrentPrice(product.price);
-                    }} 
-                >
+                        setCurrentPrice(product.price);}} >
+                            
                     <img src={product.image} className="card-img-top" alt={product.title} />
                     <div className="card-body">
                         <h5 className="card-title">{product.title}</h5>

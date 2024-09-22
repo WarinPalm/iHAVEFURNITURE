@@ -32,6 +32,7 @@ const Navbar = ({ onCategoryClick, activeCategory}) => {
                             <span className="material-symbols-outlined">search</span>
                         </button>
                     </form>
+                    
 
                     <span className="button-login">
                         <button style={{ marginRight: '10px', marginLeft: '20px' }} className="circle-button" data-bs-toggle="modal" data-bs-target="#user-login">

@@ -86,13 +86,17 @@ const Home = () => {
                             <div className="row" id="show-product">
                                 {renderProducts()}
                             </div>
+                            <div className="row">
+                                <div className="col-12 d-flex justify-content-end align-items-end mt-5">
+                                    <Link to="viewall" className="btn btn-custom" id="seeall-btn">View All</Link>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className="col-10">
-                        <Link to="viewall" className="btn btn-custom" id="seeall-btn">viewall</Link>
+                        
                     </div>
                 </div>
             </section>
+
         </>
     );
 };
