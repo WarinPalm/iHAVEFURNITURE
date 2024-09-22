@@ -92,13 +92,13 @@ const SearchProduct = () => {
 
     const handleNextPage = () => {
         if (currentPage < totalPages) {
-            setCurrentPage(currentPage += 1);
+            setCurrentPage(currentPage + 1);
         }
     };
-
+    
     const handlePrevPage = () => {
         if (currentPage > 1) {
-            setCurrentPage(currentPage -= 1);
+            setCurrentPage(currentPage - 1);
         }
     };
 
