@@ -53,6 +53,15 @@ const SearchProduct = () => {
     const renderProducts = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, products.length);
+
+        if (products.length === 0) {
+            return (
+                <div className="d-flex justify-content-center align-items-center" style={{ height: '50vh' }}>
+                    <h3>No results found for "{searchTerm}"</h3><span class="material-symbols-outlined">sick</span>
+                </div>
+            );
+        }
+
         return products.slice(startIndex, endIndex).map((product, index) => (
             <div className="col-3 mb-4" key={index}>
                 <div
@@ -75,6 +84,7 @@ const SearchProduct = () => {
                 </div>
             </div>
         ));
+        
     };
 
     const renderPageNumbers = () => {

@@ -57,9 +57,9 @@ const Home = () => {
                     alt={product.title} 
                     />
                     <div className="card-body">
-                    <h5 className="card-title">{product.title}</h5>
-                    <p className="mt-4 card-text text-muted">{product.text}</p>
-                    <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
+                        <h5 className="card-title">{product.title}</h5>
+                        <p className="mt-4 card-text text-muted">{product.text}</p>
+                        <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
                     </div>
                 </div>
             </div>
