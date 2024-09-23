@@ -1,69 +1,64 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
-import { myProduct } from './MyProduct';
 
-
-const Cart = () => {
-
-    const [currentCategory, setCurrentCategory] = useState(() => {
-        const savedCategory = localStorage.getItem('currentCategory');
-        return savedCategory ? savedCategory : 'sofa';
-    });
-    
-    const handleCategoryClick = (category) => { //เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
-        setCurrentCategory(category);
-        localStorage.setItem('currentCategory', category);
-        setCurrentPage(1);
-    };
-
+const Cart = ({ currentCategory }) => {
     const [cartItems, setCartItems] = useState([]);
 
     useEffect(() => {
-        // ดึงข้อมูลสินค้าจาก localStorage
+        // ดึงข้อมูลสินค้าจาก localStorage เมื่อ category เปลี่ยน
         const items = JSON.parse(localStorage.getItem('cartItems')) || [];
         setCartItems(items);
     }, [currentCategory]);
 
+    // ฟังก์ชันสำหรับเพิ่ม/ลดจำนวนสินค้าในตะกร้า
+    const handleQuantityChange = (index, type) => {
+        const updatedCartItems = [...cartItems];
+        if (type === 'increment') {
+            updatedCartItems[index].quantity += 1;
+        } else if (type === 'decrement' && updatedCartItems[index].quantity > 1) {
+            updatedCartItems[index].quantity -= 1;
+        }
+        setCartItems(updatedCartItems);
+        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); // อัปเดต localStorage
+    };
 
-    // สำหรับลบสินค้า
+    // ฟังก์ชันสำหรับลบสินค้าออกจากตะกร้า
     const handleRemoveItem = (index) => {
-        const updatedCartItems = [...cartItems]; // สำเนาข้อมูลสินค้า
-        updatedCartItems.splice(index, 1); // ลบสินค้าตามตำแหน่งที่กำหนด
-        setCartItems(updatedCartItems); // อัปเดต state
-        
-        // อัปเดต localStorage
+        const updatedCartItems = [...cartItems];
+        updatedCartItems.splice(index, 1);
+        setCartItems(updatedCartItems);
         localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     };
 
-    const vat = 0.07; // 7% VAT 
+    const vat = 0.07; // 7% VAT
     let totalPrice = 0;
 
     const calTotal = () => {
-        totalPrice = 0;
+        let totalPrice = 0;
         cartItems.forEach(item => {
-            totalPrice += item.price;
+            totalPrice += item.price * item.quantity; 
         });
-        return totalPrice.toFixed(2); 
+        return totalPrice.toFixed(2);
     };
-
+    
     const calVat = () => {
-        calTotal();
-        const vatPrice = totalPrice * vat;
+        let totalPrice = calTotal(); 
+        let vatPrice = totalPrice * vat;
         return vatPrice.toFixed(2); 
     };
-
+    
     const calProductPrice = () => {
-        calTotal();
-        const productPrice = totalPrice - (totalPrice * vat);
+        let totalPrice = calTotal(); 
+        let productPrice = totalPrice - (totalPrice * vat);
         return productPrice.toFixed(2); 
     };
+    
 
     const renderCartItems = () => {
         if (cartItems.length === 0) {
             return <div className='col-12'>Your cart is empty</div>;
-        } 
-        else {
+        } else {
             return cartItems.map((item, index) => (
                 <div key={index} className="card mb-3">
                     <div className="row">
@@ -75,9 +70,28 @@ const Cart = () => {
                                 <h5 className="card-title">{item.name}</h5>
                                 <p className="card-text">{item.detail}</p>
                                 <p className="card-text text-muted">฿{item.price}</p>
-                                <button onClick={() => handleRemoveItem(index)} className="btn btn-danger">
-                                    Remove
-                                </button>
+
+                                <div className="d-flex align-items-center mb-3 justify-content-between">
+                                    <div className="col-6 d-flex align-items-center">
+                                        <button 
+                                            className="btn btn-custom me-2" 
+                                            onClick={() => handleQuantityChange(index, 'decrement')}
+                                        >-</button>
+                                        <span className='m-2'>{item.quantity}</span>
+                                        <button 
+                                            className="btn btn-custom ms-2" 
+                                            onClick={() => handleQuantityChange(index, 'increment')}
+                                        >+</button>
+                                    </div>
+                                    <div className="col-4 text-end me-4">
+                                        <button onClick={() => handleRemoveItem(index)} className="btn btn-danger">
+                                            Remove
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                                
                             </div>
                         </div>
                     </div>
@@ -85,10 +99,10 @@ const Cart = () => {
             ));
         }
     };
-    
+
     return (
         <>
-            <Navbar onCategoryClick={handleCategoryClick} />
+            <Navbar /> {/* ไม่จำเป็นต้องใช้ onCategoryClick ถ้าไม่ได้ส่งลงมาจาก App */}
             <LoginModal />
 
             <div className="container">
@@ -126,7 +140,6 @@ const Cart = () => {
             </div>
         </>
     );
-    
 };
 
 export default Cart;
