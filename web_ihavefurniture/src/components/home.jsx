@@ -83,14 +83,17 @@ const Home = () => {
                         <Category activeCategory={currentCategory} onCategoryClick={handleCategoryClick} />
                         <div className="col-1"></div>
                         <div className="col-9 row-gap-2">
-                            <div className="row" id="show-product">
-                                {renderProducts()}
-                            </div>
-                            <div className="row">
+
+                            <div className="row mb-4">
                                 <div className="col-12 d-flex justify-content-end align-items-end mt-5">
                                     <Link to="viewall" className="btn btn-custom" id="seeall-btn">View All</Link>
                                 </div>
                             </div>
+
+                            <div className="row" id="show-product">
+                                {renderProducts()}
+                            </div>
+                            
                         </div>
                         
                     </div>
