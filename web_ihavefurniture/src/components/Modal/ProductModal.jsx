@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }) => {
-    const [quantity, setQuantity] = useState(1); // จัดการ state สำหรับจำนวนสินค้า
+    const [quantity, setQuantity] = useState(1); 
 
     useEffect(() => {
         const modal = document.getElementById('product-detail');
@@ -38,10 +38,10 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }
     };
 
     const handleQuantityChange = (type) => {
-        if (type === 'increment') {
-            setQuantity(prevQuantity => prevQuantity + 1);
-        } else if (type === 'decrement' && quantity > 1) {
-            setQuantity(prevQuantity => prevQuantity - 1);
+        if (type === 'add') {
+            setQuantity(quantity + 1);
+        } else if (type === 'sub' && quantity > 1) {
+            setQuantity(quantity - 1);
         }
     };
 
@@ -68,12 +68,12 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }
                                     <div className="col-3 d-flex justify-content-start align-items-center">
                                         <button 
                                             className="btn btn-custom me-2"
-                                            onClick={() => handleQuantityChange('decrement')}
+                                            onClick={() => handleQuantityChange('sub')}
                                         >-</button>
                                         <span style={{ width: '40px', textAlign: 'center' }}>{quantity}</span>
                                         <button 
                                             className="btn btn-custom ms-2"
-                                            onClick={() => handleQuantityChange('increment')}
+                                            onClick={() => handleQuantityChange('add')}
                                         >+</button>
                                     </div>
 

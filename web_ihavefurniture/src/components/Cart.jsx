@@ -1,8 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from './Navbar';
-import LoginModal from './Modal/LoginModal';
 
-const Cart = ({ currentCategory }) => {
+import { myProduct } from './MyProduct';
+import Navbar from './Navbar';
+import LoginModal from "./Modal/LoginModal";
+
+
+const Cart = () => {
+
+    const [currentCategory, setCurrentCategory] = useState(() => {
+        const savedCategory = localStorage.getItem('currentCategory');
+        return savedCategory ? savedCategory : 'sofa';
+    });
+    
+    const handleCategoryClick = (category) => { //เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
+        setCurrentCategory(category);
+        localStorage.setItem('currentCategory', category);
+        setCurrentPage(1);
+    };
+    
     const [cartItems, setCartItems] = useState([]);
 
     useEffect(() => {
@@ -11,19 +26,19 @@ const Cart = ({ currentCategory }) => {
         setCartItems(items);
     }, [currentCategory]);
 
-    // ฟังก์ชันสำหรับเพิ่ม/ลดจำนวนสินค้าในตะกร้า
+    // สำหรับเพิ่ม/ลดจำนวนสินค้าในตะกร้า
     const handleQuantityChange = (index, type) => {
         const updatedCartItems = [...cartItems];
-        if (type === 'increment') {
+        if (type === 'add') {
             updatedCartItems[index].quantity += 1;
-        } else if (type === 'decrement' && updatedCartItems[index].quantity > 1) {
+        } else if (type === 'sub' && updatedCartItems[index].quantity > 1) {
             updatedCartItems[index].quantity -= 1;
         }
         setCartItems(updatedCartItems);
         localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); // อัปเดต localStorage
     };
 
-    // ฟังก์ชันสำหรับลบสินค้าออกจากตะกร้า
+    // สำหรับลบสินค้าออกจากตะกร้า
     const handleRemoveItem = (index) => {
         const updatedCartItems = [...cartItems];
         updatedCartItems.splice(index, 1);
@@ -75,12 +90,12 @@ const Cart = ({ currentCategory }) => {
                                     <div className="col-6 d-flex align-items-center">
                                         <button 
                                             className="btn btn-custom me-2" 
-                                            onClick={() => handleQuantityChange(index, 'decrement')}
+                                            onClick={() => handleQuantityChange(index, 'sub')}
                                         >-</button>
                                         <span className='m-2'>{item.quantity}</span>
                                         <button 
                                             className="btn btn-custom ms-2" 
-                                            onClick={() => handleQuantityChange(index, 'increment')}
+                                            onClick={() => handleQuantityChange(index, 'add')}
                                         >+</button>
                                     </div>
                                     <div className="col-4 text-end me-4">
@@ -102,7 +117,7 @@ const Cart = ({ currentCategory }) => {
 
     return (
         <>
-            <Navbar /> {/* ไม่จำเป็นต้องใช้ onCategoryClick ถ้าไม่ได้ส่งลงมาจาก App */}
+            <Navbar onCategoryClick={handleCategoryClick}/>
             <LoginModal />
 
             <div className="container">
