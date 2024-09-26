@@ -141,9 +141,14 @@ const Cart = () => {
                                     <span>฿{calVat()}</span>
                                 </div>
                                 <div className="d-flex justify-content-between mb-3">
-                                    <span>NET:</span>
+                                    <span>Total:</span>
                                     <span>฿{calTotal()}</span>
-                                </div>
+                                </div>  
+                                <hr />
+                                <div className="d-flex justify-content-between mb-3">
+                                    <span>Net Total:</span>
+                                    <span>฿{calTotal()}</span>
+                                </div>  
                             </div>
                         </div>
                         <button onClick={() => handleRemoveItem(index)} className="col-12 mt-3 btn btn-primary">

@@ -14,14 +14,6 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }
         };
     }, []);
 
-    const closeModal = () => {
-        const modal = document.getElementById('product-detail');
-        if (modal) {
-            const modalInstance = new window.bootstrap.Modal(modal);
-            modalInstance.hide();
-        }
-    };
-
     const handleAddToCart = () => {
         const product = {
             image: currentImage,
@@ -30,12 +22,29 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }
             price: currentPrice,
             quantity: quantity
         };
-        
+    
         let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-        cartItems.push(product);
+    
+        // ตรวจสอบว่าสินค้านั้นมีในตะกร้าอยู่แล้วมั้ย
+        const existProduct = cartItems.findIndex(item => item.name === product.name);
+    
+        if (existProduct !== -1) {
+            // ถ้ามีสินค้าอยู่แล้ว ให้เพิ่มจำนวนสินค้า
+            cartItems[existProduct].quantity += quantity;
+        } 
+        else {
+            // ถ้าไม่มี ให้เพิ่มสินค้าใหม่เข้าไปในตะกร้า
+            cartItems.push(product);
+        }
+    
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        
+        // รีเซ็ตค่า quantity หลังจากเพิ่มสินค้าแล้ว
+        setQuantity(1);
         alert('Add to cart success!');
+
     };
+    
 
     const handleQuantityChange = (type) => {
         if (type === 'add') {
@@ -78,7 +87,7 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }
                                     </div>
 
                                     <div className="col-3">
-                                        <button type="button" className="btn btn-custom w-100" onClick={handleAddToCart}>Add to cart</button>
+                                        <button type="button" className="btn btn-custom w-100" onClick={handleAddToCart} data-bs-dismiss="modal">Add to cart</button>
                                     </div>
                                 </div>
                             </div>

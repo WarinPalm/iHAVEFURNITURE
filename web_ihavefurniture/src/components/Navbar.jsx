@@ -38,9 +38,9 @@ const Navbar = ({ onCategoryClick, activeCategory}) => {
                         <button style={{ marginRight: '10px', marginLeft: '20px' }} className="circle-button" data-bs-toggle="modal" data-bs-target="#user-login">
                             <span className="material-symbols-outlined pt-1">person</span>
                         </button>
-                        <button className="circle-button">
-                            <Link style={{ color: 'black' }} to='../cart'><span className="material-symbols-outlined pt-1">shopping_cart</span></Link>
-                        </button>
+                        <Link to='../cart'><button className="circle-button">
+                            <span style={{ color: 'black' }} className="material-symbols-outlined pt-1">shopping_cart</span>
+                        </button></Link>
                     </span>
                 </div>
             </nav>
