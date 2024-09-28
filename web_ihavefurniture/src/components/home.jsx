@@ -122,9 +122,9 @@ const Home = () => {
                             {renderRecommendedProducts()}
                         </div>
                     </div>
-
+                    
                     <div className="col-2 pt-5">
-                        <h1 className="fs-2">Category</h1>
+                        <h1>Category</h1>
                     </div>
                     <div className="row mt-2 pt-5">
                         <Category activeCategory={currentCategory} onCategoryClick={handleCategoryClick} />
