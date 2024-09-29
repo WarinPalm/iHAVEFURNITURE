@@ -1,5 +1,3 @@
 # JVPPA
 
-โหย่วๆๆ ~~~~~~
-บ่นควยไรสัส
-กูมาละไอเหี้ย
+https://drive.google.com/drive/folders/1SfBHzP2wz37arI0YMB8ArJXW7zGYTbtJ?usp=sharing
