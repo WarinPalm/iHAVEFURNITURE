@@ -16,7 +16,7 @@ const Navbar = ({ onCategoryClick, activeCategory}) => {
         <div style={{position: 'sticky', top: "0", zIndex: "100"}}>
             <nav className="my-nav">
                 <div className="container nav-content">
-                    <h1 className="h1-text m-0">iHAVEFurniture Admin</h1>
+                    <h1 className="h1-text m-0">iAMadministrator</h1>
 
                     {/* Search Bar */}
                     <form onSubmit={handleSearch} className="input-group w-25 ms-auto">
@@ -55,9 +55,7 @@ const Navbar = ({ onCategoryClick, activeCategory}) => {
                         <li className="nav-item">
                             <Link className="nav-link active" aria-current="page" to="../">Home</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link active" aria-current="page" to="../viewall">Catalog</Link>
-                        </li>
+                        
                         <li className="nav-item dropdown">
                             <a
                                 className={`nav-link dropdown-toggle ${activeCategory ? 'active' : ''}`}
@@ -69,6 +67,10 @@ const Navbar = ({ onCategoryClick, activeCategory}) => {
                                 Product
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <Link to='../viewall' className={`dropdown-item ${activeCategory === 'sofa' ? 'active' : ''}`} 
+                                    onClick={() => onCategoryClick('AllProduct')}>
+                                    <li>Viewall</li>
+                                </Link>
                                 <Link to='../viewall' className={`dropdown-item ${activeCategory === 'sofa' ? 'active' : ''}`} 
                                     onClick={() => onCategoryClick('sofa')}>
                                     <li>Sofa</li>

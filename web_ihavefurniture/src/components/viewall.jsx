@@ -22,8 +22,17 @@ const ViewAll = () => {
 
     useEffect(() => { // เข้าถึงสินค้า จาก array ผ่านเข้ามาเป็นหมวดหมู่สินค้า และคำนวณจำนวนหน้า
         const categoryItems = myProduct[currentCategory] || [];
-        setProducts(categoryItems);
-        setTotalPages(Math.ceil(categoryItems.length / itemsPerPage));
+        if(currentCategory != "AllProduct"){
+            setProducts(categoryItems);
+            setTotalPages(Math.ceil(categoryItems.length / itemsPerPage));
+
+        }
+        if(currentCategory == "AllProduct"){
+            const allProducts = Object.values(myProduct).flat();
+            setProducts(allProducts)
+            setTotalPages(Math.ceil(allProducts.length / itemsPerPage));
+
+        }
     }, [currentCategory, itemsPerPage]);
 
     const handleCategoryClick = (category) => { // เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
