@@ -63,11 +63,7 @@ const Home = () => {
                     setCurrentPrice(product.price)
                     }} 
                 >
-                    <img 
-                    src={product.image} 
-                    className="card-img-top" 
-                    alt={product.title} 
-                    />
+                    <img src={product.image} className="card-img-top" alt={product.title}/>
                     <div className="card-body">
                         <h5 className="card-title">{product.title}</h5>
                         <p className="mt-4 card-text text-muted">{product.text}</p>

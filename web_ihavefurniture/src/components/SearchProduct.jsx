@@ -85,14 +85,24 @@ const SearchProduct = () => {
 
     const renderPageNumbers = () => {
         const pageNumbers = [];
-        for (let i = 1; i <= totalPages; i++) {
+        let startPage = Math.max(1, currentPage - 1); // เริ่มที่หน้าปัจจุบัน - 1
+        let endPage = Math.min(totalPages, currentPage + 1); // สิ้นสุดที่หน้าปัจจุบัน + 1
+    
+        if (currentPage === 1) { // กรณีอยู่หน้าแรก
+            endPage = Math.min(totalPages, 3); // แสดง 1, 2, 3
+        } else if (currentPage === totalPages) { // กรณีอยู่หน้าสุดท้าย
+            startPage = Math.max(1, totalPages - 2); // แสดง totalPages - 2, totalPages - 1, totalPages
+        }
+    
+        for (let i = startPage; i <= endPage; i++) {
             pageNumbers.push(
                 <button key={i} className={`btn ${i === currentPage ? 'btn-custom2' : 'btn-custom'} mx-1`} 
-                onClick={() => setCurrentPage(i)}>
+                onClick={() => handlePageClick(i)}>
                     {i}
                 </button>
             );
         }
+    
         return pageNumbers;
     };
 
@@ -116,7 +126,7 @@ const SearchProduct = () => {
 
             <section className="list-product">
                 <div className="container text-center">
-                    <div className="col-5 pt-5">
+                    <div className="col-4 pt-5">
                         <h1>Search Results for "{searchTerm}"</h1>
                     </div>
                     <div className="row mt-3 pt-5">
@@ -130,13 +140,17 @@ const SearchProduct = () => {
                         <div className="d-flex justify-content-end">
                             {totalPages > 1 && (
                                 <>
-                                    {currentPage > 1 && (
-                                        <button className="btn btn-custom mx-2" onClick={handlePrevPage}>Previous Page</button>
-                                    )}
+                                    {/* ปุ่ม Previous จะไม่มีผลเมื่ออยู่หน้าแรก */}
+                                    <button className="btn btn-custom mx-2" onClick={handlePrevPage} disabled={currentPage === 1}>
+                                        Previous Page
+                                    </button>
+
                                     {renderPageNumbers()}
-                                    {currentPage < totalPages && (
-                                        <button className="btn btn-custom mx-2" onClick={handleNextPage}>Next Page</button>
-                                    )}
+
+                                    {/* ปุ่ม Next จะไม่มีผลเมื่ออยู่หน้าสุดท้าย */}
+                                    <button className="btn btn-custom mx-2" onClick={handleNextPage} disabled={currentPage === totalPages}>
+                                        Next Page
+                                    </button>
                                 </>
                             )}
                         </div>
