@@ -181,3 +181,5 @@ export const myProduct = {
     ]
     
 }
+
+console.log(myProduct['sofa'])

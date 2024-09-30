@@ -93,7 +93,7 @@ const ViewAll = () => {
 
             <section className="list-product">
                 <div className="container text-center">
-                    <div className="col-3 pt-5">
+                    <div className="col-4 pt-5">
                         <h1>Category : {currentCategory}</h1>
                     </div>
                     <div className="row mt-3 pt-5">

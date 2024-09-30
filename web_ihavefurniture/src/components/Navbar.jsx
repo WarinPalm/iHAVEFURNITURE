@@ -16,7 +16,7 @@ const Navbar = ({ onCategoryClick, activeCategory}) => {
         <div style={{position: 'sticky', top: "0", zIndex: "100"}}>
             <nav className="my-nav">
                 <div className="container nav-content">
-                    <h1 className="h1-text m-0">iHAVEFurniture</h1>
+                    <h1 className="h1-text m-0">iHAVEFurniture Admin</h1>
 
                     {/* Search Bar */}
                     <form onSubmit={handleSearch} className="input-group w-25 ms-auto">
@@ -38,9 +38,7 @@ const Navbar = ({ onCategoryClick, activeCategory}) => {
                         <button style={{ marginRight: '10px', marginLeft: '20px' }} className="circle-button" data-bs-toggle="modal" data-bs-target="#user-login">
                             <span className="material-symbols-outlined pt-1">person</span>
                         </button>
-                        <Link to='../cart'><button className="circle-button">
-                            <span style={{ color: 'black' }} className="material-symbols-outlined pt-1">shopping_cart</span>
-                        </button></Link>
+                        
                     </span>
                 </div>
             </nav>
@@ -56,6 +54,9 @@ const Navbar = ({ onCategoryClick, activeCategory}) => {
                     <ul className="nav justify-content-center">
                         <li className="nav-item">
                             <Link className="nav-link active" aria-current="page" to="../">Home</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link active" aria-current="page" to="../viewall">Catalog</Link>
                         </li>
                         <li className="nav-item dropdown">
                             <a
