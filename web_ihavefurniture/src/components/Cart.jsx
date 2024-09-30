@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 
 import { myProduct } from './MyProduct';
 import Navbar from './Navbar';
@@ -24,7 +25,7 @@ const Cart = () => {
         // ดึงข้อมูลสินค้าจาก localStorage เมื่อ category เปลี่ยน
         const items = JSON.parse(localStorage.getItem('cartItems')) || [];
         setCartItems(items);
-    }, [currentCategory]);
+    }, []);
 
     // สำหรับเพิ่ม/ลดจำนวนสินค้าในตะกร้า
     const handleQuantityChange = (index, type) => {
@@ -151,9 +152,9 @@ const Cart = () => {
                                 </div>  
                             </div>
                         </div>
-                        <button onClick={() => handleRemoveItem(index)} className="col-12 mt-3 btn btn-primary">
+                        <Link to="../billOrder"><button onClick={() => handleRemoveItem(index)} className="col-12 mt-3 btn btn-primary">
                             BUY
-                         </button>
+                         </button></Link>
                     </div>
 
                 </div>

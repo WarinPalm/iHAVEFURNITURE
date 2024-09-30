@@ -137,4 +137,8 @@ aside li {
     margin: 0 auto;
     padding: 20px;
 }
-
+.card-bill {
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 15px;
+}

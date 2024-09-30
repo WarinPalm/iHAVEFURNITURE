@@ -14,6 +14,7 @@ import ViewAll from './components/viewall.jsx'
 import Register from './components/register.jsx';
 import Cart from './components/Cart.jsx';
 import SearchProduct from './components/SearchProduct.jsx';
+import BillOrder from './components/BillOrder.jsx';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "searchProduct",
     element:<SearchProduct/>
+  },
+  {
+    path: "billOrder",
+    element:<BillOrder/>
   }
 ]);
 
