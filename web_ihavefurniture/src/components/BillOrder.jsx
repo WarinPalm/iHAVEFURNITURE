@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
+import { usePricing } from './PricingContext'; 
 
 
 const BillOrder = () => {
+    const { cartItems, calTotal,calNetTotal, calVat, calShipping, calProductPrice, calDiscount} = usePricing();
+
     const [currentCategory, setCurrentCategory] = useState(() => {
         const savedCategory = localStorage.getItem('currentCategory');
         return savedCategory ? savedCategory : 'sofa';
@@ -15,18 +18,14 @@ const BillOrder = () => {
         setCurrentPage(1);
     };
 
-    const [billItems, setBillItems] = useState([]);
-    useEffect(() => {
-        // ดึงข้อมูลสินค้าจาก localStorage เมื่อ category เปลี่ยน
-        const items = JSON.parse(localStorage.getItem('cartItems')) || [];
-        setBillItems(items);
-    }, []);
+   
 
+    
     const renderBillItems = () => {
-        if (billItems.length === 0) {
+        if (cartItems.length === 0) {
             return <div className='col-12'>Your Bill is empty</div>;
         } else {
-            return billItems.map((item, index) => (
+            return cartItems.map((item, index) => (
                 <div key={index} className="mb-3 mt-5">
                     <div className="row">
                         <div className="col-6">
@@ -39,12 +38,89 @@ const BillOrder = () => {
                             <h5 className="card-title">฿{item.price}</h5> 
                         </div>
                     </div>
-                    <hr/>
+                    <div className="row">
+                        <div className="col-11"><hr/></div>
+                    </div>
+
                 </div>
-                
             ));
         }
     };
+    const renderPrice =() =>{
+        return(
+            <div className="mb-3 mt-5">
+                <div className="row">
+                    <div className="col-6">
+                        <h5 className="card-title">Product Price:</h5>   
+                    </div>
+                    <div className="col-1"> 
+                    </div>
+                    <div className="col-4 text-end">
+                        <h5 className="card-title">฿{calProductPrice()}</h5> 
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-6">
+                        <h5 className="card-title">VAT 7%:</h5>   
+                    </div>
+                    <div className="col-1">
+                    </div>
+                    <div className="col-4 text-end">
+                        <h5 className="card-title">฿{calVat()}</h5> 
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-6">
+                        <h5 className="card-title">Shipping cost:</h5>   
+                    </div>
+                    <div className="col-1">
+                    </div>
+                    <div className="col-4 text-end">
+                        <h5 className="card-title">฿{calShipping()}</h5> 
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-6">
+                        <h5 className="card-title">Total:</h5>   
+                    </div>
+                    <div className="col-1">
+                    </div>
+                    <div className="col-4 text-end">
+                        <h5 className="card-title">฿{calTotal()}</h5> 
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-6">
+                        <h5 className="card-title">Discount:</h5>   
+                    </div>
+                    <div className="col-1">
+                    </div>
+                    <div className="col-4 text-end">
+                        <h5 className="card-title">{calDiscount()}%</h5> 
+                    </div>
+                </div>
+
+                <div className="row">
+                        <div className="col-11"><hr/></div>
+                </div>
+                <div className="row">
+                    <div className="col-6">
+                        <h5 className="card-title">Net Total:</h5>   
+                    </div>
+                    <div className="col-1">
+                    </div>
+                    <div className="col-4 text-end">
+                        <h5 className="card-title">฿{calNetTotal()}</h5> 
+                    </div>
+                </div>
+            </div>
+            
+        )
+    }
     return (
         <>
         <Navbar onCategoryClick={handleCategoryClick} />
@@ -64,7 +140,12 @@ const BillOrder = () => {
                             <div className="card-body">
                                 <h1>Receipt</h1>
                                 
-                                <h5 className="mt-4 ms-5">{renderBillItems()}</h5>
+                                <div className="mt-4 ms-5">{renderBillItems()}</div>
+                                <div className="mt-4 ms-5">
+                                    {renderPrice()}
+                                </div>
+                                
+                                
                             </div>  
                         </div>
                     </dic>
