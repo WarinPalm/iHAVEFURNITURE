@@ -56,7 +56,7 @@ export const PricingProvider = ({ children }) => {
     };
 
     return (
-        <PricingContext.Provider value={{ cartItems, calTotal, calNetTotal, calVat, calProductPrice, calShipping, calDiscount }}>
+        <PricingContext.Provider value={{calTotal, calNetTotal, calVat, calProductPrice, calShipping, calDiscount }}>
             {children}
         </PricingContext.Provider>
     );

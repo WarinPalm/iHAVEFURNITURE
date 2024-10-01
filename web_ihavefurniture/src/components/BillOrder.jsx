@@ -5,7 +5,7 @@ import { usePricing } from './PricingContext';
 
 
 const BillOrder = () => {
-    const { cartItems, calTotal,calNetTotal, calVat, calShipping, calProductPrice, calDiscount} = usePricing();
+    const {calTotal,calNetTotal, calVat, calShipping, calProductPrice, calDiscount} = usePricing();
 
     const [currentCategory, setCurrentCategory] = useState(() => {
         const savedCategory = localStorage.getItem('currentCategory');
@@ -18,14 +18,20 @@ const BillOrder = () => {
         setCurrentPage(1);
     };
 
-   
+    const [billItems, setBillItems] = useState([]);
+    const vat = 0.07; // 7% VAT
+
+    useEffect(() => {
+        const items = JSON.parse(localStorage.getItem('cartItems')) || [];
+        setBillItems(items);
+    }, []);
 
     
     const renderBillItems = () => {
-        if (cartItems.length === 0) {
+        if (billItems.length === 0) {
             return <div className='col-12'>Your Bill is empty</div>;
         } else {
-            return cartItems.map((item, index) => (
+            return billItems.map((item, index) => (
                 <div key={index} className="mb-3 mt-5">
                     <div className="row">
                         <div className="col-6">

@@ -5,7 +5,7 @@ import LoginModal from './Modal/LoginModal';
 import { usePricing } from './PricingContext'; 
 
 const Cart = () => {
-    const { cartItems, calTotal, calNetTotal, calVat, calShipping, calProductPrice, calDiscount} = usePricing();
+    const { cartItems, setCartItems, calTotal, calNetTotal, calVat, calShipping, calProductPrice, calDiscount } = usePricing();
     
     const [currentCategory, setCurrentCategory] = useState(() => {
         const savedCategory = localStorage.getItem('currentCategory');
@@ -16,6 +16,25 @@ const Cart = () => {
         setCurrentCategory(category);
         localStorage.setItem('currentCategory', category);
     };
+
+    const handleQuantityChange = (index, type) => {
+        const updatedCartItems = [...cartItems];
+        if (type === 'add') {
+            updatedCartItems[index].quantity += 1;
+        } else if (type === 'sub' && updatedCartItems[index].quantity > 1) {
+            updatedCartItems[index].quantity -= 1;
+        }
+        setCartItems(updatedCartItems);
+        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    };
+    
+    const handleRemoveItem = (index) => {
+        const updatedCartItems = [...cartItems];
+        updatedCartItems.splice(index, 1);
+        setCartItems(updatedCartItems);
+        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); 
+    };
+    
 
     const renderCartItems = () => {
         if (cartItems.length === 0) {
@@ -34,12 +53,12 @@ const Cart = () => {
                                 <p className="card-text text-muted">฿{item.price}</p>
                                 <div className="d-flex align-items-center mb-3 justify-content-between">
                                     <div className="col-6 d-flex align-items-center">
-                                        <button className="btn btn-custom me-2">-</button>
+                                        <button className="btn btn-custom me-2" onClick={() =>{handleQuantityChange(index,'sub')}}>-</button>
                                         <span className='m-2'>{item.quantity}</span>
-                                        <button className="btn btn-custom ms-2">+</button>
+                                        <button className="btn btn-custom ms-2" onClick={() =>{handleQuantityChange(index,'add')}}>+</button>
                                     </div>
                                     <div className="col-4 text-end me-4">
-                                        <button className="btn btn-danger">Remove</button>
+                                        <button className="btn btn-danger" onClick={() => handleRemoveItem()}>Remove</button>
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +108,7 @@ const Cart = () => {
                                     <span>Net Total:</span>
                                     <span>฿{calNetTotal()}</span>
                                 </div>  
-                                
+
                                 <Link to="../billOrder">
                                     <button className="col-12 mt-3 btn btn-primary">BUY</button>
                                 </Link>
