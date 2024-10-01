@@ -4,7 +4,6 @@ import { createRoot } from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import { PricingProvider } from './components/PricingContext';
 import './CSS/header.css';
 import './CSS/hero-image.css';
 import './CSS/style.css';
@@ -46,8 +45,6 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <PricingProvider>
       <RouterProvider router={router} />
-    </PricingProvider>
   </StrictMode>,
 );

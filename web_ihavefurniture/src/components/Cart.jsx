@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
-import { usePricing } from './PricingContext'; 
 
 const Cart = () => {
-    const { cartItems, setCartItems, calTotal, calNetTotal, calVat, calShipping, calProductPrice, calDiscount } = usePricing();
     
     const [currentCategory, setCurrentCategory] = useState(() => {
         const savedCategory = localStorage.getItem('currentCategory');
@@ -16,8 +14,8 @@ const Cart = () => {
         setCurrentCategory(category);
         localStorage.setItem('currentCategory', category);
     };
-
-    const handleQuantityChange = (index, type) => {
+     // สำหรับเพิ่ม/ลดจำนวนสินค้าในตะกร้า
+     const handleQuantityChange = (index, type) => {
         const updatedCartItems = [...cartItems];
         if (type === 'add') {
             updatedCartItems[index].quantity += 1;
@@ -25,17 +23,67 @@ const Cart = () => {
             updatedCartItems[index].quantity -= 1;
         }
         setCartItems(updatedCartItems);
-        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); // อัปเดต localStorage
     };
-    
+
+    // สำหรับลบสินค้าออกจากตะกร้า
     const handleRemoveItem = (index) => {
         const updatedCartItems = [...cartItems];
         updatedCartItems.splice(index, 1);
         setCartItems(updatedCartItems);
-        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); 
+        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     };
-    
+    const [cartItems, setCartItems] = useState([]);
+    const vat = 0.07; // 7% VAT
 
+    useEffect(() => {
+        const items = JSON.parse(localStorage.getItem('cartItems')) || [];
+        setCartItems(items);
+    }, []);
+
+    const calTotal = () => {
+        let totalPrice = 0;
+        cartItems.forEach(item => {
+            totalPrice += item.price * item.quantity; 
+        });
+        return totalPrice.toFixed(2);
+    };
+    const calNetTotal = () => {
+        let totalPrice = 0;
+        cartItems.forEach(item => {
+            totalPrice += item.price * item.quantity; 
+        });
+        return totalPrice.toFixed(2);
+    };
+
+    const calVat = () => {
+        let totalPrice = calTotal(); 
+        let vatPrice = totalPrice * vat;
+        return vatPrice.toFixed(2); 
+    };
+
+    const calProductPrice = () => {
+        let totalPrice = calTotal(); 
+        let productPrice = totalPrice - (totalPrice * vat);
+        return productPrice.toFixed(2); 
+    };
+
+    const calShipping = () => {
+        let shippingPrice;
+        if(cartItems.length === 0){
+            shippingPrice = 0
+        }
+        else{
+            shippingPrice = 250
+        }
+        return shippingPrice;
+    };
+
+    const calDiscount = () => {
+        let discount = 10;
+        
+        return discount;
+    };
     const renderCartItems = () => {
         if (cartItems.length === 0) {
             return <div className='col-12'>Your cart is empty</div>;
@@ -53,9 +101,9 @@ const Cart = () => {
                                 <p className="card-text text-muted">฿{item.price}</p>
                                 <div className="d-flex align-items-center mb-3 justify-content-between">
                                     <div className="col-6 d-flex align-items-center">
-                                        <button className="btn btn-custom me-2" onClick={() =>{handleQuantityChange(index,'sub')}}>-</button>
+                                        <button className="btn btn-custom me-2" onClick={() => handleQuantityChange(index,'sub')}>-</button>
                                         <span className='m-2'>{item.quantity}</span>
-                                        <button className="btn btn-custom ms-2" onClick={() =>{handleQuantityChange(index,'add')}}>+</button>
+                                        <button className="btn btn-custom ms-2" onClick={() => handleQuantityChange(index,'add')}>+</button>
                                     </div>
                                     <div className="col-4 text-end me-4">
                                         <button className="btn btn-danger" onClick={() => handleRemoveItem()}>Remove</button>
@@ -108,7 +156,7 @@ const Cart = () => {
                                     <span>Net Total:</span>
                                     <span>฿{calNetTotal()}</span>
                                 </div>  
-
+                                
                                 <Link to="../billOrder">
                                     <button className="col-12 mt-3 btn btn-primary">BUY</button>
                                 </Link>

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
-import { usePricing } from './PricingContext'; 
 
 
 const BillOrder = () => {
-    const {calTotal,calNetTotal, calVat, calShipping, calProductPrice, calDiscount} = usePricing();
 
     const [currentCategory, setCurrentCategory] = useState(() => {
         const savedCategory = localStorage.getItem('currentCategory');
@@ -26,7 +24,49 @@ const BillOrder = () => {
         setBillItems(items);
     }, []);
 
-    
+    const calTotal = () => {
+        let totalPrice = 0;
+        billItems.forEach(item => {
+            totalPrice += item.price * item.quantity; 
+        });
+        return totalPrice.toFixed(2);
+    };
+    const calNetTotal = () => {
+        let totalPrice = 0;
+        billItems.forEach(item => {
+            totalPrice += item.price * item.quantity; 
+        });
+        return totalPrice.toFixed(2);
+    };
+
+    const calVat = () => {
+        let totalPrice = calTotal(); 
+        let vatPrice = totalPrice * vat;
+        return vatPrice.toFixed(2); 
+    };
+
+    const calProductPrice = () => {
+        let totalPrice = calTotal(); 
+        let productPrice = totalPrice - (totalPrice * vat);
+        return productPrice.toFixed(2); 
+    };
+
+    const calShipping = () => {
+        let shippingPrice;
+        if(billItems.length === 0){
+            shippingPrice = 0
+        }
+        else{
+            shippingPrice = 250
+        }
+        return shippingPrice;
+    };
+
+    const calDiscount = () => {
+        let discount = 10;
+        
+        return discount;
+    };
     const renderBillItems = () => {
         if (billItems.length === 0) {
             return <div className='col-12'>Your Bill is empty</div>;
