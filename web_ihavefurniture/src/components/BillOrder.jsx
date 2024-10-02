@@ -72,7 +72,7 @@ const BillOrder = () => {
             return <div className='col-12'>Your Bill is empty</div>;
         } else {
             return billItems.map((item, index) => (
-                <div key={index} className="mb-3 mt-5">
+                <div key={index} className="mb-3 mt-2">
                     <div className="row">
                         <div className="col-6">
                             <h5 className="card-title">{item.name}</h5>   
@@ -184,7 +184,7 @@ const BillOrder = () => {
                         <div className="card card-bill">
                         
                             <div className="card-body">
-                                <h1>Receipt</h1>
+                                <h1 className='mb-5'>Receipt</h1>
                                 
                                 <div className="mt-4 ms-5">{renderBillItems()}</div>
                                 <div className="mt-4 ms-5">

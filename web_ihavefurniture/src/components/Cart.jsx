@@ -106,7 +106,7 @@ const Cart = () => {
                                         <button className="btn btn-custom ms-2" onClick={() => handleQuantityChange(index,'add')}>+</button>
                                     </div>
                                     <div className="col-4 text-end me-4">
-                                        <button className="btn btn-danger" onClick={() => handleRemoveItem()}>Remove</button>
+                                        <button className="btn btn-danger" onClick={() => handleRemoveItem(index)}>Remove</button>
                                     </div>
                                 </div>
                             </div>
