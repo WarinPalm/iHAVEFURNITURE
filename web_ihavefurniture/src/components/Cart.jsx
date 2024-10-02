@@ -1,56 +1,64 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
+import { getCartItems, updateCartStatus } from './CartItem';
 
 const Cart = () => {
-    
+
     const [currentCategory, setCurrentCategory] = useState(() => {
         const savedCategory = localStorage.getItem('currentCategory');
         return savedCategory ? savedCategory : 'sofa';
     });
-
-    const handleCategoryClick = (category) => {
+    
+    const handleCategoryClick = (category) => { //เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
         setCurrentCategory(category);
         localStorage.setItem('currentCategory', category);
+        setCurrentPage(1);
     };
-     // สำหรับเพิ่ม/ลดจำนวนสินค้าในตะกร้า
-     const handleQuantityChange = (index, type) => {
+
+
+    const [cartItems, setCartItems] = useState(getCartItems());
+
+    const handleBuy = () => {
+        cartItems.forEach((item, index) => {
+            updateCartStatus(index, 'รอชำระเงิน');
+        });
+        alert('Status updated to รอชำระเงิน');
+    };
+
+    // สำหรับเพิ่ม/ลดจำนวนสินค้าในตะกร้า
+    const handleQuantityChange = (index, type) => {
         const updatedCartItems = [...cartItems];
         if (type === 'add') {
             updatedCartItems[index].quantity += 1;
         } else if (type === 'sub' && updatedCartItems[index].quantity > 1) {
             updatedCartItems[index].quantity -= 1;
         }
-        setCartItems(updatedCartItems);
-        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); // อัปเดต localStorage
+        setCartItems(updatedCartItems); // อัปเดต state
     };
 
     // สำหรับลบสินค้าออกจากตะกร้า
     const handleRemoveItem = (index) => {
         const updatedCartItems = [...cartItems];
         updatedCartItems.splice(index, 1);
-        setCartItems(updatedCartItems);
-        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        setCartItems(updatedCartItems); // อัปเดต state
     };
-    const [cartItems, setCartItems] = useState([]);
-    const vat = 0.07; // 7% VAT
 
-    useEffect(() => {
-        const items = JSON.parse(localStorage.getItem('cartItems')) || [];
-        setCartItems(items);
-    }, []);
+    const vat = 0.07; // 7% VAT
+    const cartItemsStatusNull = cartItems.filter(item => item.status === null); // กรองเฉพาะสินค้าที่มีสถานะเป็น null
 
     const calTotal = () => {
         let totalPrice = 0;
-        cartItems.forEach(item => {
+        cartItemsStatusNull.forEach(item => {
             totalPrice += item.price * item.quantity; 
         });
         return totalPrice.toFixed(2);
     };
+
     const calNetTotal = () => {
         let totalPrice = 0;
-        cartItems.forEach(item => {
+        cartItemsStatusNull.forEach(item => {
             totalPrice += item.price * item.quantity; 
         });
         return totalPrice.toFixed(2);
@@ -70,7 +78,7 @@ const Cart = () => {
 
     const calShipping = () => {
         let shippingPrice;
-        if(cartItems.length === 0){
+        if(cartItemsStatusNull.length === 0){
             shippingPrice = 0
         }
         else{
@@ -81,14 +89,15 @@ const Cart = () => {
 
     const calDiscount = () => {
         let discount = 10;
-        
         return discount;
     };
+
     const renderCartItems = () => {
-        if (cartItems.length === 0) {
+    
+        if (cartItemsStatusNull.length === 0) {
             return <div className='col-12'>Your cart is empty</div>;
         } else {
-            return cartItems.map((item, index) => (
+            return cartItemsStatusNull.map((item, index) => (
                 <div key={index} className="card mb-3">
                     <div className="row">
                         <div className="col-4">
@@ -99,11 +108,12 @@ const Cart = () => {
                                 <h5 className="card-title">{item.name}</h5>
                                 <p className="card-text">{item.detail}</p>
                                 <p className="card-text text-muted">฿{item.price}</p>
+    
                                 <div className="d-flex align-items-center mb-3 justify-content-between">
                                     <div className="col-6 d-flex align-items-center">
-                                        <button className="btn btn-custom me-2" onClick={() => handleQuantityChange(index,'sub')}>-</button>
+                                        <button className="btn btn-custom me-2" onClick={() => handleQuantityChange(index, 'sub')}>-</button>
                                         <span className='m-2'>{item.quantity}</span>
-                                        <button className="btn btn-custom ms-2" onClick={() => handleQuantityChange(index,'add')}>+</button>
+                                        <button className="btn btn-custom ms-2" onClick={() => handleQuantityChange(index, 'add')}>+</button>
                                     </div>
                                     <div className="col-4 text-end me-4">
                                         <button className="btn btn-danger" onClick={() => handleRemoveItem(index)}>Remove</button>
@@ -116,6 +126,8 @@ const Cart = () => {
             ));
         }
     };
+    
+    
 
     return (
         <>
@@ -158,7 +170,7 @@ const Cart = () => {
                                 </div>  
                                 
                                 <Link to="../billOrder">
-                                    <button className="col-12 mt-3 btn btn-primary">BUY</button>
+                                    <button className="col-12 mt-3 btn btn-primary" onClick={handleBuy}>BUY</button>
                                 </Link>
                             </div>
                         </div>

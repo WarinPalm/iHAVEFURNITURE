@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { addToCart, getCartItems } from '../CartItem';
 
 const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }) => {
-    const [quantity, setQuantity] = useState(1); 
+    const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
         const modal = document.getElementById('product-detail');
@@ -10,9 +11,11 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }
         });
 
         return () => {
-            modal.removeEventListener('shown.bs.modal', () => {}); // ทำความสะอาด event listener เมื่อ component unmount
+            modal.removeEventListener('shown.bs.modal', () => {});
         };
     }, []);
+
+    const [cartItems, setCartItems] = useState(getCartItems());
 
     const handleAddToCart = () => {
         const product = {
@@ -20,31 +23,26 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }
             name: currentName,
             detail: currentDetail,
             price: currentPrice,
-            quantity: quantity
+            quantity: quantity,
+            status: null // สถานะเริ่มต้นเป็น null
         };
-    
-        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    
+
         // ตรวจสอบว่าสินค้านั้นมีในตะกร้าอยู่แล้วมั้ย
         const existProduct = cartItems.findIndex(item => item.name === product.name);
-    
         if (existProduct !== -1) {
             // ถ้ามีสินค้าอยู่แล้ว ให้เพิ่มจำนวนสินค้า
-            cartItems[existProduct].quantity += quantity;
+            const updatedCartItems = [...cartItems]; // คัดลอก cartItems
+            updatedCartItems[existProduct].quantity += quantity; // เพิ่มจำนวน
+            setCartItems(updatedCartItems); // อัปเดต state
         } 
         else {
             // ถ้าไม่มี ให้เพิ่มสินค้าใหม่เข้าไปในตะกร้า
-            cartItems.push(product);
+            addToCart(product); // สมมติว่าฟังก์ชัน addToCart จะจัดการเพิ่มสินค้าใน cartItems
+            setCartItems(prevItems => [...prevItems, product]); // อัปเดต state ด้วยสินค้าใหม่
         }
-    
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        
-        // รีเซ็ตค่า quantity หลังจากเพิ่มสินค้าแล้ว
-        setQuantity(1);
-        alert('Add to cart success!');
-
+        alert("Product added to cart");
     };
-    
+
 
     const handleQuantityChange = (type) => {
         if (type === 'add') {
