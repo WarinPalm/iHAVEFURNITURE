@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar'
-function PaymentDetail() {
+const PaymentDetail =() =>{
   return (
     <>
         <Navbar/>
