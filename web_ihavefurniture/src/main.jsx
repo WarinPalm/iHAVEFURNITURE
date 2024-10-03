@@ -15,6 +15,8 @@ import Register from './components/register.jsx';
 import Cart from './components/Cart.jsx';
 import SearchProduct from './components/SearchProduct.jsx';
 import BillOrder from './components/BillOrder.jsx';
+import History from './components/History.jsx';
+import PaymentDetail from './components/PaymentDetail.jsx';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,15 @@ const router = createBrowserRouter([
   {
     path: "billOrder",
     element: <BillOrder />
+  },
+  {
+    path: "history",
+    element: <History />
+  }
+  ,
+  {
+    path: "paymentDetail",
+    element: <PaymentDetail />
   }
 ]);
 

@@ -24,7 +24,6 @@ const Cart = () => {
         cartItems.forEach((item, index) => {
             updateCartStatus(index, 'รอชำระเงิน');
         });
-        alert('Status updated to รอชำระเงิน');
     };
 
     // สำหรับเพิ่ม/ลดจำนวนสินค้าในตะกร้า

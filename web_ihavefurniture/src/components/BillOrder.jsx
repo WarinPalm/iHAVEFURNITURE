@@ -9,7 +9,7 @@ const BillOrder = () => {
 
     useEffect(() => {
         // ดึงข้อมูลจาก CartItem
-        const items = getCartItems(); // ฟังก์ชันนี้ควรจะคืนค่าอาเรย์ของ cartItems
+        const items = getCartItems(); 
         setBillItems(items);
     }, []);
 
@@ -157,13 +157,61 @@ const BillOrder = () => {
                         <div className="col-12">
                             <div className="card card-bill">
                                 <div className="card-body">
-                                    <h1 className='mb-5'>Receipt</h1>
+                                    <h1 className='mb-5 mt-4'>Receipt</h1>
                                     
-                                    <div className="mt-4 ms-5">{renderBillItems()}</div>
-                                    <div className="mt-4 ms-5">
+                                    <div className="mt-4 ms-5 bill-items">{renderBillItems()}</div>
+
+                                    <div className="ms-5">
                                         {renderPrice()}
                                     </div>
                                 </div>  
+                            </div>
+
+                            <div className="card card-bill mt-5">
+                                <div className="card-body">
+                                    <div className="mb-3 mt-2">
+                                        <div className="row">
+                                            <div className="col-1"></div>
+                                            <div className="col-2">
+                                                <h5 className="card-title">วันที่แจ้งโอน</h5>   
+                                            </div>
+                                            <div className="col-1">
+                                                <h5 className="card-title">:</h5> 
+                                            </div>
+                                            <div className="col-1 text-end">
+                                                <input type="date"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="mb-3 mt-2">
+                                        <div className="row">
+                                            <div className="col-1"></div>
+                                            <div className="col-2">
+                                                <h5 className="card-title">วันที่โอน</h5>   
+                                            </div>
+                                            <div className="col-1">
+                                                <h5 className="card-title">:</h5> 
+                                            </div>
+                                            <div className="col-1 text-end">
+                                                <input type="date"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="mb-3 mt-2">
+                                        <div className="row">
+                                            <div className="col-1"></div>
+                                            <div className="col-2">
+                                                <h5 className="card-title">แนบสลิป</h5>   
+                                            </div>
+                                            <div className="col-1">
+                                                <h5 className="card-title">:</h5> 
+                                            </div>
+                                            <div className="col-1 text-end">
+                                                <input type="file"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

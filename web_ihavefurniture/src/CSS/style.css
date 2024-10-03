@@ -129,7 +129,7 @@ aside li {
     background-color: #BAA495; /* เปลี่ยนเป็นสีที่ต้องการ */
     color: black;
 }
-
+/* ภาพใน cart  */
 .custom-cart-img {
     width: 100%;
     height: 220px; /* กำหนดความสูงที่แน่นอน */
@@ -137,8 +137,14 @@ aside li {
     margin: 0 auto;
     padding: 20px;
 }
+/* bill order  */
 .card-bill {
     padding-left: 30px;
-    padding-right: 30px;
-    border-radius: 15px;
+    border-radius: 30px;
 }
+.bill-items {
+    margin-bottom: 200px; /* บังคับเพิ่มระยะห่าง */
+}
+
+
+
