@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+}
+
+/* form login */
+
+#user-login .modal-dialog {
+    max-width: 450px; /* ปรับค่าตามที่คุณต้องการ */
+
+}
+.my-form {
+    background: white;
+    padding: 40px 40px 50px;
+    width: 400px;
+}
+
+.my-form h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-left: 20px;
+    font-weight: bold;
+}
+
+.cover .container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-start;
+}
+
+.cover .my-form .btn {
+    width: 100%;
+}
+
+
+/* Aside Show Product*/
+
+.category-nav {
+    transition: all 0.2s ease-in-out;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.category-nav:hover {
+    background-color: #C8C6C2;
+
+    cursor: pointer;
+    transform: scale(1.05); 
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); 
+}
+
+.category-nav.active {
+    background-color: #C8C6C2; /* สีที่คุณต้องการแสดงเมื่อเลือก */
+
+    transform: scale(1.05); 
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); 
+}
+
+.nav-aside {
+    padding: 30px 0;
+}
+
+aside li {
+    list-style: none;
+    text-decoration: none;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.full-height-overflow {
+    height: 100vh;
+    overflow: auto;
+}
+
+/* ส่วนของ show product*/
+.card-hover {
+    padding-left: 30px;
+    padding-right: 30px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 15px;
+    overflow: hidden;  /*ป้องกันการล้นเมื่อขยาย */
+}
+
+.card-hover:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); 
+}
+
+.card-hover img {
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    margin: 0 auto; 
+    padding: 10px;
+}
+
+/*product */
+.custom-modal-dialog {  /*popup show */
+    padding-left: 20px;
+    padding-right: 20px;
+    max-width: 60%; 
+    margin: 0 auto;
+}
+
+.custom-modal-img { 
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    margin: 0 auto; 
+}
+/* ปุ่ม pagination */
+.btn-custom {
+    background-color: #C8C6C2; /* เปลี่ยนเป็นสีที่ต้องการ */
+    color: black;
+}
+
+.btn-custom:hover {
+    background-color: #BAA495; /* สีเมื่อวางเมาส์บนปุ่ม */
+    color: white;
+    cursor: pointer;
+}
+.btn-custom2{
+    background-color: #BAA495; /* เปลี่ยนเป็นสีที่ต้องการ */
+    color: black;
+}
+/* ภาพใน cart  */
+.custom-cart-img {
+    width: 100%;
+    height: 220px; /* กำหนดความสูงที่แน่นอน */
+    object-fit: contain; /* รักษาอัตราส่วนของภาพ */
+    margin: 0 auto;
+    padding: 20px;
+}
+/* bill order  */
+.card-bill {
+    padding-left: 30px;
+    border-radius: 30px;
+}
+.bill-items {
+    margin-bottom: 200px; /* บังคับเพิ่มระยะห่าง */
+}
+
+
+

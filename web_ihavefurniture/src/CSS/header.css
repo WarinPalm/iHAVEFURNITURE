@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+}
+/* nav */
+
+.my-nav {
+    padding: 5px 0;
+    background-color: #807166;
+}
+
+.my-nav2 {
+    padding: 5px 0;
+    background-color: #BAA495;
+}
+
+.nav-link {
+    color: black;
+}
+
+.nav-content {
+    padding-right: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ป้องกันขีดเส้นใต้จากลิงก์ใน dropdown-item */
+.nav-item .dropdown-menu .dropdown-item a {
+    text-decoration: none;
+    color: inherit; /* ใช้สีของข้อความที่ถูกกำหนดไว้ใน .dropdown-item */
+}
+
+.nav-item .dropdown-menu .dropdown-item a:hover {
+    color: white; /* สีที่ต้องการเมื่อ hover */
+}
+
+/* แน่ใจว่าขีดเส้นใต้ไม่มีเมื่อ hover */
+.nav-item .dropdown-menu .dropdown-item {
+    text-decoration: none;
+}
+
+/* เปลี่ยนสีพื้นหลังและข้อความเมื่อ hover */
+.nav-item .dropdown-menu .dropdown-item:hover {
+    background-color: #3A3129; /* เปลี่ยนสีพื้นหลังตามที่ต้องการ */
+    color: white; /* เปลี่ยนสีข้อความตามที่ต้องการ */
+}
+.dropdown-item.active{
+    background-color: #3A3129;
+}
+
+.h1-text {
+    color: white;
+}
+
+.circle-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+.circle-button:hover{
+    background-color:#d1baaa ;
+}
+.search-btn{
+    color: #ffffff;   
+    background-color:#4d4038;
+}
+.search-btn:hover{
+    color: #ffffff;   
+    background-color:#3A3129;
+}
+
