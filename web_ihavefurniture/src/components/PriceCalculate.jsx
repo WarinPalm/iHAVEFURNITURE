@@ -8,8 +8,8 @@ export const PriceProvider = ({ children }) => {
 
     const vat = 0.07;
 
-    useEffect(() => {
-        const items = getCartItems(); // เรียกฟังก์ชัน getCartItems()
+    useEffect(() => { //ให้อัพเดทตลอดเวลา
+        const items = getCartItems(); 
         setCartItems(items); // อัปเดตค่าใน state
     }, []);
 
@@ -20,7 +20,7 @@ export const PriceProvider = ({ children }) => {
     const calTotal = () => {
         let totalPrice = 0;
         cartItems.forEach(item => {
-            totalPrice += item.price * item.quantity; // ใช้ cartItem แทน billItems
+            totalPrice += item.price * item.quantity; 
         });
         return totalPrice.toFixed(2);
     };
@@ -41,7 +41,7 @@ export const PriceProvider = ({ children }) => {
     };
 
     const calShipping = () => {
-        return cartItems.length === 0 ? 0 : 250; // ใช้ cartItem แทน billItems
+        return cartItems.length === 0 ? 0 : 250;
     };
 
     const calDiscount = () => {
