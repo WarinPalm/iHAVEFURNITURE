@@ -9,6 +9,8 @@ import './CSS/hero-image.css';
 import './CSS/style.css';
 import './CSS/loginModal.css';
 
+import { PriceProvider } from './components/PriceCalculate.jsx';
+
 import Home from './components/home.jsx';
 import ViewAll from './components/viewall.jsx';
 import Register from './components/register.jsx';
@@ -56,6 +58,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <PriceProvider>
       <RouterProvider router={router} />
+    </PriceProvider>
   </StrictMode>,
 );

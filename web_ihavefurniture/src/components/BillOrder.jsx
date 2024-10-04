@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
-import { getCartItems } from './CartItem'; 
+import { usePriceCalculate } from './PriceCalculate';
+
 
 const BillOrder = () => {
+    const { calTotal, calNetTotal, calVat, calProductPrice, calShipping, calDiscount, cartItems } = usePriceCalculate();
 
     const [currentCategory, setCurrentCategory] = useState(() => {
         const savedCategory = localStorage.getItem('currentCategory');
@@ -15,53 +17,12 @@ const BillOrder = () => {
         localStorage.setItem('currentCategory', category);
         setCurrentPage(1);
     };
-    const [billItems, setBillItems] = useState([]);
-    const vat = 0.07; // 7% VAT
-
-    useEffect(() => {
-        // ดึงข้อมูลจาก CartItem
-        const items = getCartItems(); 
-        setBillItems(items);
-    }, []);
-
-    const calTotal = () => {
-        let totalPrice = 0;
-        billItems.forEach(item => {
-            totalPrice += item.price * item.quantity; 
-        });
-        return totalPrice.toFixed(2);
-    };
-
-    const calNetTotal = () => {
-        let totalPrice = calTotal(); 
-        return totalPrice; // แสดงผลรวมราคาสุทธิ
-    };
-
-    const calVat = () => {
-        let totalPrice = calTotal(); 
-        let vatPrice = totalPrice * vat;
-        return vatPrice.toFixed(2); 
-    };
-
-    const calProductPrice = () => {
-        let totalPrice = calTotal(); 
-        let productPrice = totalPrice - (totalPrice * vat);
-        return productPrice.toFixed(2); 
-    };
-
-    const calShipping = () => {
-        return billItems.length === 0 ? 0 : 250; // ค่าจัดส่ง
-    };
-
-    const calDiscount = () => {
-        return 10; // ส่วนลด
-    };
-
+    
     const renderBillItems = () => {
-        if (billItems.length === 0) {
+        if (cartItems.length === 0) {
             return <div className='col-12'>Your Bill is empty</div>;
         } else {
-            return billItems.map((item, index) => (
+            return cartItems.map((item, index) => (
                 <div key={index} className="mb-3 mt-2">
                     <div className="row">
                         <div className="col-6">
