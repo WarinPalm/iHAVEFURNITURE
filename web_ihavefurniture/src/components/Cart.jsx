@@ -100,7 +100,7 @@ const Cart = () => {
                 <div key={index} className="card mb-3">
                     <div className="row">
                         <div className="col-4">
-                            <img src={item.image} className="img-fluid custom-cart-img rounded-start" alt={item.name} />
+                            <img src={item.image} className="img-fluid custom-cart-img" alt={item.name} />
                         </div>
                         <div className="col-8">
                             <div className="card-body">

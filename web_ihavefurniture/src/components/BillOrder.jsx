@@ -4,6 +4,17 @@ import LoginModal from './Modal/LoginModal';
 import { getCartItems } from './CartItem'; 
 
 const BillOrder = () => {
+
+    const [currentCategory, setCurrentCategory] = useState(() => {
+        const savedCategory = localStorage.getItem('currentCategory');
+        return savedCategory ? savedCategory : 'sofa';
+    });
+    
+    const handleCategoryClick = (category) => { //เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
+        setCurrentCategory(category);
+        localStorage.setItem('currentCategory', category);
+        setCurrentPage(1);
+    };
     const [billItems, setBillItems] = useState([]);
     const vat = 0.07; // 7% VAT
 
@@ -178,7 +189,7 @@ const BillOrder = () => {
                                             <div className="col-1">
                                                 <h5 className="card-title">:</h5> 
                                             </div>
-                                            <div className="col-1 text-end">
+                                            <div className="col-1">
                                                 <input type="date"/>
                                             </div>
                                         </div>
@@ -192,7 +203,7 @@ const BillOrder = () => {
                                             <div className="col-1">
                                                 <h5 className="card-title">:</h5> 
                                             </div>
-                                            <div className="col-1 text-end">
+                                            <div className="col-1">
                                                 <input type="date"/>
                                             </div>
                                         </div>
@@ -206,13 +217,17 @@ const BillOrder = () => {
                                             <div className="col-1">
                                                 <h5 className="card-title">:</h5> 
                                             </div>
-                                            <div className="col-1 text-end">
+                                            <div className="col-1">
                                                 <input type="file"/>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div className="d-flex justify-content-center">
+                                <button className='btn btn-custom mt-5'>Confirm Order</button>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
