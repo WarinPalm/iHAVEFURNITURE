@@ -24,7 +24,7 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice }
             detail: currentDetail,
             price: currentPrice,
             quantity: quantity,
-            status: null // สถานะเริ่มต้นเป็น null
+            status: 'สั่งซื้อ' // สถานะเริ่มต้นเป็น null
         };
 
         // ตรวจสอบว่าสินค้านั้นมีในตะกร้าอยู่แล้วมั้ย

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
@@ -29,7 +29,7 @@ const Cart = () => {
         updateCartItems(updatedCartItems);
     };
 
-    const cartItemsStatusNull = cartItems.filter(item => item.status === null);
+    const cartItemsStatusNull = cartItems.filter(item => item.status === 'สั่งซื้อ');
 
     const renderCartItems = () => {
         if (cartItemsStatusNull.length === 0) {
@@ -64,6 +64,13 @@ const Cart = () => {
         }
     };
 
+    // คำนวณราคาเฉพาะสินค้าที่มีสถานะ 'สั่งซื้อ'
+    const totalNull = calTotal('สั่งซื้อ'); 
+    const netTotalNull = calNetTotal('สั่งซื้อ'); 
+    const vatNull = calVat('สั่งซื้อ');
+    const productPriceNull = calProductPrice('สั่งซื้อ'); 
+
+
     return (
         <>
             <Navbar />
@@ -80,11 +87,11 @@ const Cart = () => {
                                 <h4 className='mb-4'>Order Summary</h4>
                                 <div className="d-flex justify-content-between mb-4">
                                     <span>Product Price:</span>
-                                    <span>฿{calProductPrice()}</span>
+                                    <span>฿{productPriceNull}</span>
                                 </div>
                                 <div className="d-flex justify-content-between mb-4">
                                     <span>VAT 7%:</span>
-                                    <span>฿{calVat()}</span>
+                                    <span>฿{vatNull}</span>
                                 </div>
                                 <div className="d-flex justify-content-between mb-4">
                                     <span>Shipping cost:</span>
@@ -96,12 +103,12 @@ const Cart = () => {
                                 </div>  
                                 <div className="d-flex justify-content-between mb-3">
                                     <span>Total:</span>
-                                    <span>฿{calTotal()}</span>
+                                    <span>฿{totalNull}</span>
                                 </div>  
                                 <hr />
                                 <div className="d-flex justify-content-between mb-3">
                                     <span>Net Total:</span>
-                                    <span>฿{calNetTotal()}</span>
+                                    <span>฿{netTotalNull}</span>
                                 </div>  
                                 
                                 <Link to="../billOrder">

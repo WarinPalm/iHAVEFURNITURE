@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
+import { updateCartStatus } from './CartItem';
 import { usePriceCalculate } from './PriceCalculate';
 
 
@@ -17,12 +18,19 @@ const BillOrder = () => {
         localStorage.setItem('currentCategory', category);
         setCurrentPage(1);
     };
-    
+    const confirmOrder = () =>{
+        cartItems.forEach((item,index)=>{
+            updateCartStatus(index, 'รอคำอนุมัติ');
+        });
+    }
     const renderBillItems = () => {
-        if (cartItems.length === 0) {
+        // กรองเฉพาะสินค้าใน cart ที่มีสถานะเป็น 'รอชำระเงิน'
+        const cartItemsForPayment = cartItems.filter(item => item.status === 'รอชำระเงิน');
+    
+        if (cartItemsForPayment.length === 0) {
             return <div className='col-12'>Your Bill is empty</div>;
         } else {
-            return cartItems.map((item, index) => (
+            return cartItemsForPayment.map((item, index) => (
                 <div key={index} className="mb-3 mt-2">
                     <div className="row">
                         <div className="col-6">
@@ -42,8 +50,15 @@ const BillOrder = () => {
             ));
         }
     };
+    
 
     const renderPrice = () => {
+        // คำนวณราคาเฉพาะสินค้าที่มีสถานะ 'รอชำระเงิน'
+        const totalForPayment = calTotal('รอชำระเงิน');
+        const netTotalForPayment = calNetTotal('รอชำระเงิน');
+        const vatForPayment = calVat('รอชำระเงิน');
+        const productPriceForPayment = calProductPrice('รอชำระเงิน');
+
         return (
             <div className="mb-3 mt-5">
                 <div className="row">
@@ -52,7 +67,7 @@ const BillOrder = () => {
                     </div>
                     <div className="col-1"></div>
                     <div className="col-4 text-end">
-                        <h5 className="card-title">฿{calProductPrice()}</h5> 
+                        <h5 className="card-title">฿{productPriceForPayment}</h5> 
                     </div>
                 </div>
 
@@ -62,7 +77,7 @@ const BillOrder = () => {
                     </div>
                     <div className="col-1"></div>
                     <div className="col-4 text-end">
-                        <h5 className="card-title">฿{calVat()}</h5> 
+                        <h5 className="card-title">฿{vatForPayment}</h5> 
                     </div>
                 </div>
 
@@ -82,7 +97,7 @@ const BillOrder = () => {
                     </div>
                     <div className="col-1"></div>
                     <div className="col-4 text-end">
-                        <h5 className="card-title">฿{calTotal()}</h5> 
+                        <h5 className="card-title">฿{totalForPayment}</h5> 
                     </div>
                 </div>
 
@@ -106,12 +121,12 @@ const BillOrder = () => {
                     </div>
                     <div className="col-1"></div>
                     <div className="col-4 text-end">
-                        <h5 className="card-title">฿{calNetTotal()}</h5> 
+                        <h5 className="card-title">฿{netTotalForPayment}</h5> 
                     </div>
                 </div>
             </div>
-        )
-    }
+        );
+    };
 
     return (
         <>
@@ -186,7 +201,7 @@ const BillOrder = () => {
                                 </div>
                             </div>
                             <div className="d-flex justify-content-center">
-                                <button className='btn btn-custom mt-5'>Confirm Order</button>
+                                <button className='btn btn-custom mt-5' onClick={confirmOrder}>Confirm Order</button>
                             </div>
                             
                         </div>

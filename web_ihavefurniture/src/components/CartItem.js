@@ -4,8 +4,8 @@ export const cartItems = [
         "name": "kitchen21",
         "detail": "kitchen21asasasas",
         "price": 1500,
-        "quantity": 100,
-        "status": null
+        "quantity": 10,
+        "status": 'สั่งซื้อ'
     },
     {
 
@@ -14,13 +14,13 @@ export const cartItems = [
         "detail": "kitchen21asasasas",
         "price": 1500,
         "quantity": 10,
-        "status": null
+        "status": 'สั่งซื้อ'
     }
 ];
 
 
 export const addToCart = (product) => {
-    const item = { ...product, status: null }; // เพิ่มสถานะ 'null'
+    const item = { ...product, status:'สั่งซื้อ'}; // เพิ่มสถานะ 'สั่งซื้อ'
     cartItems.push(item);
 };
 

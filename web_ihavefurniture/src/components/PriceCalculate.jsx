@@ -5,37 +5,40 @@ const PriceContext = createContext();
 
 export const PriceProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
-
     const vat = 0.07;
 
-    useEffect(() => { //ให้อัพเดทตลอดเวลา
+    useEffect(() => {
         const items = getCartItems(); 
-        setCartItems(items); // อัปเดตค่าใน state
+        setCartItems(items);
     }, []);
 
     const updateCartItems = (newCartItems) => {
         setCartItems(newCartItems);
     };
 
-    const calTotal = () => {
+    // ฟังก์ชันไว้สร้างยอดรวม โดยอิงผ่าน status
+    const calTotal = (status) => {
         let totalPrice = 0;
-        cartItems.forEach(item => {
+        const filteredItems = status ? cartItems.filter(item => item.status === status) : cartItems;
+
+        filteredItems.forEach(item => {
             totalPrice += item.price * item.quantity; 
         });
+
         return totalPrice.toFixed(2);
     };
 
-    const calNetTotal = () => {
-        return calTotal();
+    const calNetTotal = (status) => {
+        return calTotal(status);
     };
 
-    const calVat = () => {
-        let vatPrice = calTotal() * vat;
+    const calVat = (status) => {
+        let vatPrice = calTotal(status) * vat;
         return vatPrice.toFixed(2); 
     };
 
-    const calProductPrice = () => {
-        let totalPrice = calTotal();
+    const calProductPrice = (status) => {
+        let totalPrice = calTotal(status);
         let productPrice = totalPrice - (totalPrice * vat);
         return productPrice.toFixed(2); 
     };
@@ -45,16 +48,29 @@ export const PriceProvider = ({ children }) => {
     };
 
     const calDiscount = () => {
-        return 10; // ส่วนลด
+        return 10; // Discount
     };
+    // const calNetTotal = (status) => {
+    //     const total = calTotal(status);
+    //     const shipping = calShipping();
+    //     const discount = calDiscount();
+    //     return (total + shipping - (total * (discount / 100))).toFixed(2);
+    // };
 
     return (
-        <PriceContext.Provider value={{ calTotal, calNetTotal, calVat, calProductPrice, calShipping, calDiscount, cartItems, updateCartItems}}>
+        <PriceContext.Provider value={{
+            calTotal,
+            calNetTotal,
+            calVat,
+            calProductPrice,
+            calShipping,
+            calDiscount,
+            cartItems,
+            updateCartItems
+        }}>
             {children}
         </PriceContext.Provider>
     );
 };
 
 export const usePriceCalculate = () => useContext(PriceContext);
-
-
