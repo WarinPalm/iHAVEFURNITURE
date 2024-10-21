@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
+import Footer from "./Footer";
 
 const Register = () => {
 
@@ -63,15 +64,13 @@ const Register = () => {
 
                             <div className="mb-3 col-md-8" id="question">
                                 
-
-                            </div>
-                           
+                            </div>            
                         </form>
- 
                     </div>
                 </div>
             </div>
         </section>
+        <Footer/>
         </>
     );
 };

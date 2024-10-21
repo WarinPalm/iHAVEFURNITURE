@@ -5,7 +5,7 @@ import { myProduct } from './MyProduct';
 import Navbar from './Navbar';
 import LoginModal from "./Modal/LoginModal";
 import ProductModal from './Modal/ProductModal';
-
+import Footer from "./Footer";
 
 const SearchProduct = () => {
     const [currentCategory, setCurrentCategory] = useState(() => {
@@ -157,6 +157,7 @@ const SearchProduct = () => {
                     </div>
                 </div>
             </section>
+            <Footer/>
         </>
     );
 };

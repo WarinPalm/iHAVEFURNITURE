@@ -8,6 +8,7 @@ import './CSS/header.css';
 import './CSS/hero-image.css';
 import './CSS/style.css';
 import './CSS/loginModal.css';
+import './CSS/footer.css';
 
 import { PriceProvider } from './components/PriceCalculate.jsx';
 

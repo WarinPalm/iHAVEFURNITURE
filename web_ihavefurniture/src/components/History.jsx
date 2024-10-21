@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import { cartItems } from './CartItem';
+import Footer from "./Footer";
 
 const History = () => {
 
@@ -62,6 +63,7 @@ const History = () => {
                     )}
                 </div>
             </div>
+            <Footer/>
         </>
     );
 };

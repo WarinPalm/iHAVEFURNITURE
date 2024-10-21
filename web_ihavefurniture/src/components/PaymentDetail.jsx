@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import { usePriceCalculate } from './PriceCalculate';
+import Footer from "./Footer";
 
 const PaymentDetail = () => {
   const { cartItems, calTotal, calNetTotal, calVat, calProductPrice, calShipping, calDiscount } = usePriceCalculate();
@@ -148,6 +149,7 @@ const PaymentDetail = () => {
           <div className="col-1"></div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }
