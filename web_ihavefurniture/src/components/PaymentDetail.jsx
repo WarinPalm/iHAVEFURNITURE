@@ -111,34 +111,41 @@ const PaymentDetail = () => {
       <Navbar />
       <div className="container">
         <div className="row">
-          <div className="card card-bill card-order mb-3 mt-5">
-            <div className="card-body">
-              <h5 className="card-title mt-3">Order#s5554545454545</h5>
-              <h1 className="card-title mt-3">Your order is in the process of being shipped</h1>
-              <h5 className="card-title mt-5">Payment Status: อนุมัติคำสั่งซื้อ</h5>
-              <h5 className="card-title mt-3">Order Status: Currently Shipping</h5>
-              <h5 className="card-title mt-3">Ordered date: Jul. 5 2024</h5>
-              <h5 className="card-title mt-3">Address: 88/2 Banglang Gorkai Bangkokk 77159</h5>
 
-              {/* โซนแสดงสินค้า */}
-              <div className="card card-bill mt-5">
-                <div className="card-body">
-                  {renderProductItem()}
+          <div className="col-1"></div>
+
+          <div className="col-10">
+            <div className="card card-bill card-order mb-3 mt-5">
+              <div className="card-body">
+                <h5 className="card-title mt-3">Order#s5554545454545</h5>
+                <h1 className="card-title mt-3">Your order is in the process of being shipped</h1>
+                <h5 className="card-title mt-5">Payment Status: อนุมัติคำสั่งซื้อ</h5>
+                <h5 className="card-title mt-3">Order Status: Currently Shipping</h5>
+                <h5 className="card-title mt-3">Ordered date: Jul. 5 2024</h5>
+                <h5 className="card-title mt-3">Address: 88/2 Banglang Gorkai Bangkokk 77159</h5>
+
+                {/* โซนแสดงสินค้า */}
+                <div className="card card-bill mt-5">
+                  <div className="card-body">
+                    {renderProductItem()}
+                  </div>
                 </div>
-              </div>
 
-              {/* โซนแสดงราคา */}
-              <div className="card card-bill mt-5">
-                <div className="card-body">
-                  {renderPrice()}
+                {/* โซนแสดงราคา */}
+                <div className="card card-bill mt-5">
+                  <div className="card-body">
+                    {renderPrice()}
+                  </div>
                 </div>
-              </div>
 
-              <div className="d-flex justify-content-end mt-5">
-                <button className="btn btn-danger" onClick={goToHistory}>BACK</button>
+                <div className="d-flex justify-content-end mt-5">
+                  <button className="btn btn-danger" onClick={goToHistory}>BACK</button>
+                </div>
               </div>
             </div>
           </div>
+
+          <div className="col-1"></div>
         </div>
       </div>
     </>

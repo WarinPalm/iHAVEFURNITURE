@@ -141,7 +141,8 @@ const BillOrder = () => {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-12">
+                        <div className="col-1"></div>
+                        <div className="col-10">
                             <div className="card card-bill">
                                 <div className="card-body">
                                     <h1 className='mb-5 mt-4'>Receipt</h1>
@@ -206,6 +207,7 @@ const BillOrder = () => {
                             
                         </div>
                     </div>
+                    <div className="col-1"></div>
                 </div>
             </section>
         </>
