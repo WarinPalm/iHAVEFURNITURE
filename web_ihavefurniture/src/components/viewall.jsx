@@ -114,7 +114,7 @@ const ViewAll = () => {
                             </div>
                         </div>
                     </div>
-                    <div id="pagination" className="mt-4">
+                    <div id="pagination" className="mt-4 mb-4">
                         <div className="d-flex justify-content-end">
                             {totalPages > 1 && (
                                 <>

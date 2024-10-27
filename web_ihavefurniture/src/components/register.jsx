@@ -3,16 +3,20 @@ import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
 
 const Register = () => {
-
+    const [chooseQuestion, setChooseQuestion] = useState(false);
     const [currentCategory, setCurrentCategory] = useState(() => {
         const savedCategory = localStorage.getItem('currentCategory');
         return savedCategory ? savedCategory : 'sofa';
     });
     
-    const handleCategoryClick = (category) => { //เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
+    const handleCategoryClick = (category) => {
         setCurrentCategory(category);
         localStorage.setItem('currentCategory', category);
-        setCurrentPage(1);
+    };
+
+    const handleQuestionChange = (event) => {
+        // ถ้าเลือกคำตอบให้ set เป็น True
+        setChooseQuestion(event.target.value !== "");
     };
 
     return (
@@ -44,7 +48,7 @@ const Register = () => {
                                 </div>
                                 <div className="mb-3 col-md-4">
                                     <label htmlFor="dateofbirth-Input" className="form-label">Date of birth</label>
-                                    <input type="text" className="form-control" id="dateofbirth-Input" placeholder="Date of birth" required />
+                                    <input type="date" className="form-control" id="dateofbirth-Input" placeholder="Date of birth" required />
                                 </div>
                             </div>
 
@@ -62,14 +66,26 @@ const Register = () => {
                             </div>
 
                             <div className="mb-3 col-md-8" id="question">
-                                
-                            </div>            
+                                <label htmlFor="security-question" className="form-label">Select Question</label>
+                                <select id="security-question" className="form-select" required onChange={handleQuestionChange}>
+                                    <option value="">-- Please select a question --</option>
+                                    <option value="q1">สัตว์เลี้ยงตัวแรกของคุณชื่ออะไร ?</option>
+                                    <option value="q2">ชอบสัตว์อะไรที่สุด ?</option>
+                                    <option value="q3">อาหารที่คุณเกลียด ?</option>
+                                </select>
+                            </div>   
+
+                            {chooseQuestion && (
+                                <div className="mb-3 col-md-8">
+                                    <label htmlFor="answer-input" className="form-label">Your Answer</label>
+                                    <input type="text" className="form-control" id="answer-input" placeholder="Type the answer" required />
+                                </div>
+                            )}
                         </form>
                     </div>
                 </div>
             </div>
         </section>
-
         </>
     );
 };
