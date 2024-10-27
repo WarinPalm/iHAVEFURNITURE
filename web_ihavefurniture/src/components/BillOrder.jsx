@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
 import { updateCartStatus } from './CartItem';
 import { usePriceCalculate } from './PriceCalculate';
-import Footer from "./Footer";
+
 
 const BillOrder = () => {
     const { calTotal, calNetTotal, calVat, calProductPrice, calShipping, calDiscount, cartItems } = usePriceCalculate();
@@ -210,7 +210,6 @@ const BillOrder = () => {
                     <div className="col-1"></div>
                 </div>
             </section>
-            <Footer/>
         </>
     );
 }

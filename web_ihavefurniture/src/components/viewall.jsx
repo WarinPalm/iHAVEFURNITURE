@@ -3,7 +3,6 @@ import Navbar from './Navbar';
 import { myProduct } from './MyProduct';
 import LoginModal from "./Modal/LoginModal";
 import ProductModal from './Modal/ProductModal';
-import Footer from "./Footer";
 
 const ViewAll = () => {
     const [currentCategory, setCurrentCategory] = useState(() => {
@@ -136,7 +135,7 @@ const ViewAll = () => {
                     </div>
                 </div>
             </section>
-            <Footer/>
+
         </>
     );
 };

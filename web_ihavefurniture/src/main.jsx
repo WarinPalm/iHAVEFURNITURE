@@ -20,6 +20,7 @@ import SearchProduct from './components/SearchProduct.jsx';
 import BillOrder from './components/BillOrder.jsx';
 import History from './components/History.jsx';
 import PaymentDetail from './components/PaymentDetail.jsx';
+import Footer from './components/Footer';
 
 const router = createBrowserRouter([
   {
@@ -60,7 +61,14 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <PriceProvider>
-      <RouterProvider router={router} />
+      <div className="app-container">
+        <div className="main-content">
+          <RouterProvider router={router} />
+        </div>
+        <Footer />
+      </div>
     </PriceProvider>
   </StrictMode>,
 );
+
+

@@ -3,7 +3,24 @@
 .material-symbols-outlined {
     font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 }
+/* CSS ที่ใช้กับโครงสร้างหลัก */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+  
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
+.main-content {
+    flex: 1 0 auto;
+}
+
+
+  
 /* form login */
 
 #user-login .modal-dialog {

@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
 import { updateCartStatus } from './CartItem';
 import { usePriceCalculate } from './PriceCalculate';
-import Footer from "./Footer";
+
 
 const Cart = () => {
     const { calTotal, calNetTotal, calVat, calProductPrice, calShipping, calDiscount, cartItems, updateCartItems } = usePriceCalculate();
@@ -120,7 +120,7 @@ const Cart = () => {
                     </div>
                 </div>
             </div>
-            <Footer/>
+  
         </>
     );
 };

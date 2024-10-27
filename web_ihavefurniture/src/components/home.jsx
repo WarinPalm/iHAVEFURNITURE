@@ -7,7 +7,7 @@ import LoginModal from './Modal/LoginModal';
 import HeroImage from './HeroImage';
 import Category from './Category';
 import ProductModal from './Modal/ProductModal';
-import Footer from "./Footer";
+
 
 const Home = () => {
     const [currentCategory, setCurrentCategory] = useState(() => {
@@ -143,7 +143,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            <Footer/>
+
         </>
     );
 };
