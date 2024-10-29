@@ -5,7 +5,7 @@ import { usePriceCalculate } from './PriceCalculate';
 
 
 const PaymentDetail = () => {
-  const { cartItems, calTotal, calNetTotal, calVat, calProductPrice, calShipping, calDiscount } = usePriceCalculate();
+  const { cartItems, calNetTotal, calProductPrice} = usePriceCalculate();
   const navigate = useNavigate();
 
   const goToHistory = () => {
@@ -34,8 +34,6 @@ const PaymentDetail = () => {
   };
   const renderPrice = ()=>{
     const productPriceForApprove = calProductPrice('รอคำอนุมัติ');
-    const vatForApprove = calVat('รอคำอนุมัติ');
-    const totalForApprove= calTotal('รอคำอนุมัติ');
     const netTotalForApprove = calNetTotal('รอคำอนุมัติ');
     return(
       <>
@@ -49,45 +47,7 @@ const PaymentDetail = () => {
           </div>
         </div>
 
-        <div className="row">
-          <div className="col-6">
-            <h5 className="card-title">VAT 7%:</h5>   
-          </div>
-          <div className="col-1"></div>
-          <div className="col-4 text-end">
-            <h5 className="card-title">฿{vatForApprove}</h5> 
-          </div>
-        </div>
 
-        <div className="row">
-          <div className="col-6">
-            <h5 className="card-title">Shipping cost:</h5>   
-          </div>
-          <div className="col-1"></div>
-          <div className="col-4 text-end">
-            <h5 className="card-title">฿{calShipping()}</h5> 
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-6">
-            <h5 className="card-title">Total:</h5>   
-          </div>
-          <div className="col-1"></div>
-          <div className="col-4 text-end">
-            <h5 className="card-title">฿{totalForApprove}</h5> 
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-6">
-            <h5 className="card-title">Discount:</h5>   
-          </div>
-          <div className="col-1"></div>
-          <div className="col-4 text-end">
-            <h5 className="card-title">{calDiscount()}%</h5> 
-          </div>
-        </div>
 
         <div className="row">
           <div className="col-11"><hr/></div>

@@ -17,7 +17,7 @@ export const PriceProvider = ({ children }) => {
     };
 
     // ฟังก์ชันไว้สร้างยอดรวม โดยอิงผ่าน status
-    const calTotal = (status) => {
+    const calNetTotal = (status) => {
         let totalPrice = 0;
         const filteredItems = status ? cartItems.filter(item => item.status === status) : cartItems;
 
@@ -28,43 +28,18 @@ export const PriceProvider = ({ children }) => {
         return totalPrice.toFixed(2);
     };
 
-    const calNetTotal = (status) => {
-        return calTotal(status);
+
+    const calProductPrice = (status) => {   
+        let totalPrice = calNetTotal(status);
+       
+        return totalPrice; 
     };
 
-    const calVat = (status) => {
-        let vatPrice = calTotal(status) * vat;
-        return vatPrice.toFixed(2); 
-    };
-
-    const calProductPrice = (status) => {
-        let totalPrice = calTotal(status);
-        let productPrice = totalPrice - (totalPrice * vat);
-        return productPrice.toFixed(2); 
-    };
-
-    const calShipping = () => {
-        return cartItems.length === 0 ? 0 : 250;
-    };
-
-    const calDiscount = () => {
-        return 10; // Discount
-    };
-    // const calNetTotal = (status) => {
-    //     const total = calTotal(status);
-    //     const shipping = calShipping();
-    //     const discount = calDiscount();
-    //     return (total + shipping - (total * (discount / 100))).toFixed(2);
-    // };
 
     return (
         <PriceContext.Provider value={{
-            calTotal,
             calNetTotal,
-            calVat,
             calProductPrice,
-            calShipping,
-            calDiscount,
             cartItems,
             updateCartItems
         }}>

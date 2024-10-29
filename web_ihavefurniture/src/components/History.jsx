@@ -30,7 +30,7 @@ const History = () => {
 
             <div className="container">
                 <div className="row">
-                    <h1 className="mt-5 mb-5">Orders</h1>
+                    <h1 className="mt-5 mb-5">Orders History</h1>
                     {approvedItems.length > 0 && (
                         <div className="card mb-3 card-bill card-hover" onClick={goToPaymentDetail}>
                             <div className="row">

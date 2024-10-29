@@ -7,7 +7,7 @@ import { usePriceCalculate } from './PriceCalculate';
 
 
 const Cart = () => {
-    const { calTotal, calNetTotal, calVat, calProductPrice, calShipping, calDiscount, cartItems, updateCartItems } = usePriceCalculate();
+    const { calNetTotal, calProductPrice, cartItems, updateCartItems } = usePriceCalculate();
     
     const handleBuy = () => {
         cartItems.forEach((item, index) => {
@@ -66,10 +66,8 @@ const Cart = () => {
     };
 
     // คำนวณราคาเฉพาะสินค้าที่มีสถานะ 'สั่งซื้อ'
-    const totalNull = calTotal('สั่งซื้อ'); 
-    const netTotalNull = calNetTotal('สั่งซื้อ'); 
-    const vatNull = calVat('สั่งซื้อ');
-    const productPriceNull = calProductPrice('สั่งซื้อ'); 
+    const netTotal = calNetTotal('สั่งซื้อ'); 
+    const productPrice = calProductPrice('สั่งซื้อ'); 
 
 
     return (
@@ -86,30 +84,16 @@ const Cart = () => {
                         <div className="card" style={{ position: 'sticky', top: '10px' }}>
                             <div className="card-body">
                                 <h4 className='mb-4'>Order Summary</h4>
+
                                 <div className="d-flex justify-content-between mb-4">
                                     <span>Product Price:</span>
-                                    <span>฿{productPriceNull}</span>
+                                    <span>฿{productPrice}</span>
                                 </div>
-                                <div className="d-flex justify-content-between mb-4">
-                                    <span>VAT 7%:</span>
-                                    <span>฿{vatNull}</span>
-                                </div>
-                                <div className="d-flex justify-content-between mb-4">
-                                    <span>Shipping cost:</span>
-                                    <span>฿{calShipping()}</span>
-                                </div>
-                                <div className="d-flex justify-content-between mb-3">
-                                    <span>Discount:</span>
-                                    <span>{calDiscount()}%</span>
-                                </div>  
-                                <div className="d-flex justify-content-between mb-3">
-                                    <span>Total:</span>
-                                    <span>฿{totalNull}</span>
-                                </div>  
+
                                 <hr />
                                 <div className="d-flex justify-content-between mb-3">
                                     <span>Net Total:</span>
-                                    <span>฿{netTotalNull}</span>
+                                    <span>฿{netTotal}</span>
                                 </div>  
                                 
                                 <Link to="../billOrder">

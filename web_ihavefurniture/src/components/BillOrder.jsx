@@ -6,7 +6,7 @@ import { usePriceCalculate } from './PriceCalculate';
 
 
 const BillOrder = () => {
-    const { calTotal, calNetTotal, calVat, calProductPrice, calShipping, calDiscount, cartItems } = usePriceCalculate();
+    const { calNetTotal, calProductPrice, cartItems } = usePriceCalculate();
 
     const [currentCategory, setCurrentCategory] = useState(() => {
         const savedCategory = localStorage.getItem('currentCategory');
@@ -54,9 +54,7 @@ const BillOrder = () => {
 
     const renderPrice = () => {
         // คำนวณราคาเฉพาะสินค้าที่มีสถานะ 'รอชำระเงิน'
-        const totalForPayment = calTotal('รอชำระเงิน');
         const netTotalForPayment = calNetTotal('รอชำระเงิน');
-        const vatForPayment = calVat('รอชำระเงิน');
         const productPriceForPayment = calProductPrice('รอชำระเงิน');
 
         return (
@@ -68,46 +66,6 @@ const BillOrder = () => {
                     <div className="col-1"></div>
                     <div className="col-4 text-end">
                         <h5 className="card-title">฿{productPriceForPayment}</h5> 
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-6">
-                        <h5 className="card-title">VAT 7%:</h5>   
-                    </div>
-                    <div className="col-1"></div>
-                    <div className="col-4 text-end">
-                        <h5 className="card-title">฿{vatForPayment}</h5> 
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-6">
-                        <h5 className="card-title">Shipping cost:</h5>   
-                    </div>
-                    <div className="col-1"></div>
-                    <div className="col-4 text-end">
-                        <h5 className="card-title">฿{calShipping()}</h5> 
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-6">
-                        <h5 className="card-title">Total:</h5>   
-                    </div>
-                    <div className="col-1"></div>
-                    <div className="col-4 text-end">
-                        <h5 className="card-title">฿{totalForPayment}</h5> 
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-6">
-                        <h5 className="card-title">Discount:</h5>   
-                    </div>
-                    <div className="col-1"></div>
-                    <div className="col-4 text-end">
-                        <h5 className="card-title">{calDiscount()}%</h5> 
                     </div>
                 </div>
 
