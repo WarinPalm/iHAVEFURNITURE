@@ -20,6 +20,7 @@ import SearchProduct from './components/SearchProduct.jsx';
 import BillOrder from './components/BillOrder.jsx';
 import History from './components/History.jsx';
 import PaymentDetail from './components/PaymentDetail.jsx';
+import OrderDetail from './components/OrderDetail.jsx';
 import Footer from './components/Footer';
 
 const router = createBrowserRouter([
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
   {
     path: "paymentDetail",
     element: <PaymentDetail />
+  },
+  {
+    path:"orderDetail",
+    element:<OrderDetail/>
   }
 ]);
 

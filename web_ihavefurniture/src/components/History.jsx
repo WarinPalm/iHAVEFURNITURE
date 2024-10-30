@@ -18,11 +18,11 @@ const History = () => {
 
     const navigate = useNavigate();
     const goToPaymentDetail = () => {
-        navigate(`/paymentDetail`);
+        navigate(`/orderDetail`);
     };
 
     // Filter status 'รอคำอนุมัติ'
-    const approvedItems = cartItems.filter(item => item.status === 'รอคำอนุมัติ');
+    const approvedItems = cartItems.filter(item => item.status === 'รอชำระเงิน' || item.status === 'รอคำอนุมัติ');
 
     return (
         <>

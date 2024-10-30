@@ -1,175 +1,71 @@
-import React, { useEffect, useState} from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
-import LoginModal from './Modal/LoginModal';
-import { updateCartStatus } from './CartItem';
-import { usePriceCalculate } from './PriceCalculate';
+import { cartItems } from './CartItem';
 
 
 const BillOrder = () => {
-    const { calNetTotal, calProductPrice, cartItems } = usePriceCalculate();
 
     const [currentCategory, setCurrentCategory] = useState(() => {
         const savedCategory = localStorage.getItem('currentCategory');
         return savedCategory ? savedCategory : 'sofa';
     });
-    
-    const handleCategoryClick = (category) => { //เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
+
+    const handleCategoryClick = (category) => { 
         setCurrentCategory(category);
         localStorage.setItem('currentCategory', category);
-        setCurrentPage(1);
     };
-    const confirmOrder = () =>{
-        cartItems.forEach((item,index)=>{
-            updateCartStatus(index, 'รอคำอนุมัติ');
-        });
-    }
-    const renderBillItems = () => {
-        // กรองเฉพาะสินค้าใน cart ที่มีสถานะเป็น 'รอชำระเงิน'
-        const cartItemsForPayment = cartItems.filter(item => item.status === 'รอชำระเงิน');
-    
-        if (cartItemsForPayment.length === 0) {
-            return <div className='col-12'>Your Bill is empty</div>;
-        } else {
-            return cartItemsForPayment.map((item, index) => (
-                <div key={index} className="mb-3 mt-2">
-                    <div className="row">
-                        <div className="col-6">
-                            <h5 className="card-title">{item.name}</h5>   
-                        </div>
-                        <div className="col-1">
-                            <h5 className="card-title">{item.quantity}</h5> 
-                        </div>
-                        <div className="col-4 text-end">
-                            <h5 className="card-title">฿{(item.price * item.quantity).toFixed(2)}</h5> 
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-11"><hr/></div>
-                    </div>
-                </div>
-            ));
-        }
+
+    const navigate = useNavigate();
+    const goToPaymentDetail = () => {
+        navigate(`/paymentDetail`);
     };
-    
 
-    const renderPrice = () => {
-        // คำนวณราคาเฉพาะสินค้าที่มีสถานะ 'รอชำระเงิน'
-        const netTotalForPayment = calNetTotal('รอชำระเงิน');
-        const productPriceForPayment = calProductPrice('รอชำระเงิน');
-
-        return (
-            <div className="mb-3 mt-5">
-                <div className="row">
-                    <div className="col-6">
-                        <h5 className="card-title">Product Price:</h5>   
-                    </div>
-                    <div className="col-1"></div>
-                    <div className="col-4 text-end">
-                        <h5 className="card-title">฿{productPriceForPayment}</h5> 
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-11"><hr/></div>
-                </div>
-
-                <div className="row">
-                    <div className="col-6">
-                        <h5 className="card-title">Net Total:</h5>   
-                    </div>
-                    <div className="col-1"></div>
-                    <div className="col-4 text-end">
-                        <h5 className="card-title">฿{netTotalForPayment}</h5> 
-                    </div>
-                </div>
-            </div>
-        );
-    };
+    // Filter status 'รอคำอนุมัติ'
+    const cartItemsForPayment = cartItems.filter(item => item.status === 'รอชำระเงิน');
 
     return (
         <>
             <Navbar />
-            <LoginModal />
-            
-            <section className='bill-order mt-5'>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-4 mb-3">
-                            <h1>Purchase Summary</h1>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-1"></div>
-                        <div className="col-10">
-                            <div className="card card-bill">
-                                <div className="card-body">
-                                    <h1 className='mb-5 mt-4'>Receipt</h1>
-                                    
-                                    <div className="mt-4 ms-5 bill-items">{renderBillItems()}</div>
 
-                                    <div className="ms-5">
-                                        {renderPrice()}
+            <div className="container">
+                <div className="row">
+                    <h1 className="mt-5 mb-5">Payment</h1>
+                    {cartItemsForPayment.length > 0 && (
+                        <div className="card mb-3 card-bill card-hover" onClick={goToPaymentDetail}>
+                            <div className="row">
+                                <div className="col-3">
+                                    {/* ดึงรูปภาพจาก approvedItems ชิ้นแรก */}
+                                    <img 
+                                        src={cartItemsForPayment[0].image} 
+                                        className="img-fluid custom-cart-img rounded-start" 
+                                        alt={cartItemsForPayment[0].name} 
+                                    />
+                                </div>
+                                <div className="col-4">
+                                    <div className="card-body">
+                                        <h5 className="card-title">Order#sdsdsdsdsdsdsds</h5>
+                                        <p className="card-title">Status: {cartItemsForPayment[0].status}</p>
+                                        <p className="card-title">Order Status: dsdsdsdsdsd</p>
                                     </div>
-                                </div>  
-                            </div>
-
-                            <div className="card card-bill mt-5">
-                                <div className="card-body">
-                                    <div className="mb-3 mt-2">
-                                        <div className="row">
-                                            <div className="col-1"></div>
-                                            <div className="col-2">
-                                                <h5 className="card-title">วันที่แจ้งโอน</h5>   
-                                            </div>
-                                            <div className="col-1">
-                                                <h5 className="card-title">:</h5> 
-                                            </div>
-                                            <div className="col-1">
-                                                <input type="date"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="mb-3 mt-2">
-                                        <div className="row">
-                                            <div className="col-1"></div>
-                                            <div className="col-2">
-                                                <h5 className="card-title">วันที่โอน</h5>   
-                                            </div>
-                                            <div className="col-1">
-                                                <h5 className="card-title">:</h5> 
-                                            </div>
-                                            <div className="col-1">
-                                                <input type="date"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="mb-3 mt-2">
-                                        <div className="row">
-                                            <div className="col-1"></div>
-                                            <div className="col-2">
-                                                <h5 className="card-title">แนบสลิป</h5>   
-                                            </div>
-                                            <div className="col-1">
-                                                <h5 className="card-title">:</h5> 
-                                            </div>
-                                            <div className="col-1">
-                                                <input type="file"/>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div className="col-5">
+                                    <div className="card-body">
+                                        <h5 className="card-title">Address</h5>
+                                        <p className="card-title">66/666644dsss sdsdds</p>
                                     </div>
                                 </div>
                             </div>
-                            <div className="d-flex justify-content-center">
-                                <button className='btn btn-custom mt-5' onClick={confirmOrder}>Confirm Order</button>
-                            </div>
-                            
                         </div>
-                    </div>
-                    <div className="col-1"></div>
+                    )}
+                    {cartItemsForPayment.length === 0 && (
+                        <p>No orders waiting for approval.</p>
+                    )}
                 </div>
-            </section>
+            </div>
+
         </>
     );
-}
+};
 
 export default BillOrder;
