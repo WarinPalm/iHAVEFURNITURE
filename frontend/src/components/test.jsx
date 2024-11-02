@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import Navbar from './Navbar';
 function Test() {
-    const [data, setData] = useState([]);
+    const [chooseQuestion, setChooseQuestion] = useState(false);
+    const [currentCategory, setCurrentCategory] = useState(() => {
+        const savedCategory = localStorage.getItem('currentCategory');
+        return savedCategory ? savedCategory : 'sofa';
+    });
+    
+    const handleCategoryClick = (category) => {
+        setCurrentCategory(category);
+        localStorage.setItem('currentCategory', category);
+    };
 
+    const [data, setData] = useState([]);
+    
     useEffect(() => {
         axios.get("http://localhost:3000/api/category")
             .then(res => {
@@ -13,14 +24,29 @@ function Test() {
     }, []);
 
     return (
+        <>
+        <Navbar onCategoryClick={handleCategoryClick} />
         <div>
-            {data.map((item, index) => (
-                <div key={index}>
-                    <p>{item.id}</p>
-                    <p>{item.name}</p>
-                </div>
-            ))}
+            {data.length > 0 && (
+                <table border="1" cellPadding="10" cellSpacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map((item, index) => (
+                            <tr key={index}>
+                                <td>{item.id}</td>
+                                <td>{item.name}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
         </div>
+        </>
     );
 }
 

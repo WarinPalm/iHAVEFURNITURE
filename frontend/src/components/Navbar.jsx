@@ -108,7 +108,10 @@ const Navbar = ({ onCategoryClick, activeCategory}) => {
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#about">Q&A</a>
-                        </li>                        
+                        </li>
+                        <li className="nav-item">
+                        <Link to="/test" className="nav-link" href="#about">Test</Link>
+                        </li>                     
                     </ul>
                 </div>
             </nav>

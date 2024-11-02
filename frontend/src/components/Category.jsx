@@ -1,47 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Category = ({ onCategoryClick, activeCategory }) => {
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:3000/api/category")
+            .then(res => {
+                setCategories(res.data);
+            })
+            .catch(error => console.error("Error fetching categories:", error));
+    }, []);
+
     return (
+        <>
         <aside className="col-2 full-height-overflow">
             <ul className="nav-aside">
+            {categories.map((category, index) => (
                 <li
-                    className={`category-nav ${activeCategory === 'sofa' ? 'active' : ''}`}
-                    onClick={() => onCategoryClick('sofa')}
+                    key={index}
+                    className={`category-nav ${activeCategory === category.name ? 'active' : ''}`}
+                    onClick={() => onCategoryClick(category.name)}
                 >
-                    Sofa
+                    {category.name}
                 </li>
-                <li
-                    className={`category-nav ${activeCategory === 'bed' ? 'active' : ''}`}
-                    onClick={() => onCategoryClick('bed')}
-                >
-                    Bed
-                </li>
-                <li
-                    className={`category-nav ${activeCategory === 'chair' ? 'active' : ''}`}
-                    onClick={() => onCategoryClick('chair')}
-                >
-                    Chair
-                </li>
-                <li
-                    className={`category-nav ${activeCategory === 'table' ? 'active' : ''}`}
-                    onClick={() => onCategoryClick('table')}
-                >
-                    Table
-                </li>
-                <li
-                    className={`category-nav ${activeCategory === 'lamp' ? 'active' : ''}`}
-                    onClick={() => onCategoryClick('lamp')}
-                >
-                    Lamp
-                </li>
-                <li
-                    className={`category-nav ${activeCategory === 'kitchen' ? 'active' : ''}`}
-                    onClick={() => onCategoryClick('kitchen')}
-                >
-                    Kitchen
-                </li>
+            ))}
+
             </ul>
         </aside>
+        
+        </>
     );
 };
 

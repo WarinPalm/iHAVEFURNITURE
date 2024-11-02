@@ -46,6 +46,7 @@ const Home = () => {
         localStorage.setItem('currentCategory', category);
         setCurrentPage(1);
     };
+    
 
     const renderProducts = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -125,6 +126,7 @@ const Home = () => {
                     </div>
                     <div className="row mt-2 pt-5">
                         <Category activeCategory={currentCategory} onCategoryClick={handleCategoryClick} />
+
                         <div className="col-1"></div>
                         <div className="col-9 row-gap-2">
 
