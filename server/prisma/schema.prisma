@@ -3,6 +3,7 @@
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// npx prisma migrate dev --name init
 
 generator client {
   provider = "prisma-client-js"
@@ -40,6 +41,8 @@ model Product {
   images      Image[]
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
+  category    Category?        @relation(fields: [categoryId], references: [id])
+  categoryId  Int
 }
 
 model Order {
@@ -64,10 +67,11 @@ model ProductOnOrder {
 }
 
 model Category {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Cart {

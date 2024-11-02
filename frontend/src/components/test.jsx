@@ -2,24 +2,22 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function Test() {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.post("http://localhost:3000/api/login")
+        axios.get("http://localhost:3000/api/category")
             .then(res => {
-                console.log(res.data); 
-                setData(res.data.payload); 
+                setData(res.data); 
             })
             .catch(error => console.error("Error fetching data:", error));
     }, []);
 
     return (
         <div>
-            
             {data.map((item, index) => (
                 <div key={index}>
-                    <p>{item.email}</p>
-                    <p>{item.password}</p>
+                    <p>{item.id}</p>
+                    <p>{item.name}</p>
                 </div>
             ))}
         </div>
