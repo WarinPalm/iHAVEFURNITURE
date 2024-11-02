@@ -22,7 +22,7 @@ import History from './components/History.jsx';
 import PaymentDetail from './components/PaymentDetail.jsx';
 import OrderDetail from './components/OrderDetail.jsx';
 import Footer from './components/Footer';
-
+import Test from './components/test.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -60,6 +60,10 @@ const router = createBrowserRouter([
   {
     path:"orderDetail",
     element:<OrderDetail/>
+  },
+  {
+    path:"test",
+    element:<Test/>
   }
 ]);
 
