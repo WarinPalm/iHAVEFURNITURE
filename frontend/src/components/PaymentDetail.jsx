@@ -118,11 +118,11 @@ const PaymentDetail = () => {
                                     <div className='card ms-5 mt-3 mb-5 card-kbank'>
                                         <div className="card-body">
                                             <div className="row">
-                                                <div className="col-2 kbank-img ms-5"></div>
+                                                <div className="col-2 kbank-img ms-3"></div>
                                                 <div className="col-1"></div>
-                                                <div className="col-7">
-                                                    <h2 className=''>082-8-06385-5</h2>
-                                                    <h2 className=''>นายวฤณ พรหมวรานนท์</h2>
+                                                <div className="col-8">
+                                                    <h2 className='mt-2'>082-8-06385-5</h2>
+                                                    <h3 className=''>นายวฤณ พรหมวรานนท์</h3>
                                                 </div>
                                             </div>
                                         </div>
