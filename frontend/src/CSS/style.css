@@ -160,10 +160,19 @@ aside li {
     border-radius: 30px;
 }
 
-  
 .bill-items {
     margin-bottom: 200px; /* บังคับเพิ่มระยะห่าง */
 }
+.kbank-img{
+    width: 200px;
+    height: 200px;
+    border-radius: 30%;
+    background-image: url("/public/image/Other/kbank.jpg");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 
 
 

@@ -113,8 +113,20 @@ const PaymentDetail = () => {
                                 </div>  
                             </div>
 
-                            <div className="card card-bill mt-5">
+                            <div className="card card-bill mt-5 pe-4">
                                 <div className="card-body">
+                                    <div className='card mt-3 mb-5'>
+                                        <div className="card-body">
+                                            <div className="row">
+                                                <div className="col-2 kbank-img ms-5"></div>
+                                                <div className="col-1"></div>
+                                                <div className="col-5">
+                                                    <h2 className='mt-5'>082-8-06385-5</h2>
+                                                    <h2 className='mt-3'>นายวฤณ พรหมวรานนท์</h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div className="mb-3 mt-2">
                                         <div className="row">
                                             <div className="col-1"></div>
@@ -160,7 +172,7 @@ const PaymentDetail = () => {
                                 </div>
                             </div>
                             <div className="d-flex justify-content-center">
-                                <button className='btn btn-custom mt-5' onClick={confirmOrder}>Confirm Order</button>
+                                <button className='btn btn-custom mt-5 mb-5' onClick={confirmOrder}>Confirm Order</button>
                             </div>
                             
                         </div>
