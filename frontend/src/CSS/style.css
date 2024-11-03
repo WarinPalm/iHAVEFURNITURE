@@ -163,11 +163,14 @@ aside li {
 .bill-items {
     margin-bottom: 200px; /* บังคับเพิ่มระยะห่าง */
 }
+.card-kbank{
+    width: 60%;
+}
 .kbank-img{
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     border-radius: 30%;
-    background-image: url("/public/image/Other/kbank.jpg");
+    background-image: url("/image/Other/kbank.jpg");
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
