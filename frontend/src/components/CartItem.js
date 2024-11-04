@@ -31,3 +31,13 @@ export const updateCartStatus = (index, newStatus) => {
         cartItems[index].status = newStatus;
     }
 };
+
+const today = new Date().toISOString().split('T')[0];
+var currentdate = new Date();
+var datetime = "Last Sync: " + currentdate.getDay() + "/" + currentdate.getMonth() 
++ "/" + currentdate.getFullYear() + " @ " 
++ currentdate.getHours() + ":" 
++ currentdate.getMinutes() + ":" + currentdate.getSeconds();
+
+console.log(today)
+console.log(datetime)
