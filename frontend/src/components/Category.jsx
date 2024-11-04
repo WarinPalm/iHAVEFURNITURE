@@ -5,12 +5,18 @@ const Category = ({ onCategoryClick, activeCategory }) => {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/category")
-            .then(res => {
-                setCategories(res.data);
-            })
-            .catch(error => console.error("Error fetching categories:", error));
+        const fetchCategories = () => {
+            axios.get("http://localhost:3000/api/category")
+                .then(res => setCategories(res.data))
+                .catch(error => console.error("Error fetching categories:", error));
+        };
+    
+        fetchCategories();
+        const intervalId = setInterval(fetchCategories, 1000); // Fetch ทุก 1 วิ
+    
+        return () => clearInterval(intervalId);
     }, []);
+    
 
     return (
         <>

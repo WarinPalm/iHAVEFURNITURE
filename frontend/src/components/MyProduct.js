@@ -1,5 +1,5 @@
 export const myProduct = {
-    Sofa: [
+    sofa: [
         { title: "Sofa1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa1.png", price: 15000 },
         { title: "Sofa2", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa2.png", price: 15000 },
         { title: "Sofa3", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa3.png", price: 15000 },
@@ -25,7 +25,7 @@ export const myProduct = {
         { title: "Sofa23", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa23.png", price: 15000 },
         { title: "Sofa24", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Sofa/sofa24.png", price: 15000 }
     ],
-    Bed: [
+    bed: [
         { title: "Bed1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Bed/bed1.png", price: 15000 },
         { title: "Bed2", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Bed/bed2.png", price: 15000 },
         { title: "Bed3", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Bed/bed3.png", price: 15000 },
@@ -51,7 +51,7 @@ export const myProduct = {
         { title: "Bed23", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Bed/bed23.png", price: 15000 },
         { title: "Bed24", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Bed/bed24.png", price: 15000 }
     ],
-    Chair: [
+    chair: [
         { title: "Chair1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Chair/chair1.png", price: 15000 },
         { title: "Chair2", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Chair/chair2.png", price: 15000 },
         { title: "Chair3", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Chair/chair3.png", price: 15000 },
@@ -77,7 +77,7 @@ export const myProduct = {
         { title: "Chair23", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Chair/chair23.png", price: 15000 },
         { title: "Chair24", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Chair/chair24.png", price: 15000 }
     ],
-    Table: [
+    table: [
         { title: "Table1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Table/table1.png", price: 15000 },
         { title: "Table2", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Table/table2.png", price: 15000 },
         { title: "Table3", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Table/table3.png", price: 15000 },
@@ -127,7 +127,7 @@ export const myProduct = {
         { title: "Table23", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Table/table23.png", price: 15000 },
         { title: "Table24", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Table/table24.png", price: 15000 }
     ],
-    Lamp: [
+    lamp: [
         { title: "Lamp1", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Lamp/lamp1.png", price: 15000 },
         { title: "Lamp2", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Lamp/lamp2.png", price: 15000 },
         { title: "Lamp3", text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", image: "/image/Lamp/lamp3.png", price: 15000 },
