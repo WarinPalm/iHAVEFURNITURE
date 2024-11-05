@@ -6,10 +6,6 @@ import { usePriceCalculate } from './PriceCalculate';
 
 const PaymentDetail = () => {
     const { calNetTotal, calProductPrice, cartItems } = usePriceCalculate();
-    const [currentCategory, setCurrentCategory] = useState(() => {
-        const savedCategory = localStorage.getItem('currentCategory');
-        return savedCategory ? savedCategory : 'sofa';
-    });
 
     const [notificationDateTime, setNotificationDateTime] = useState('');
 
@@ -33,9 +29,8 @@ const PaymentDetail = () => {
     }, []);
     
 
-    const handleCategoryClick = (category) => {
-        setCurrentCategory(category);
-        localStorage.setItem('currentCategory', category);
+    const handleCategoryClick = (id) => { 
+        setCurrentCategory(id);
     };
 
     const confirmOrder = () => {

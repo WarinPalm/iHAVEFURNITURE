@@ -6,14 +6,8 @@ import { cartItems } from './CartItem';
 
 const BillOrder = () => {
 
-    const [currentCategory, setCurrentCategory] = useState(() => {
-        const savedCategory = localStorage.getItem('currentCategory');
-        return savedCategory ? savedCategory : 'sofa';
-    });
-
-    const handleCategoryClick = (category) => { 
-        setCurrentCategory(category);
-        localStorage.setItem('currentCategory', category);
+    const handleCategoryClick = (id) => { 
+        setCurrentCategory(id);
     };
 
     const navigate = useNavigate();
@@ -26,7 +20,7 @@ const BillOrder = () => {
 
     return (
         <>
-            <Navbar />
+            <Navbar onCategoryClick={handleCategoryClick} />
 
             <div className="container">
                 <div className="row">

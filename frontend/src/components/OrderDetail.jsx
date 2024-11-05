@@ -8,10 +8,14 @@ const OrderDetail = () => {
   const { cartItems, calNetTotal, calProductPrice} = usePriceCalculate();
   const navigate = useNavigate();
 
+  const handleCategoryClick = (id) => { 
+    setCurrentCategory(id);
+  };
+  
   const goToHistory = () => {
     navigate(`/history`);
   };
-
+  
   // Filter status 'รอคำอนุมัติ'
   const approvedItems = cartItems.filter(item => item.status === 'รอชำระเงิน' || item.status === 'รอคำอนุมัติ');
 
@@ -69,7 +73,7 @@ const OrderDetail = () => {
   
   return (
     <>
-      <Navbar />
+      <Navbar onCategoryClick={handleCategoryClick} />
       
       <div className="container">
         <div className="row">

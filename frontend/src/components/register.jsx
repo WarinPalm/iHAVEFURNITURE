@@ -3,20 +3,9 @@ import Navbar from './Navbar';
 import LoginModal from './Modal/LoginModal';
 
 const Register = () => {
-    const [chooseQuestion, setChooseQuestion] = useState(false);
-    const [currentCategory, setCurrentCategory] = useState(() => {
-        const savedCategory = localStorage.getItem('currentCategory');
-        return savedCategory ? savedCategory : 'sofa';
-    });
     
-    const handleCategoryClick = (category) => {
-        setCurrentCategory(category);
-        localStorage.setItem('currentCategory', category);
-    };
-
-    const handleQuestionChange = (event) => {
-        // ถ้าเลือกคำตอบให้ set เป็น True
-        setChooseQuestion(event.target.value !== "");
+    const handleCategoryClick = (id) => { 
+        setCurrentCategory(id);
     };
 
     return (
@@ -64,23 +53,6 @@ const Register = () => {
                                 <label htmlFor="confirm-password-Input" className="form-label">Confirm Password</label>
                                 <input type="password" className="form-control" id="confirm-password-Input" placeholder="Confirm Password" required />
                             </div>
-
-                            <div className="mb-3 col-md-8" id="question">
-                                <label htmlFor="security-question" className="form-label">Select Question</label>
-                                <select id="security-question" className="form-select" required onChange={handleQuestionChange}>
-                                    <option value="">-- Please select a question --</option>
-                                    <option value="q1">สัตว์เลี้ยงตัวแรกของคุณชื่ออะไร ?</option>
-                                    <option value="q2">ชอบสัตว์อะไรที่สุด ?</option>
-                                    <option value="q3">อาหารที่คุณเกลียด ?</option>
-                                </select>
-                            </div>   
-
-                            {chooseQuestion && (
-                                <div className="mb-3 col-md-8">
-                                    <label htmlFor="answer-input" className="form-label">Your Answer</label>
-                                    <input type="text" className="form-control" id="answer-input" placeholder="Type the answer" required />
-                                </div>
-                            )}
                         </form>
                     </div>
                 </div>

@@ -8,7 +8,9 @@ import { usePriceCalculate } from './PriceCalculate';
 
 const Cart = () => {
     const { calNetTotal, calProductPrice, cartItems, updateCartItems } = usePriceCalculate();
-    
+    const handleCategoryClick = (id) => { 
+        setCurrentCategory(id);
+    };
     const handleBuy = () => {
         cartItems.forEach((item, index) => {
             updateCartStatus(index, 'รอชำระเงิน');
@@ -72,7 +74,7 @@ const Cart = () => {
 
     return (
         <>
-            <Navbar />
+            <Navbar onCategoryClick={handleCategoryClick} />
             <LoginModal />
             <div className="container">
                 <h2 className='mt-5 mb-5'>Your Cart</h2>
