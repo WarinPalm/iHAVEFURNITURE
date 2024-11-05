@@ -165,6 +165,10 @@ aside li {
     background-color: #BAA495; /* เปลี่ยนเป็นสีที่ต้องการ */
     color: black;
 }
+.btn-custom2:hover{
+    background-color: #6b5f56; /* เปลี่ยนเป็นสีที่ต้องการ */
+    color: white;
+}
 /* ภาพใน cart  */
 .custom-cart-img {
     width: 100%;
