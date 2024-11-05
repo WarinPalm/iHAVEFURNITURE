@@ -13,7 +13,7 @@ import axios from "axios";
 const Home = () => {
     const [products,setProducts] = useState([]);
 
-    const [currentCategory, setCurrentCategory] = useState('');
+    const [currentCategory, setCurrentCategory] = useState(8);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(6);
     // const [products, setProducts] = useState([]);
@@ -79,7 +79,6 @@ const Home = () => {
         ));
     };
     
-
     const renderRecommendedProducts = () => {
         return recommendedProducts.map((product, index) => (
             <div className="col-2 mb-4" key={index}>
