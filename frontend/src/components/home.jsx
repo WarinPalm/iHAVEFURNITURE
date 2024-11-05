@@ -7,16 +7,16 @@ import LoginModal from './Modal/LoginModal';
 import HeroImage from './HeroImage';
 import Category from './Category';
 import ProductModal from './Modal/ProductModal';
+import axios from "axios";
 
 
 const Home = () => {
-    const [currentCategory, setCurrentCategory] = useState(() => {
-        const savedCategory = localStorage.getItem('currentCategory');
-        return savedCategory ? savedCategory : 'sofa';
-    });
+    const [products,setProducts] = useState([]);
+
+    const [currentCategory, setCurrentCategory] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(6);
-    const [products, setProducts] = useState([]);
+    // const [products, setProducts] = useState([]);
     const [recommendedProducts, setRecommendedProducts] = useState([]);
 
     //ส่งค่าไปให้ popup show product
@@ -30,51 +30,55 @@ const Home = () => {
         const random = allProducts.sort(() => 0.5 - Math.random()); // สุ่มเรียงสินค้า
         return random.slice(0, count); // ดึงสินค้าจำนวนที่ต้องการ
     };
-
-    useEffect(() => { 
-        const categoryItems = myProduct[currentCategory] || [];
-        setProducts(categoryItems); // สำหรับนำไปคำนวณจำนวนสินค้า products.length
-
-        // ดึงสินค้าทุกหมวดหมู่มารวมกันใน array เดียว
-        const allProducts = Object.values(myProduct).flat();
-        const randomRecommendedItems = getRandomProducts(allProducts, 6); // สุ่มสินค้าแนะนำ 6 ชิ้น
-        setRecommendedProducts(randomRecommendedItems);
-    }, [currentCategory]);
-
-    const handleCategoryClick = (category) => { 
-        setCurrentCategory(category);
-        localStorage.setItem('currentCategory', category);
-        setCurrentPage(1);
-    };
+    useEffect(()=>{
+        const fetchProduct = ()=>{
+            axios.get("http://localhost:3000/api/products")
+                .then(res => setProducts(res.data))
+                .catch(error=>console.error('Error Fetching Products'))
+        }
+        fetchProduct();
+        const intervalId = setInterval(fetchProduct, 1000); // Fetch ทุก 1 วิ
+    
+        return () => clearInterval(intervalId);
+    },[])
     
 
-    const renderProducts = () => {
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = Math.min(startIndex + itemsPerPage, products.length);
+    const handleCategoryClick = (id) => { 
+        setCurrentCategory(id);
+        setCurrentPage(1)
+    };
 
-        return products.slice(startIndex, endIndex).map((product, index) => (
+    const renderProducts = () => {
+        // กรองสินค้าตามหมวดหมู่ที่เลือก
+        const filteredProducts = products.filter(product => product.categoryId === currentCategory);
+    
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
+    
+        return filteredProducts.slice(startIndex, endIndex).map((product, index) => (
             <div className="col-4 mb-4" key={index}>
                 <div
                     className="card card-hover"
                     data-bs-toggle="modal"
                     data-bs-target="#product-detail"
                     onClick={() => {
-                    setCurrentImage(product.image),
-                    setCurrentName(product.title),
-                    setCurrentDetail(product.text),
-                    setCurrentPrice(product.price)
-                    }} 
+                        setCurrentImage(product.image);
+                        setCurrentName(product.title);
+                        setCurrentDetail(product.text);
+                        setCurrentPrice(product.price);
+                    }}
                 >
-                    <img src={product.image} className="card-img-top" alt={product.title}/>
+                    <img src={product.image} className="card-img-top" alt={product.title} />
                     <div className="card-body">
-                        <h5 className="card-title">{product.title}</h5>
-                        <p className="mt-4 card-text text-muted">{product.text}</p>
+                        <h5 className="card-title">{product.name}</h5>
+                        <p className="mt-4 card-text text-muted">{product.description}</p>
                         <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
                     </div>
                 </div>
             </div>
         ));
     };
+    
 
     const renderRecommendedProducts = () => {
         return recommendedProducts.map((product, index) => (

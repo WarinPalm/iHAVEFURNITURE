@@ -16,7 +16,7 @@ function Test() {
     const [data, setData] = useState([]);
     
     useEffect(() => {
-        axios.get("http://localhost:3000/api/category")
+        axios.get("http://localhost:3000/api/products")
             .then(res => {
                 setData(res.data); 
             })
@@ -38,8 +38,11 @@ function Test() {
                     <tbody>
                         {data.map((item, index) => (
                             <tr key={index}>
-                                <td>{item.id}</td>
                                 <td>{item.name}</td>
+                                <td>{item.description}</td>
+                                <td>{item.price}</td>
+                                <td>{item.quantity}</td>
+                                <td>{item.categoryId}</td>
                             </tr>
                         ))}
                     </tbody>

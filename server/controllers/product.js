@@ -51,6 +51,16 @@ exports.list = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+exports.listAll = async (req, res) => {
+  try {
+    const products = await prisma.product.findMany()
+
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
 exports.read = async (req, res) => {
   try {
     const { id } = req.params;
