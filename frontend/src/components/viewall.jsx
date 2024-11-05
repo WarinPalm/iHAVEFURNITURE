@@ -3,12 +3,10 @@ import Navbar from './Navbar';
 import { myProduct } from './MyProduct';
 import LoginModal from "./Modal/LoginModal";
 import ProductModal from './Modal/ProductModal';
+import axios from "axios";
 
 const ViewAll = () => {
-    const [currentCategory, setCurrentCategory] = useState(() => {
-        const savedCategory = localStorage.getItem('currentCategory');
-        return savedCategory ? savedCategory : 'sofa';
-    });
+    const [currentCategory, setCurrentCategory] = useState(1)// default category id == sofa
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(12);
     const [products, setProducts] = useState([]);
@@ -20,16 +18,28 @@ const ViewAll = () => {
     const [currentDetail, setCurrentDetail] = useState('');
     const [currentPrice, setCurrentPrice] = useState('');
 
-    useEffect(() => { // เข้าถึงสินค้า จาก array ผ่านเข้ามาเป็นหมวดหมู่สินค้า และคำนวณจำนวนหน้า
-        const categoryItems = myProduct[currentCategory] || [];
-        setProducts(categoryItems);
-        setTotalPages(Math.ceil(categoryItems.length / itemsPerPage));
-    }, [currentCategory, itemsPerPage]);
+    useEffect(()=>{
+        const fetchProduct = ()=>{
+            axios.get("http://localhost:3000/api/products")
+                .then(res => setProducts(res.data))
+                .catch(error => console.error('Error Fetching Products' + error));
+        }
+        fetchProduct();
+        const intervalId = setInterval(fetchProduct, 1000); // Fetch ทุก 1 วิ
+    
+        return () => clearInterval(intervalId);
+    },[])
 
-    const handleCategoryClick = (category) => { // เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
-        setCurrentCategory(category);
-        localStorage.setItem('currentCategory', category);
-        setCurrentPage(1);
+    useEffect(() => {
+        // คำนวณจำนวนหน้าทั้งหมดตามสินค้าที่กรองแล้ว
+        const filteredProducts = products.filter(product => product.categoryId === currentCategory);
+        const pages = Math.ceil(filteredProducts.length / itemsPerPage);
+        setTotalPages(pages);
+    }, [products, currentCategory, itemsPerPage]);
+    
+    const handleCategoryClick = (id) => { 
+        setCurrentCategory(id);
+        setCurrentPage(1)
     };
 
     const handleNextPage = () => {
@@ -48,25 +58,33 @@ const ViewAll = () => {
         setCurrentPage(pageNumber);
     };
 
+    
     const renderProducts = () => {
+        // กรองสินค้าตามหมวดหมู่ที่เลือก
+        const filteredProducts = products.filter(product => product.categoryId === currentCategory);
+    
         const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = Math.min(startIndex + itemsPerPage, products.length);
-        
-        return products.slice(startIndex, endIndex).map((product, index) => (
+        const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
+    
+        return filteredProducts.slice(startIndex, endIndex).map((product, index) => (
             <div className="col-3 mb-4" key={index}>
-                <div className="card card-hover" data-bs-toggle="modal" data-bs-target="#product-detail"
+                <div
+                    className="card card-hover"
+                    data-bs-toggle="modal"
+                    data-bs-target="#product-detail"
                     onClick={() => {
-                        setCurrentImage(product.image),
-                        setCurrentName(product.title),
-                        setCurrentDetail(product.text),
-                        setCurrentPrice(product.price)}}>
-                            
-                    <img src={product.image} className="card-img-top" alt={product.title}/>
+                        setCurrentImage(product.image);
+                        setCurrentName(product.title);
+                        setCurrentDetail(product.text);
+                        setCurrentPrice(product.price);
+                    }}
+                >
+                    <img src={product.image} className="card-img-top" alt={product.title} />
                     <div className="card-body">
-                        <h5 className="card-title">{product.title}</h5>
-                        <p className="card-text text-muted">{product.text}</p>
+                        <h5 className="card-title">{product.name}</h5>
+                        <p className="mt-4 card-text text-muted">{product.description}</p>
                         <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
-                    </div>              
+                    </div>
                 </div>
             </div>
         ));
@@ -104,7 +122,7 @@ const ViewAll = () => {
 
             <section className="list-product">
                 <div className="container text-center">
-                    <div className="col-4 pt-5">
+                    <div className="col-3 pt-5">
                         <h1>Category : {currentCategory}</h1>
                     </div>
                     <div className="row mt-3 pt-5">

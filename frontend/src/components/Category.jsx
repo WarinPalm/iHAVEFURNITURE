@@ -25,7 +25,7 @@ const Category = ({ onCategoryClick, activeCategory }) => {
             {categories.map(category => (
                 <li
                     key={category.id}
-                    className={`category-nav ${activeCategory === category.name ? 'active' : ''}`}
+                    className={`category-nav ${activeCategory === category.id ? 'active' : ''}`}
                     onClick={() => onCategoryClick(category.id)}
                 >
                     {category.name}
