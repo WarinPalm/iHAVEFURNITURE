@@ -25,7 +25,7 @@ const ViewAll = () => {
                 .catch(error => console.error('Error Fetching Products' + error));
         }
         fetchProduct();
-        const intervalId = setInterval(fetchProduct, 1000); // Fetch ทุก 1 วิ
+        const intervalId = setInterval(fetchProduct, 10000); // Fetch ทุก 10 วิ
     
         return () => clearInterval(intervalId);
     },[])

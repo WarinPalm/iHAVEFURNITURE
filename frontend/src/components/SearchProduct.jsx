@@ -1,25 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom';
-
-import { myProduct } from './MyProduct';
 import Navbar from './Navbar';
 import LoginModal from "./Modal/LoginModal";
 import ProductModal from './Modal/ProductModal';
-import Footer from "./Footer";
+import axios from "axios";
 
 const SearchProduct = () => {
-    const [currentCategory, setCurrentCategory] = useState(() => {
-        const savedCategory = localStorage.getItem('currentCategory');
-        return savedCategory ? savedCategory : 'sofa';
-    });
+    const [currentCategory, setCurrentCategory] = useState(1);
     
-    const handleCategoryClick = (category) => { //เปลี่ยนสินค้าจากหมวดหมู่นึงไปอีกหมวดหมู่
-        setCurrentCategory(category);
-        localStorage.setItem('currentCategory', category);
-        setCurrentPage(1);
+    const handleCategoryClick = (id) => {
+        setCurrentCategory(id);
     };
 
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]); // สถานะสำหรับผลิตภัณฑ์ทั้งหมด
+    const [filteredProducts, setFilteredProducts] = useState([]); // สถานะสำหรับผลิตภัณฑ์ที่กรองแล้ว
 
     // ส่งค่าไปให้ popup show product
     const [currentImage, setCurrentImage] = useState('');
@@ -29,7 +23,6 @@ const SearchProduct = () => {
 
     // ตั้งค่าการค้นหา 
     const [searchTerm, setSearchTerm] = useState('');
-
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(12);
     const [totalPages, setTotalPages] = useState(0);
@@ -37,50 +30,63 @@ const SearchProduct = () => {
     const location = useLocation();
 
     useEffect(() => {
+        const fetchProduct = () => {
+            axios.get("http://localhost:3000/api/products")
+                .then(res => {
+                    setProducts(res.data); 
+                })
+                .catch(error => console.error('Error Fetching Products: ' + error));
+        }
+        fetchProduct();
+        const intervalId = setInterval(fetchProduct, 10000); // Fetch ทุก 10 วิ
+
+        return () => clearInterval(intervalId);
+    }, [])
+
+    useEffect(() => { // สำหรับการค้นหา
         const query = new URLSearchParams(location.search).get('query') || '';
         setSearchTerm(query);
 
         // คัดตัว product ที่สามารถเอามาใกล้เคียงกับคำค้นหา
-        const allProducts = Object.values(myProduct).flat();
-        const filteredProducts = allProducts.filter(product =>
-            product.title.toLowerCase().includes(query.toLowerCase())
+        const filtered = products.filter(product =>
+            product.name.toLowerCase().includes(query.toLowerCase())
         );
-        setProducts(filteredProducts);
-        setTotalPages(Math.ceil(filteredProducts.length / itemsPerPage));
+        setFilteredProducts(filtered); // ตั้งค่าผลิตภัณฑ์ที่กรองด้วย
+        setTotalPages(Math.ceil(filtered.length / itemsPerPage));
         setCurrentPage(1);
-    }, [location.search, itemsPerPage]);
-
+    }, [location.search, products, itemsPerPage]);
+    
     const renderProducts = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = Math.min(startIndex + itemsPerPage, products.length);
+        const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
 
-        if (products.length === 0) {
+        if (filteredProducts.length === 0) {
             return (
                 <div className="d-flex justify-content-center align-items-center" style={{ height: '50vh' }}>
-                    <h3>No results found for "{searchTerm}"</h3><span class="material-symbols-outlined">sick</span>
+                    <h3>No results found for "{searchTerm}"</h3>
+                    <span className="material-symbols-outlined">sick</span>
                 </div>
             );
         }
 
-        return products.slice(startIndex, endIndex).map((product, index) => (
+        return filteredProducts.slice(startIndex, endIndex).map((product, index) => (
             <div className="col-3 mb-4" key={index}>
                 <div className="card card-hover" data-bs-toggle="modal" data-bs-target="#product-detail"
                     onClick={() => {
                         setCurrentImage(product.image);
                         setCurrentName(product.title);
                         setCurrentDetail(product.text);
-                        setCurrentPrice(product.price);}} >
-                            
+                        setCurrentPrice(product.price);
+                    }} >
                     <img src={product.image} className="card-img-top" alt={product.title} />
                     <div className="card-body">
-                        <h5 className="card-title">{product.title}</h5>
-                        <p className="card-text text-muted">{product.text}</p>
+                        <h5 className="card-title">{product.name}</h5>
+                        <p className="card-text text-muted">{product.description}</p>
                         <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
                     </div>              
                 </div>
             </div>
         ));
-        
     };
 
     const renderPageNumbers = () => {
@@ -97,7 +103,7 @@ const SearchProduct = () => {
         for (let i = startPage; i <= endPage; i++) {
             pageNumbers.push(
                 <button key={i} className={`btn ${i === currentPage ? 'btn-custom2' : 'btn-custom'} mx-1`} 
-                onClick={() => handlePageClick(i)}>
+                onClick={() => setCurrentPage(i)}>
                     {i}
                 </button>
             );
@@ -136,18 +142,16 @@ const SearchProduct = () => {
                             </div>
                         </div>
                     </div>
-                    <div id="pagination" className="mt-4">
+                    <div id="pagination" className="mt-4 mb-4">
                         <div className="d-flex justify-content-end">
                             {totalPages > 1 && (
                                 <>
-                                    {/* ปุ่ม Previous จะไม่มีผลเมื่ออยู่หน้าแรก */}
                                     <button className="btn btn-custom mx-2" onClick={handlePrevPage} disabled={currentPage === 1}>
                                         Previous Page
                                     </button>
 
                                     {renderPageNumbers()}
 
-                                    {/* ปุ่ม Next จะไม่มีผลเมื่ออยู่หน้าสุดท้าย */}
                                     <button className="btn btn-custom mx-2" onClick={handleNextPage} disabled={currentPage === totalPages}>
                                         Next Page
                                     </button>
@@ -157,7 +161,6 @@ const SearchProduct = () => {
                     </div>
                 </div>
             </section>
-            <Footer/>
         </>
     );
 };

@@ -10,8 +10,9 @@ const OrderDetail = () => {
 
   const handleCategoryClick = (id) => { 
     setCurrentCategory(id);
+    
   };
-  
+
   const goToHistory = () => {
     navigate(`/history`);
   };
