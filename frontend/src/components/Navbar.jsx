@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-
+import axios from 'axios';
 const Navbar = ({ onCategoryClick, activeCategory}) => {
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
@@ -11,6 +11,20 @@ const Navbar = ({ onCategoryClick, activeCategory}) => {
             navigate(`/searchProduct?query=${searchTerm}`); // เปลี่ยน path ไปที่หน้า searchProduct
         }
     };
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        const fetchCategories = () => {
+            axios.get("http://localhost:3000/api/category")
+                .then(res => setCategories(res.data))
+                .catch(error => console.error("Error fetching categories:", error));
+        };
+    
+        fetchCategories();
+        const intervalId = setInterval(fetchCategories, 1000); // Fetch ทุก 1 วิ
+    
+        return () => clearInterval(intervalId);
+    }, []);
     return (
         
         <div style={{position: 'sticky', top: "0", zIndex: "100"}}>
@@ -68,35 +82,16 @@ const Navbar = ({ onCategoryClick, activeCategory}) => {
                                 Product
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <Link to='../viewall' className={`dropdown-item ${activeCategory === 'sofa' ? 'active' : ''}`} 
-                                    onClick={() => onCategoryClick('sofa')}>
-                                    <li>Sofa</li>
-                                </Link>
-
-                                <Link to='../viewall' className={`dropdown-item ${activeCategory === 'bed' ? 'active' : ''}`} 
-                                    onClick={() => onCategoryClick('bed')}>
-                                    <li>Bed</li>
-                                </Link>
-
-                                <Link to='../viewall' className={`dropdown-item ${activeCategory === 'chair' ? 'active' : ''}`} 
-                                    onClick={() => onCategoryClick('chair')}>
-                                    <li>Chair</li>
-                                </Link>
-
-                                <Link to='../viewall' className={`dropdown-item ${activeCategory === 'table' ? 'active' : ''}`} 
-                                    onClick={() => onCategoryClick('table')}>
-                                    <li>Table</li>
-                                </Link>
-                                
-                                <Link to='../viewall' className={`dropdown-item ${activeCategory === 'lamp' ? 'active' : ''}`} 
-                                    onClick={() => onCategoryClick('lamp')}>
-                                    <li>Lamp</li>
-                                </Link>
-                                
-                                <Link to='../viewall' className={`dropdown-item ${activeCategory === 'kitchen' ? 'active' : ''}`} 
-                                    onClick={() => onCategoryClick('kitchen')}>
-                                    <li>Kitchen</li>
-                                </Link>
+                                {categories.map(category => (
+                                    <Link
+                                        to='../viewall'
+                                        key={category.id}
+                                        className={`dropdown-item ${activeCategory === category.id ? 'active' : ''}`} 
+                                        onClick={() => onCategoryClick(category.id)}
+                                    >
+                                        <li>{category.name}</li>
+                                    </Link>
+                                ))}
                             </ul>
 
                         </li>

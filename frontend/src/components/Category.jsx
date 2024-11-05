@@ -22,9 +22,9 @@ const Category = ({ onCategoryClick, activeCategory }) => {
         <>
         <aside className="col-2 full-height-overflow">
             <ul className="nav-aside">
-            {categories.map((category, index) => (
+            {categories.map(category => (
                 <li
-                    key={index}
+                    key={category.id}
                     className={`category-nav ${activeCategory === category.name ? 'active' : ''}`}
                     onClick={() => onCategoryClick(category.id)}
                 >
