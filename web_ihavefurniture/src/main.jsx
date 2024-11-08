@@ -13,7 +13,12 @@ import Home from './components/home.jsx'
 import ViewAll from './components/viewall.jsx'
 import Register from './components/register.jsx';
 import SearchProduct from './components/SearchProduct.jsx';
-
+import New from './components/New.jsx';
+import AdminUserData from './components/admin_user_data.jsx';
+import AdminCatalog from './components/Admin_catalog.jsx';
+import AdminTransfer from './components/Admin_transfer.jsx';
+import AdminOrder from './components/Admin_order.jsx';
+import Adminproduct from './components/Admin_product.jsx';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +37,36 @@ const router = createBrowserRouter([
   {
     path: "searchProduct",
     element:<SearchProduct/>
+  },
+  
+  {
+    path: "smokeweed",
+    element:<New/>
+  },
+
+  {
+    path: "userData",
+    element:<AdminUserData/>
+  },
+
+  {
+    path: "catalog",
+    element:<AdminCatalog/>
+  },
+
+  {
+    path: "transfer",
+    element:<AdminTransfer/>
+  },
+
+  {
+    path: "order",
+    element:<AdminOrder/>
+  },
+
+  {
+    path: "product",
+    element:<Adminproduct/>
   }
   
 ]);

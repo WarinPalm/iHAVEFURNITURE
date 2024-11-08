@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
+import AdminUserData from './admin_user_data';
 
 const Navbar = ({ onCategoryClick, activeCategory}) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -54,6 +55,21 @@ const Navbar = ({ onCategoryClick, activeCategory}) => {
                     <ul className="nav justify-content-center">
                         <li className="nav-item">
                             <Link className="nav-link active" aria-current="page" to="../">Home</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" aria-current="page" to="../userData">User data</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" aria-current="page" to="../catalog">Catalog</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" aria-current="page" to="../transfer">Transfer notification</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" aria-current="page" to="../order">Order</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" aria-current="page" to="../product">Product</Link>
                         </li>
                         
                         <li className="nav-item dropdown">

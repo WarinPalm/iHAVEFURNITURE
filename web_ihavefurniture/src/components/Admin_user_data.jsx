@@ -8,7 +8,7 @@ import EditHeroImageModal from "./Modal/EditHeroImage";
 import HeroImage from './HeroImage';
 import ProductModal from './Modal/ProductModal';
 
-const Home = () => {
+const AdminUserData = () => {
     const [currentCategory, setCurrentCategory] = useState(() => {
         const savedCategory = localStorage.getItem('currentCategory');
         return savedCategory ? savedCategory : 'sofa';
@@ -39,47 +39,46 @@ const Home = () => {
         <>
             <Navbar onCategoryClick={handleCategoryClick}/>            
             <LoginModal />
-            <HeroImage />
-            <EditHeroImageModal/>
 
             <section className="list-product">
                 <div className="container">
                     {/* สำหรับเขียนหน้าตา _html */}
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#Edit-Hero-Image" value=""><h2 className="text-center">Edit Hero Image</h2></a>
-                    {/* <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Edit-Hero-Image">
-                    Edit Hero Image
-                    </button> */}
                     <br />
-                    <h2>Orders</h2>
+                    <h2>User data</h2>
                     <div>
-                    <table class="table text-center">
+                    <table class="table">
                           <thead>
                             <tr>
                               <th scope="col">Name</th>
-                              <th scope="col">Order ID</th>
-                              <th scope="col">Status</th>
+                              <th scope="col"></th>
+                              <th scope="col">Phone number</th>
+                              <th scope="col">Email</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
                               <th scope="row">Jomprach</th> {/*Name*/}
-                              <td>#W835749801</td> {/*Order ID*/}
-                              <td class="text-warning">รอการอนุมัติ</td> {/*Status*/}
+                              <td>remove</td> {/*remove*/}
+                              <td>081-xxx-xxxx</td> {/*Phone number*/}
+                              <td>xxx@gmail.com</td> {/*Email*/}
+                            </tr>
+                            <tr>
+                            <th scope="row">Jomprach</th> {/*Name*/}
+                              <td>remove</td> {/*remove*/}
+                              <td>081-xxx-xxxx</td> {/*Phone number*/}
+                              <td>xxx@gmail.com</td> {/*Email*/}
+                            </tr>
+                            <tr>
+                            <th scope="row">Jomprach</th> {/*Name*/}
+                              <td>remove</td> {/*remove*/}
+                              <td>081-xxx-xxxx</td> {/*Phone number*/}
+                              <td>xxx@gmail.com</td> {/*Email*/}
                             </tr>
                             <tr>
                               <th scope="row">Jomprach</th> {/*Name*/}
-                              <td>#W835749801</td> {/*Order ID*/}
-                              <td class="text-success">อนุมัติคำสั่งซื้อ</td> {/*Status*/}
-                            </tr>
-                            <tr>
-                              <th scope="row">Jomprach</th> {/*Name*/}
-                              <td>#W835749801</td> {/*Order ID*/}
-                              <td class="text-danger">รอการส่งหลักฐาน</td> {/*Status*/}
-                            </tr>
-                            <tr>
-                              <th scope="row">Jomprach</th> {/*Name*/}
-                              <td>#W835749801</td> {/*Order ID*/}
-                              <td class="text-danger">รอการส่งหลักฐาน</td> {/*Status*/}
+                              <td>remove</td> {/*remove*/}
+                              <td>081-xxx-xxxx</td> {/*Phone number*/}
+                              <td>xxx@gmail.com</td> {/*Email*/}
                             </tr>
                           </tbody>
                         </table>
@@ -91,4 +90,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default AdminUserData;
