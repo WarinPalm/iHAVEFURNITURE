@@ -8,7 +8,7 @@ import ProductModal from './Modal/ProductModal';
 import axios from "axios";
 
 const Home = () => {
-    const [currentCategory, setCurrentCategory] = useState(1); // default category id
+    const [currentCategory, setCurrentCategory] = useState(8); // default category id
     const [products, setProducts] = useState([]);
     const [recommendedProducts, setRecommendedProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);

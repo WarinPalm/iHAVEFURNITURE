@@ -6,7 +6,7 @@ import ProductModal from './Modal/ProductModal';
 import axios from "axios";
 
 const ViewAll = () => {
-    const [currentCategory, setCurrentCategory] = useState(1)// default category id == sofa
+    const [currentCategory, setCurrentCategory] = useState(8)// default category id == sofa
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(12);
     const [products, setProducts] = useState([]);
