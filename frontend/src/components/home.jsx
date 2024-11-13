@@ -19,11 +19,6 @@ const Home = () => {
     const [currentDetail, setCurrentDetail] = useState('');
     const [currentPrice, setCurrentPrice] = useState('');
 
-    // สุ่มสินค้าแนะนำ
-    const getRandomProducts = (allProducts, count) => {
-        const random = allProducts.sort(() => 0.5 - Math.random()); // สุ่มเรียงสินค้า
-        return random.slice(0, count); // ดึงสินค้าจำนวนที่ต้องการ
-    };
 
     useEffect(() => {
         const fetchProduct = () => {
@@ -39,12 +34,6 @@ const Home = () => {
         return () => clearInterval(intervalId);
     }, []);
 
-    useEffect(() => {
-        // สุ่มสินค้าแนะนำใหม่เมื่อหมวดหมู่เปลี่ยน
-        const allProducts = products;
-        const randomRecommendedItems = getRandomProducts(allProducts, 4); // สุ่มสินค้าแนะนำ 6 ชิ้น
-        setRecommendedProducts(randomRecommendedItems);
-    }, [products]); // เพิ่ม products ใน dependency array
 
     const handleCategoryClick = (id) => { 
         setCurrentCategory(id);
@@ -80,7 +69,8 @@ const Home = () => {
     };
 
     const renderRecommendedProducts = () => {
-        return recommendedProducts.map((product, index) => (
+        const recommendProducts = products.slice().reverse().slice(0, 4);
+        return recommendProducts.map((product, index) => (
             <div className="col-3 mb-4" key={index}>
                 <div
                     className="card card-recom-hover"
