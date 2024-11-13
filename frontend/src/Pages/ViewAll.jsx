@@ -6,11 +6,12 @@ import { useLocation } from "react-router-dom";
 const ViewAll = () => {
     const location = useLocation();
     const categoryNow = location.state?.categoryId || 2;
-    const [currentCategory, setCurrentCategory] = useState(categoryNow)// default category id == sofa
+    const [currentCategory, setCurrentCategory] = useState(categoryNow); // default category id == sofa
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(12);
     const [products, setProducts] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
+    const [categories, setCategories] = useState([]); // เพิ่ม state สำหรับเก็บข้อมูลหมวดหมู่
     
     // ส่งค่าไปให้ popup show product
     const [currentImage, setCurrentImage] = useState('');
@@ -18,6 +19,7 @@ const ViewAll = () => {
     const [currentDetail, setCurrentDetail] = useState('');
     const [currentPrice, setCurrentPrice] = useState('');
 
+    // ดึงข้อมูลสินค้า
     useEffect(()=>{
         const fetchProduct = ()=>{
             axios.get("http://localhost:3000/api/products")
@@ -29,8 +31,19 @@ const ViewAll = () => {
     
         return () => clearInterval(intervalId);
     },[])
+
+    // ดึงข้อมูลหมวดหมู่
     useEffect(() => {
-        // อัปเดต currentCategory เมื่อ categoryNow เปลี่ยนแปลง
+        const fetchCategories = () => {
+            axios.get("http://localhost:3000/api/category")
+                .then(res => setCategories(res.data))
+                .catch(error => console.error('Error Fetching Categories' + error));
+        };
+        fetchCategories();
+    }, []);
+
+    // อัปเดต currentCategory เมื่อ categoryNow เปลี่ยนแปลง
+    useEffect(() => {
         setCurrentCategory(categoryNow);
         setCurrentPage(1); 
     }, [categoryNow]);
@@ -41,7 +54,9 @@ const ViewAll = () => {
         const pages = Math.ceil(filterProducts.length / itemsPerPage);
         setTotalPages(pages);
     }, [products, currentCategory, itemsPerPage]);
-    
+
+    // หาชื่อหมวดหมู่จาก currentCategory
+    const currentCategoryName = categories.find(category => category.id === currentCategory)?.name || '';
 
     const handleNextPage = () => {
         if (currentPage < totalPages) {
@@ -59,7 +74,6 @@ const ViewAll = () => {
         setCurrentPage(pageNumber);
     };
 
-    
     const renderProducts = () => {
         // กรองสินค้าตามหมวดหมู่ที่เลือก
         const filteredProducts = products.filter(product => product.categoryId === currentCategory);
@@ -113,7 +127,6 @@ const ViewAll = () => {
     
         return pageNumbers;
     };
-    
 
     return (
         <>
@@ -122,7 +135,7 @@ const ViewAll = () => {
             <section className="list-product">
                 <div className="container text-center">
                     <div className="col-3 pt-5">
-                        <h1>Category : {currentCategory}</h1>
+                        <h1>Category: {currentCategoryName}</h1>
                     </div>
                     <div className="row mt-3 pt-5">
                         <div className="col-12 row-gap-2">
@@ -152,7 +165,6 @@ const ViewAll = () => {
                     </div>
                 </div>
             </section>
-
         </>
     );
 };
