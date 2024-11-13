@@ -8,7 +8,7 @@ import ProductModal from './Modal/ProductModal';
 import axios from "axios";
 
 const Home = () => {
-    const [currentCategory, setCurrentCategory] = useState(8); // default category id
+    const [currentCategory, setCurrentCategory] = useState(2); // default category id
     const [products, setProducts] = useState([]);
     const [recommendedProducts, setRecommendedProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -42,7 +42,7 @@ const Home = () => {
     useEffect(() => {
         // สุ่มสินค้าแนะนำใหม่เมื่อหมวดหมู่เปลี่ยน
         const allProducts = products;
-        const randomRecommendedItems = getRandomProducts(allProducts, 6); // สุ่มสินค้าแนะนำ 6 ชิ้น
+        const randomRecommendedItems = getRandomProducts(allProducts, 4); // สุ่มสินค้าแนะนำ 6 ชิ้น
         setRecommendedProducts(randomRecommendedItems);
     }, [products]); // เพิ่ม products ใน dependency array
 
@@ -51,11 +51,11 @@ const Home = () => {
     };
 
     const renderProducts = () => {
-        const filteredProducts = products.filter(product => product.categoryId === currentCategory);
+        const filterProducts = products.filter(product => product.categoryId === currentCategory);
         const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
+        const endIndex = Math.min(startIndex + itemsPerPage, filterProducts.length);
 
-        return filteredProducts.slice(startIndex, endIndex).map((product, index) => (
+        return filterProducts.slice(startIndex, endIndex).map((product, index) => (
             <div className="col-4 mb-4" key={index}>
                 <div
                     className="card card-hover"
@@ -81,7 +81,7 @@ const Home = () => {
 
     const renderRecommendedProducts = () => {
         return recommendedProducts.map((product, index) => (
-            <div className="col-2 mb-4" key={index}>
+            <div className="col-3 mb-4" key={index}>
                 <div
                     className="card card-recom-hover"
                     data-bs-toggle="modal"
@@ -132,9 +132,10 @@ const Home = () => {
                         <div className="col-1"></div>
                         <div className="col-9 row-gap-2">
                             <div className="row mb-4">
-                                <div className="col-12 d-flex justify-content-end align-items-end mt-5">
-                                    <Link to="viewall" className="btn btn-custom" id="seeall-btn">View All</Link>
-                                </div>
+                                <Link to="/viewall" className="btn btn-custom" id="seeall-btn" state={{ categoryId: currentCategory }}>
+                                    View All
+                                </Link>
+
                             </div>
 
                             <div className="row" id="show-product">

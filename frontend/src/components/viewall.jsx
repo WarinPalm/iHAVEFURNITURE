@@ -4,9 +4,12 @@ import { myProduct } from './MyProduct';
 import LoginModal from "./Modal/LoginModal";
 import ProductModal from './Modal/ProductModal';
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const ViewAll = () => {
-    const [currentCategory, setCurrentCategory] = useState(8)// default category id == sofa
+    const location = useLocation();
+    const categoryFromHome = location.state?.categoryId || 2;
+    const [currentCategory, setCurrentCategory] = useState(categoryFromHome)// default category id == sofa
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(12);
     const [products, setProducts] = useState([]);
@@ -32,8 +35,8 @@ const ViewAll = () => {
 
     useEffect(() => {
         // คำนวณจำนวนหน้าทั้งหมดตามสินค้าที่กรองแล้ว
-        const filteredProducts = products.filter(product => product.categoryId === currentCategory);
-        const pages = Math.ceil(filteredProducts.length / itemsPerPage);
+        const filterProducts = products.filter(product => product.categoryId === currentCategory);
+        const pages = Math.ceil(filterProducts.length / itemsPerPage);
         setTotalPages(pages);
     }, [products, currentCategory, itemsPerPage]);
     

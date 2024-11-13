@@ -12,7 +12,7 @@ const Category = ({ onCategoryClick, activeCategory }) => {
         };
     
         fetchCategories();
-        const intervalId = setInterval(fetchCategories, 1000); // Fetch ทุก 1 วิ
+        const intervalId = setInterval(fetchCategories, 10000); // Fetch ทุก 10 วิ
     
         return () => clearInterval(intervalId);
     }, []);
