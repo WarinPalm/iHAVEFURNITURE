@@ -7,12 +7,11 @@ import LoginModal from './Modal/LoginModal';
 import EditHeroImageModal from "./Modal/EditHeroImage";
 import HeroImage from './HeroImage';
 import ProductModal from './Modal/ProductModal';
+import axios from 'axios'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AdminCatalog = () => {
-    const [currentCategory, setCurrentCategory] = useState(() => {
-        const savedCategory = localStorage.getItem('currentCategory');
-        return savedCategory ? savedCategory : 'sofa';
-    });
+    const [currentCategory, setCurrentCategory] = useState('');
 
     const [products, setProducts] = useState([]);
 
@@ -22,261 +21,55 @@ const AdminCatalog = () => {
     const [currentDetail, setCurrentDetail] = useState('');
     const [currentPrice, setCurrentPrice] = useState('');
 
-    useEffect(() => { 
-        const categoryItems = myProduct[currentCategory] || [];
-        setProducts(categoryItems); // สำหรับนำไปคำนวณจำนวนสินค้า products.length
+    const [categories, setCategory] = useState([]); // สร้าง state สำหรับเก็บข้อมูล หมวดหมู่สินค้า
+    const [form, setForm] = useState({ name: '', orderid: '', status: '' }); // สร้าง state สำหรับฟอร์มเพิ่ม/แก้ไข หมวดหมู่สินค้า
+    const [editingId, setEditingId] = useState(null); // สร้าง state สำหรับเก็บ ID ของ หมวดหมู่สินค้า ที่กำลังแก้ไข
 
-    }, [currentCategory]);
+    
 
-    const handleCategoryClick = (category) => { 
-        setCurrentCategory(category);
-        localStorage.setItem('currentCategory', category);
-        setCurrentPage(1);
-    };
+  
 
+    useEffect(()=>{
+      const fetchCategory = async () => {
+        // ฟังก์ชันสำหรับดึงข้อมูลหมวดหมู่สินค้าเข้ามา (API)
+        axios.get('http://localhost:3000/api/category') // ส่งคำขอ GET ไปยัง API
+          .then(res => {
+            setCategory(res.data); // ตั้งค่า state ที่ได้รับข้อมูลที่ลูกค้าออเดอร์เข้ามา
+          })
+          .catch(err => {
+            console.error('Error fetching data: ', err); // แสดงข้อผิดพลาดถ้ามี
+          });
+      };
+      fetchCategory();
+    },[])
+    
 
     return (
         <>
-            <Navbar onCategoryClick={handleCategoryClick}/>            
+            <Navbar/>            
             <LoginModal />
 
-            <section className="list-product">
-                <div className="container">
-                    {/* สำหรับเขียนหน้าตา _html */}
-                    <br />
-                    <h2>CATALOG admin</h2>
-                    
-                    <div>
-                    {/* Sofa */}
-                    <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col-6">Sofa</th>
-                              <th scope="col-2"></th>
-                              <th scope="col-2"></th>
-                              <th scope="col-2">Price(Baht)</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">sofa1.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                              <th scope="row">sofa2.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                            <th scope="row">sofa3.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                            <th scope="row">sofa4.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                          </tbody>
-                        </table>
+            {/* วนลูปข้อมูลหมวดหมู่สินค้า */}
+            <div className="container">
+              {categories.map(category=>(
+                <div key={category.id}>
+                  <div className="d-flex justify-content-between">
+                    <h2>{category.name}</h2>
+                    <h2>Price (Bath)</h2>
+                  </div>
 
-                        {/* Chair */}
-                    <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col-6">Chair</th>
-                              <th scope="col-2"></th>
-                              <th scope="col-2"></th>
-                              <th scope="col-2"></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">chair1.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                              <th scope="row">chair2.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                            <th scope="row">chair3.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                            <th scope="row">chair4.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                          </tbody>
-                        </table>
-
-                        {/* Desk & Table */}
-                    <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col-6">Desk & Table</th>
-                              <th scope="col-2"></th>
-                              <th scope="col-2"></th>
-                              <th scope="col-2"></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">Desk1.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                              <th scope="row">Desk2.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                            <th scope="row">Table1.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                            <th scope="row">Table2.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                          </tbody>
-                        </table>
-
-                        {/* Lamp */}
-                    <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col-6">Lamp</th>
-                              <th scope="col-2"></th>
-                              <th scope="col-2"></th>
-                              <th scope="col-2"></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">Lamp1.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                              <th scope="row">Lamp2.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                            <th scope="row">Lamp3.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                            <th scope="row">Lamp4.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                          </tbody>
-                        </table>
-
-                        {/* Bed */}
-                    <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col-6">Bed</th>
-                              <th scope="col-2"></th>
-                              <th scope="col-2"></th>
-                              <th scope="col-2"></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">bed1.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                              <th scope="row">bed2.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                            <th scope="row">bed3.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                            <th scope="row">bed4.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                          </tbody>
-                        </table>
-
-                        {/* Kitchenware */}
-                    <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col-6">Kitchenware</th>
-                              <th scope="col-2"></th>
-                              <th scope="col-2"></th>
-                              <th scope="col-2"></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">kit1.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                              <th scope="row">kit2.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                            <th scope="row">kit3.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                            <tr>
-                            <th scope="row">kit4.jpg</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>edit</td> {/*edit*/}
-                              <td>3,900</td> {/*Price(Baht)*/}
-                            </tr>
-                          </tbody>
-                        </table>
+                  <div className="row">
+                    <div className="col-7">{category.name}</div>
+                    <div className="col-1 ms-5 me-3">remove</div>
+                    <div className="col-1 me-3">edit</div>
+                    <div className="col-2">
+                      <button className="btn btn-primary">{category.price}</button>
                     </div>
-                </div>
-            </section>
+                  </div>
+
+                </div>  
+              ))}
+            </div>
 
         </>
     );

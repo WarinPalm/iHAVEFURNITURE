@@ -7,6 +7,8 @@ import LoginModal from './Modal/LoginModal';
 import EditHeroImageModal from "./Modal/EditHeroImage";
 import HeroImage from './HeroImage';
 import ProductModal from './Modal/ProductModal';
+import axios from 'axios'; 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 const AdminTransfer = () => {
     const [currentCategory, setCurrentCategory] = useState(() => {
@@ -22,6 +24,10 @@ const AdminTransfer = () => {
     const [currentDetail, setCurrentDetail] = useState('');
     const [currentPrice, setCurrentPrice] = useState('');
 
+    const [customer, setCustomer] = useState([]); // สร้าง state สำหรับเก็บข้อมูล user
+    const [form, setForm] = useState({ name: '', orderid: '', status: '' }); // สร้าง state สำหรับฟอร์มเพิ่ม/แก้ไข user
+    const [editingId, setEditingId] = useState(null); // สร้าง state สำหรับเก็บ ID ของ user ที่กำลังแก้ไข
+
     useEffect(() => { 
         const categoryItems = myProduct[currentCategory] || [];
         setProducts(categoryItems); // สำหรับนำไปคำนวณจำนวนสินค้า products.length
@@ -34,7 +40,6 @@ const AdminTransfer = () => {
         setCurrentPage(1);
     };
 
-
     return (
         <>
             <Navbar onCategoryClick={handleCategoryClick}/>            
@@ -46,7 +51,7 @@ const AdminTransfer = () => {
                     <br />
                     <h2>Tansfer notification</h2>
                     <div>
-                    <table class="table text-center">
+                    <table class="table text-center table-bordered">
                           <thead>
                             <tr>
                               <th scope="col">Name</th>

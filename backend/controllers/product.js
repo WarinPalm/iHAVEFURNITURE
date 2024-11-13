@@ -30,6 +30,15 @@ exports.create = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+exports.listAll = async (req,res) => {
+    try{
+        const product = await prisma.product.findMany();
+        res.send(product);
+    }catch (err){
+        console.log(err);
+        res.status(500).json({ message: "Server Error"});
+    }
+}
 exports.list = async (req, res) => {
   try {
     const { count } = req.params;

@@ -25,7 +25,7 @@ const Register = () => {
                     <div className="col-12 mt-3">
                         <h1 className="text-center">Register</h1>
 
-                        <form className="forgot-password-form mt-4 offset-md-3">
+                        <form className="forgot-password-form mt-4 offset-md-3" id="addCustomerModal">
                             <div className="row">
                                 <div className="mb-3 col-md-4">
                                     <label htmlFor="firstname-Input" className="form-label">Firstname</label>
