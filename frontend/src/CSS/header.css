@@ -67,6 +67,19 @@
 .circle-button:hover{
     background-color:#d1baaa ;
 }
+.circle-button2 {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #000000;
+    background-image: url('/image/profile.jpg'); 
+    background-size: cover; 
+    background-position: right center; 
+    background-repeat: no-repeat; 
+    border: none;
+    cursor: pointer;
+}
+
 .search-btn{
     color: #ffffff;   
     background-color:#4d4038;

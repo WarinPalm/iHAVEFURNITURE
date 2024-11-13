@@ -31,8 +31,8 @@
 }
 
 .btn-banner {
-    width: 25px; /* ลดขนาดของปุ่ม */
-    height: 25px; /* ลดขนาดของปุ่ม */
+    width: 30px; 
+    height: 30px;
     border-radius: 50%;
     border-width: 2px; /* ลดความหนาของเส้นขอบ */
     border-color: white;
