@@ -19,9 +19,8 @@ import Cart from '../Pages/user/Cart'
 import BillOrder from '../Pages/user/BillOrder'
 import OrderDetail from '../Pages/user/OrderDetail'
 import PaymentDetail from '../Pages/user/PaymentDetail'
-import History from '../Pages/user/History' // เพิ่มการนำเข้า History
+import History from '../Pages/user/History'
 
-// Define the routes
 const router = createBrowserRouter([
     {  
         path: '/', 
@@ -44,7 +43,7 @@ const router = createBrowserRouter([
             { path: 'viewall', element: <ViewAll />},
             { path: 'billorder', element: <BillOrder />},
             { path: 'cart', element: <Cart />},
-            { path: 'history', element: <History />}, // เพิ่ม History เข้าไปที่นี่
+            { path: 'history', element: <History />},
             { path: 'orderdetail', element: <OrderDetail />},
             { path: 'paymentdetail', element: <PaymentDetail />},
             { path: 'q&a', element: <QandA />},

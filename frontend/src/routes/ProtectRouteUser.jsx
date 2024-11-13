@@ -12,7 +12,7 @@ const ProtectRouteUser = ({ element }) => {
 
     useEffect(()=>{
         if(user && token){
-            // send to back
+            // send req to backend
             currentUser(token) // ถ้า current ทำงานสำเร็จจะทำ then
             .then((res)=>setOk(true))
             .catch((err)=>setOk(false))

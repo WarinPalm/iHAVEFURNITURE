@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import HeroImage from "../HeroImage";
 import Category from "../Category"
-// import ProductModal from '../ProductModal';
+import ProductModal from '../ProductModal';
 import axios from "axios";
 
 const HomeUser = () => {
@@ -97,7 +97,7 @@ const HomeUser = () => {
     return (
         <>
          
-            {/* <ProductModal currentImage={currentImage} currentName={currentName} currentDetail={currentDetail} currentPrice={currentPrice} />  */}
+            <ProductModal currentImage={currentImage} currentName={currentName} currentDetail={currentDetail} currentPrice={currentPrice} /> 
             <HeroImage />
 
             <section className="list-product">

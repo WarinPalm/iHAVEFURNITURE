@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import useEcomStore from '../../store/ecom_store';
 
-const Navbar = ({ onCategoryClick, activeCategory }) => {
-    const [searchTerm, setSearchTerm] = useState('');
+const Navbar = ({ activeCategory }) => {
     const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState('');
+    
     const [categories, setCategories] = useState([]);
 
     const handleSearch = (event) => {
@@ -13,6 +15,12 @@ const Navbar = ({ onCategoryClick, activeCategory }) => {
             navigate(`../user/searchProduct?query=${searchTerm}`);
             setSearchTerm('');
         }
+    };
+    const Logout = useEcomStore((state) => state.actionLogout);
+
+    const handleLogout = () => {
+        Logout();
+        navigate('/');
     };
 
     useEffect(() => {
@@ -50,9 +58,21 @@ const Navbar = ({ onCategoryClick, activeCategory }) => {
 
                 {/* Profile and Cart Buttons */}
                 <div className="d-flex align-items-center ms-3">
-                    <button className="circle-button2 me-3">
-                        
-                    </button>
+
+                    <div className="dropdown">
+                        <button
+                            className="circle-button2 me-3 dropdown-toggle"
+                            id="profileDropdown"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                          
+                        </button>
+                        <ul className="dropdown-menu" aria-labelledby="profileDropdown">
+                            <li><Link className="dropdown-item" to="../user/profile">Profile</Link></li>
+                            <li><Link className="dropdown-item" to="../user/">Settings</Link></li>
+                            <li><hr className="dropdown-divider" /></li>
+                            <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>                        </ul>
+                    </div>
                     <Link to="../user/cart">
                         <button className="circle-button">
                             <span className="material-symbols-outlined">shopping_cart</span>
