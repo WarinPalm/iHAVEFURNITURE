@@ -1,31 +1,38 @@
+// Step1 import ....
 const express = require('express');
 const app = express();
-const morgan = require('morgan');
-const { readdirSync } = require('fs');
-const cors = require('cors');
-// const authRouter = require('./routers/auth');
-// const categoryRouter = require('./routers/category');
+const morgan = require('morgan'); // middleware for logging request details
+const { readdirSync } = require('fs'); // ใช้เรียกไฟล์ในโฟลเดอร์ได้
+const path = require('path'); // ใช้เรียกใช้ path ของไฟล์
+const cors = require('cors'); 
+const port = 3000;
+
+// import routers , Example 1
+// const authRouter = require('./routes/auth'); // import auth router
 
 
-let port = 3000;
 
-// midleware 
+
+// middleware
 app.use(morgan('dev'));
-app.use(express.json());
-app.use(cors());
+app.use(express.json()); // ใช้รับ req.body จาก client ที่ส่งมาในรูปแบบ json
+app.use(cors()); // ใช้เปิดให้ server รับ req จาก client จาก domain อื่นได้
 
-// app.use('/api',authRouter);
-// app.use('/api',categoryRouter);
+// Step3 Router
 
-// เป็นการเรียกใช้ทีละหลายเส้นทีเดียว
-readdirSync('./routes').map((item)=> app.use('/api', require('./routes/' + item)));
+// Example 1
+// app.use('/api', authRouter);
 
-// Router
-// app.get('/api', (req,res) => {
-//     res.send('hello world');
-// })
+// Example 2
+// map คือการ loop ใน array โดยมี item เป็นแต่ละ element ใน array, item คือชื่อไฟล์
+readdirSync('./routes').map((item) => app.use('/api', require(`./routes/${item}`)))
 
 
-app.listen(port , () => {
-    console.log(`Server is running on port ${port}`);
+// ใช้ express.static เพื่อเปิดให้ client สามารถเข้าถึงไฟล์ในโฟลเดอร์ uploads หรือเป็นการเปิดโฟลเดอร์ uploads ให้เป็น public
+app.use('/uploads/', express.static(path.join(__dirname, './uploads')));
+
+
+// Step2 Start Server
+app.listen(port, () => {
+    console.log(`Server is runnig on port ${port}`); 
 })

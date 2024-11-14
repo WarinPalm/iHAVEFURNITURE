@@ -23,7 +23,7 @@ const ViewAll = () => {
     useEffect(()=>{
         const fetchProduct = ()=>{
             axios.get("http://localhost:3000/api/products")
-                .then(res => setProducts(res.data))
+                .then(res => setProducts(res.data.products))
                 .catch(error => console.error('Error Fetching Products' + error));
         }
         fetchProduct();
@@ -88,13 +88,13 @@ const ViewAll = () => {
                     data-bs-toggle="modal"
                     data-bs-target="#product-detail"
                     onClick={() => {
-                        setCurrentImage(product.image);
+                        setCurrentImage(product.fullpath);
                         setCurrentName(product.name);
                         setCurrentDetail(product.description);
                         setCurrentPrice(product.price);
                     }}
                 >
-                    <img src={product.image} className="card-img-top" alt={product.title} />
+                    <img src={product.fullpath} className="card-img-top" alt={product.name} />
                     <div className="card-body">
                         <h5 className="card-title">{product.name}</h5>
                         <p className="mt-4 card-text text-muted">{product.description}</p>

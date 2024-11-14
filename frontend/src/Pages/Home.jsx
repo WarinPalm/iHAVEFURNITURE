@@ -8,7 +8,6 @@ import axios from "axios";
 const Home = () => {
     const [currentCategory, setCurrentCategory] = useState(2); // default category id
     const [products, setProducts] = useState([]);
-    const [recommendedProducts, setRecommendedProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(6);
     //ส่งค่าไปให้ popup show product
@@ -22,7 +21,7 @@ const Home = () => {
         const fetchProduct = () => {
             axios.get("http://localhost:3000/api/products")
                 .then(res => {
-                    setProducts(res.data);
+                    setProducts(res.data.products);
                 })
                 .catch(error => console.error('Error Fetching Products' + error));
         };
@@ -49,13 +48,13 @@ const Home = () => {
                     data-bs-toggle="modal"
                     data-bs-target="#product-detail"
                     onClick={() => {
-                        setCurrentImage(product.image);
+                        setCurrentImage(product.fullpath);
                         setCurrentName(product.name);
                         setCurrentDetail(product.description);
                         setCurrentPrice(product.price);
                     }}
                 >
-                    <img src={product.image} className="card-img-top" alt={product.title} />
+                    <img src={product.fullpath} className="card-img-top" alt={product.name} />
                     <div className="card-body">
                         <h5 className="card-title">{product.name}</h5>
                         <p className="mt-4 card-text text-muted">{product.description}</p>
@@ -79,14 +78,14 @@ const Home = () => {
                     data-bs-toggle="modal"
                     data-bs-target="#product-detail"
                     onClick={() => {
-                        setCurrentImage(product.image);
+                        setCurrentImage(product.fullpath);
                         setCurrentName(product.name);
                         setCurrentDetail(product.description);
                         setCurrentPrice(product.price);
                     }} 
                 >
                     <img 
-                        src={product.image} 
+                        src={product.fullpath} 
                         className="card-img-recom" 
                         alt={product.name} 
                     />

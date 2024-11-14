@@ -1,235 +1,112 @@
-const prisma = require("../config/prisma");
+const prisma = require('../config/prisma');
+const fs = require('fs');
+
 
 exports.create = async (req, res) => {
-  try {
-    const { name, description, price, quantity, categoryId , images } = req.body;
-    // console.log(title, description, price, quantity, images);
-
-    const product = await prisma.product.create({
-        data:{
-            name: name,
-            description: description,
-            price: parseFloat(price),
-            quantity: parseInt(quantity),
-            categoryId: parseInt(categoryId),
-            images: {
-                create: images.map((item) => ({
-                    asset_id: item.asset_id,
-                    public_id: item.public_id,
-                    url: item.url,
-                    secure_url: item.secure_url
-                })) // วงเล็บครอบปีกกาเพราะเป็นการ return object
-            }
-        }
-    })
-    res.send(product);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Server Error" });
-  }
-};
-exports.listAll = async (req,res) => {
     try{
-        const product = await prisma.product.findMany();
-        res.send(product);
-    }catch (err){
+        const { name, description, price, stock,categoryId } = req.body;
+        const product = await prisma.product.create({
+            data:{
+                name:name,
+                description: description,
+                price:parseFloat(price),
+                picture: req.file.filename, // เก็บชื่อไฟล์ภาพ
+                stock:parseInt(stock),
+                categoryId:parseInt(categoryId)
+            }
+        });
+        res.json({product });
+
+    }catch(err){
         console.log(err);
-        res.status(500).json({ message: "Server Error"});
+        res.status(500).json({message: 'Server Error'});
     }
 }
-exports.list = async (req, res) => {
-  try {
-    const { count } = req.params;
-    const products = await prisma.product.findMany({
-        take: parseInt(count), // get count of products
-        orderBy: { createdAt: 'desc' },
-        include: {
-            // category: {
-            //     select: { name: true }
-            // }
-            category: true,
-            images: true
-        }
-    })
 
-    res.send(products);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Server Error" });
-  }
-};
-exports.read = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const products = await prisma.product.findFirst({
-        where:{
-            id: Number(id)
-        },
-        include: {
-            category: true,
-            images: true
-        }
-    })
+exports.getAll = async (req, res) => {
+    try{
+        const products = await prisma.product.findMany({
+            include:{
+                category: true
+            },
+        });
 
-    res.send(products);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Server Error" });
-  }
-};
+        // เพิ่มฟิลด์ fullPathImage ภายใน object ของแต่ละ product
+        products.forEach((product) =>{
+            // เพิ่ม fullPathImage เข้าไปภายใน object ของแต่ละ product 
+            product.fullpath = "http://localhost:3000/uploads/" + product.picture
+        })
+
+        res.json({products});
+    }catch(err){
+        console.log(err);
+        res.status(500).json({message: 'Server Error'});
+    }
+}
+
 exports.update = async (req, res) => {
-  try {
-    const { name, description, price, quantity, categoryId , images } = req.body;
-
-    // clear images
-    await prisma.image.deleteMany({
-        where: {
-            productId: Number(req.params.id)
-        }
-    })
-
-    const product = await prisma.product.update({
-        where:{
-            id: Number(req.params.id)
-        },
-        data:{
-            name: name,
-            description: description,
-            price: parseFloat(price),
-            quantity: parseInt(quantity),
-            categoryId: parseInt(categoryId),
-            images: {
-                create: images.map((item) => ({
-                    asset_id: item.asset_id,
-                    public_id: item.public_id,
-                    url: item.url,
-                    secure_url: item.secure_url
-                })) // วงเล็บครอบปีกกาเพราะเป็นการ return object
-            }
-        }
-    })
-    res.send(product);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Server Error" });
-  }
-};
-exports.remove = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    // clear images
-
-
-    
-    await prisma.product.delete({
-        where: {
-            id: Number(id)
-        }
-    })
-    res.send("Deleted success");
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Server Error" });
-  }
-};
-exports.listby = async (req, res) => {
-  try {
-    const { sort, order, limit } = req.body;
-    console.log(sort, order, limit);
-    const products = await prisma.product.findMany({
-        take: limit,
-        orderBy:{ [sort]: order },
-        include: { category: true }
-    })
-
-    res.send(products);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Server Error" });
-  }
-};
-
-const handleQuery = async(req,res,query) => {
     try{
-        const products = await prisma.product.findMany({
-            where: {
-                name: {
-                    contains: query,
-                }
+        const { name, description, price, stock, categoryId } = req.body;
+       
+        // ค้นหาสินค้าที่ต้องการแก้ไข
+        const product = await prisma.product.findUnique({
+            where:{ id: Number(req.params.id)}
+        });
+        // ถ้าไม่พบสินค้า
+        if(!product){
+            return res.status(404).json({ message: 'Product not found'});
+        }
+
+        // ลบไฟล์ภาพเก่า (ถ้ามีอยู่)
+        if(product.picture){
+            fs.unlink(`uploads/${product.picture}`, (err) => {
+                if (err) console.log("not found image", err);
+            });
+        }
+        const updateProduct = await prisma.product.update({
+            where:{
+                id: Number(req.params.id)
             },
-            include: {
-                category: true,
-                images: true
+            data:{
+                name:name,
+                description: description,
+                price:parseFloat(price),
+                picture: req.file.filename, // เก็บชื่อไฟล์ภาพ
+                stock:parseInt(stock),
+                categoryId:parseInt(categoryId)
             }
-        })
-        res.send(products);
+        });
+        res.status(200).json({ message: 'Product updated successfully'});
     }catch(err){
         console.log(err);
-        res.status(500).json({ message: "Search Error" });
-    }
-}
-const handlePrice = async(req,res,priceRange) => {
-    try{
-        const products = await prisma.product.findMany({
-            where: {
-                price: {
-                    gte: priceRange[0],
-                    lte: priceRange[1]
-                }
-            },
-            include: {
-                category: true,
-                images: true
-            }
-        })
-        res.send(products);
-    }catch(err){
-        console.log(err);
-        res.status(500).json({ message: "Search Error" });
-    }
-}
-const handleCategory = async(req,res,categoryId) => {
-    try{
-        const products = await prisma.product.findMany({
-            where: {
-                // categoryId: Number(categoryId)  // category อันเดียว
-                categoryId: {
-                    in: categoryId.map((id) => Number(id))
-                }
-            },
-            include: {
-                category: true,
-                images: true
-            }
-        })
-        res.send(products);
-    }catch(err){
-        console.log(err);
-        res.status(500).json({ message: "Search Error" });
+        res.status(500).json({message: 'Server Error'});
     }
 }
 
+exports.remove = async (req,res) => {
+    try{
+        const { id } = req.params;
+        const product = await prisma.product.findUnique({
+            where:{ id: Number(id)}
+        })
+        if(!product){
+            return res.status(404).json({ message: 'Product not found'});
+        }
 
-exports.searchFilters = async (req, res) => {
-  try {
-    const { query, category, price } = req.body;
-    if(query){
-        console.log('query : ',query);
-        await handleQuery(req,res,query);
-    }
-    if(category){
-        console.log('category : ',category);
-        await handleCategory(req,res,category);
-    }
-    if(price){
-        console.log('price : ',price);
-        await handlePrice(req,res,price);
-    }
+        if(product.picture){
+            fs.unlink(`uploads/${product.picture}`, (err) => {
+                if (err) console.log("not found image", err);
+            });
+        }
 
-    // res.send("Hello searchFilters product");
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Server Error" });
-  }
-};
+        await prisma.product.delete({
+            where: {
+                id: Number(id)
+            }
+        })
+        res.send({ message: 'Product deleted successfully'});
+    }catch(err){
+        console.log(err);
+        res.status(500).json({message: 'Server Error'});
+    }
+}

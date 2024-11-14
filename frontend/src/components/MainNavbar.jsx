@@ -17,7 +17,7 @@ const MainNavbar = ({activeCategory }) => {
 
     useEffect(() => {
         const fetchCategories = () => {
-            axios.get("http://localhost:3000/api/category")
+            axios.get("http://localhost:3000/api/categories")
                 .then(res => setCategories(res.data))
                 .catch(error => console.error("Error fetching categories:", error));
         };
