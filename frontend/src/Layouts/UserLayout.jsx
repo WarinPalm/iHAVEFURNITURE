@@ -5,6 +5,7 @@ import Navbar from "../components/user/Navbar"
 function UserLayout() {
   return (
     <div>
+        
         <Navbar/>
         <main>
             <Outlet/>

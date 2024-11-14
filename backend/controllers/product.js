@@ -22,8 +22,6 @@ exports.create = async (req, res) => {
             }
         }
     })
-
-
     res.send(product);
   } catch (err) {
     console.log(err);

@@ -44,40 +44,40 @@ const Login = () => {
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: '#f0f0f5' }}>
-            <div className="card p-5 shadow-lg" style={{ width: "500px", borderRadius: "10px", backgroundColor: '#ffffff', color: 'white' }}>
-                <h3 className="card-title text-center mb-4" style={{ color: '#BAA495' }}>Login</h3>
+        <div className="d-flex justify-content-center align-items-center bg-login" >
+            <div className="card p-5 shadow-lg login-form w-25">
+                <h3 className="card-title text-center mb-4">เข้าสู่ระบบ</h3>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label htmlFor="email" className="form-label" style={{ color: '#BAA495' }}>Email</label>
+                        <label htmlFor="email" className="form-label" >อีเมล</label>
                         <input
-                            className="form-control"
+                            className="form-control input-login"
                             id="email"
                             onChange={handleOnChange}
                             name="email"
                             type="email"
-                            placeholder="Enter your email"
                             required
-                            style={{borderColor: 'black' }}
                         />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="password" className="form-label" style={{ color: '#BAA495' }}>Password</label>
+                        <label htmlFor="password" className="form-label">รหัสผ่าน</label>
                         <input
-                            className="form-control"
+                            className="form-control input-login"
                             id="password"
                             onChange={handleOnChange}
                             name="password"
                             type="password"
-                            placeholder="Enter your password"
                             required
-                            style={{borderColor: 'black' }}
+                            
                         />
                     </div>
-                    <button type="submit" className="btn w-100" style={{ backgroundColor: '#C8C6C2', color: '#3a3f58' }}>Login</button>
+                    <div className="d-flex justify-content-center">
+                      <button type="submit" className="btn btn-custom w-50">ยืนยัน</button>
+                    </div>
+
                 </form>
                 <div className="text-center mt-4">
-                    <Link to="../register" className="text-decoration-none" style={{ color: '#ffc107' }}>Register</Link>
+                    <Link to="../register" style={{ color: '#a18e81' }}>สมัครสมาชิก</Link>
                 </div>
             </div>
         </div>

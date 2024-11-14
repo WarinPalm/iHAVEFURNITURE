@@ -9,6 +9,7 @@ import './CSS/header.css';
 import './CSS/hero-image.css';
 import './CSS/style.css';
 import './CSS/footer.css';
+import './CSS/Login.css'
 
 import { PriceProvider } from './Pages/user/PriceCalculate.jsx';
 import App from './App.jsx';

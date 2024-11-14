@@ -17,12 +17,13 @@ const Category = ({ onCategoryClick, activeCategory }) => {
         return () => clearInterval(intervalId);
     }, []);
     
-
+    const categoryNotBanner = categories.filter(category => category.name != 'Banner')
     return (
         <>
-        <aside className="col-2 full-height-overflow">
+        <aside className="col-2 full-height-overflow text-center">
             <ul className="nav-aside">
-            {categories.map(category => (
+        
+            {categoryNotBanner.map(category => (
                 <li
                     key={category.id}
                     className={`category-nav ${activeCategory === category.id ? 'active' : ''}`}

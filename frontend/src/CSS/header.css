@@ -18,7 +18,12 @@
 .nav-link {
     color: black;
 }
-
+.nav-link:hover {
+    color: #954f1d;
+}
+.nav-link:focus {
+    color: #6c3712;
+}
 .nav-content {
     padding-right: 50px;
     display: flex;

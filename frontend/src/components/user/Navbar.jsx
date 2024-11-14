@@ -34,10 +34,11 @@ const Navbar = ({ activeCategory }) => {
         const intervalId = setInterval(fetchCategories, 1000);
         return () => clearInterval(intervalId);
     }, []);
+    const categoryNotBanner = categories.filter(category => category.name != 'Banner')
 
     return (
-        <div style={{ position: 'sticky', top: "0", zIndex: "100" }}>
-            <nav className="my-nav">
+        <div style={{ position: 'sticky', top: "0", zIndex: "100"}}>
+            <nav className="my-nav" style={{height:"6vh"}}>
             <div className="container nav-content">
                 <h1 className="h1-text m-0">iHAVEFurniture</h1>
 
@@ -46,7 +47,7 @@ const Navbar = ({ activeCategory }) => {
                     <input
                         type="text"
                         className="form-control"
-                        placeholder="Search for products..."
+                        placeholder="ค้นหาสินค้า..."
                         aria-label="Search"
                         value={searchTerm}
                         onChange={(event) => setSearchTerm(event.target.value)}
@@ -68,10 +69,10 @@ const Navbar = ({ activeCategory }) => {
                           
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="profileDropdown">
-                            <li><Link className="dropdown-item" to="../user/profile">Profile</Link></li>
-                            <li><Link className="dropdown-item" to="../user/">Settings</Link></li>
+                            <li><Link className="dropdown-item" to="../user/history">ประวัติการสั่งซื้อ</Link></li>
+                            <li><Link className="dropdown-item" to="../user/">ข้อมูลผู้ใช้</Link></li>
                             <li><hr className="dropdown-divider" /></li>
-                            <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>                        </ul>
+                            <li><button className="dropdown-item" onClick={handleLogout}>ออกจากระบบ</button></li>                        </ul>
                     </div>
                     <Link to="../user/cart">
                         <button className="circle-button">
@@ -83,14 +84,14 @@ const Navbar = ({ activeCategory }) => {
 
             </nav>
 
-            <nav className="my-nav2">
+            <nav className="my-nav2" style={{height:"5vh"}}>
                 <div className="container nav-content">
                     <div>
                         <span className="material-symbols-outlined">storefront</span>
                     </div>
                     <ul className="nav justify-content-center">
                         <li className="nav-item">
-                            <Link className="nav-link active" aria-current="page" to="../user">Home</Link>
+                            <Link className="nav-link active" aria-current="page" to="../user">หน้าแรก</Link>
                         </li>
                         <li className="nav-item dropdown">
                             <a
@@ -100,10 +101,10 @@ const Navbar = ({ activeCategory }) => {
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                             >
-                                Product
+                                สินค้า
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {categories.map(category => (
+                                {categoryNotBanner.map(category => (
                                     <Link
                                         to={{
                                             pathname: '../user/viewall'
@@ -117,17 +118,15 @@ const Navbar = ({ activeCategory }) => {
                                 ))}
                             </ul>
                         </li>
+                        
                         <li className="nav-item">
-                            <Link to="../user/history" className="nav-link">History</Link>
+                            <Link to="../user/billOrder" className="nav-link">ธุรกรรม</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="../user/billOrder" className="nav-link">Payment</Link>
+                            <Link to="../user/q&a" className="nav-link">คำถามที่พบบ่อย</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="../user/q&a" className="nav-link">Q&A</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="../user/aboutus" className="nav-link">About Us</Link>
+                            <Link to="../user/aboutus" className="nav-link">เกี่ยวกับเรา</Link>
                         </li>
                     </ul>
                 </div>

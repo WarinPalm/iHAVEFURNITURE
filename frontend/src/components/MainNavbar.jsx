@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
-const MainNavbar = ({ onCategoryClick, activeCategory }) => {
+const MainNavbar = ({activeCategory }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
 
@@ -27,10 +27,12 @@ const MainNavbar = ({ onCategoryClick, activeCategory }) => {
 
         return () => clearInterval(intervalId);
     }, []);
+    const categoryNotBanner = categories.filter(category => category.name != 'Banner')
+
     return (
 
-        <div style={{ position: 'sticky', top: "0", zIndex: "100" }}>
-            <nav className="my-nav">
+        <div style={{ position: 'sticky', top: "0", zIndex: "100"}}>
+            <nav className="my-nav" style={{height:"6vh"}}>
                 <div className="container nav-content">
                     <h1 className="h1-text m-0">iHAVEFurniture</h1>
 
@@ -39,7 +41,7 @@ const MainNavbar = ({ onCategoryClick, activeCategory }) => {
                         <input
                             type="text"
                             className="form-control"
-                            placeholder="Search for products..."
+                            placeholder="ค้นหาสินค้า..."
                             aria-label="Search"
                             value={searchTerm}
                             onChange={(event) => setSearchTerm(event.target.value)} // อัปเดตค่าเมื่อมีการพิมพ์
@@ -68,14 +70,14 @@ const MainNavbar = ({ onCategoryClick, activeCategory }) => {
 
 
 
-            <nav className="my-nav2">
+            <nav className="my-nav2" style={{height:"5vh"}}>
                 <div className="container nav-content">
                     <div>
                         <span className="material-symbols-outlined">storefront</span>
                     </div>
                     <ul className="nav justify-content-center">
                         <li className="nav-item">
-                            <Link className="nav-link active" aria-current="page" to="../">Home</Link>
+                            <Link className="nav-link active" aria-current="page" to="../">หน้าแรก</Link>
                         </li>
                         <li className="nav-item dropdown">
                             <a
@@ -85,10 +87,10 @@ const MainNavbar = ({ onCategoryClick, activeCategory }) => {
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                             >
-                                Product
+                                สินค้า
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {categories.map(category => (
+                                {categoryNotBanner.map(category => (
                                     <Link
                                         to='../viewall'
                                         key={category.id}
@@ -103,10 +105,10 @@ const MainNavbar = ({ onCategoryClick, activeCategory }) => {
                         </li>
 
                         <li className="nav-item">
-                            <Link to='../q&a'className="nav-link" href="#about">Q&A</Link>
+                            <Link to='../q&a'className="nav-link" href="#about">คำถามที่พบบ่อย</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="../aboutus" className="nav-link" href="#about">About Us</Link>
+                            <Link to="../aboutus" className="nav-link" href="#about">เกี่ยวกับเรา</Link>
                         </li>
                     </ul>
                 </div>

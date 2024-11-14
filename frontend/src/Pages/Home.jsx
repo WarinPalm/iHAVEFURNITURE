@@ -43,7 +43,7 @@ const Home = () => {
         const endIndex = Math.min(startIndex + itemsPerPage, filterProducts.length);
 
         return filterProducts.slice(startIndex, endIndex).map((product, index) => (
-            <div className="col-4 mb-4" key={index}>
+            <div className="col-4 mb-4 text-center" key={index}>
                 <div
                     className="card card-hover"
                     data-bs-toggle="modal"
@@ -67,9 +67,13 @@ const Home = () => {
     };
 
     const renderRecommendedProducts = () => {
-        const recommendProducts = products.slice().reverse().slice(0, 4);
-        return recommendProducts.map((product, index) => (
-            <div className="col-3 mb-4" key={index}>
+        const recomProduct = products
+        .slice()
+        .reverse()
+        .filter(product => product.categoryId !== 8)
+        .slice(0, 4); // กรองแล้วเลือกเฉพาะ 4 รายการแรกที่ไม่ใช่ category banner
+        return recomProduct.map((product, index) => (
+            <div className="col-3 mb-4 text-center" key={index}>
                 <div
                     className="card card-recom-hover"
                     data-bs-toggle="modal"
@@ -100,32 +104,33 @@ const Home = () => {
             <HeroImage />
 
             <section className="list-product">
-                <div className="container text-center">
+                <div className="container">
                     <div className="col-2 pt-5 mb-5">
-                        <h1>Recommended</h1>
+                        <h1>สินค้าแนะนำ</h1>
                     </div>
                     <div className="row recom-Product">
                         <div className="row">
                             {renderRecommendedProducts()}
                         </div>
                     </div>
-                    
-                    <div className="col-2 pt-5">
-                        <h1>Category</h1>
+                    <div className="col-12 pt-5">
+                        <h1>หมวดหมู่สินค้า</h1>
                     </div>
+                    
                     <div className="row mt-2 pt-5">
                         <Category activeCategory={currentCategory} onCategoryClick={handleCategoryClick} />
                         <div className="col-1"></div>
                         <div className="col-9 row-gap-2">
-                            <div className="row mb-4">
-                                <Link to="/viewall" className="btn btn-custom" id="seeall-btn" state={{ categoryId: currentCategory }}>
-                                    View All
-                                </Link>
-
-                            </div>
+                            
 
                             <div className="row" id="show-product">
                                 {renderProducts()}
+                            </div>
+                            <div className="row mb-4 mt-3">
+                                <Link to="/viewall" className="btn btn-custom" id="seeall-btn" state={{ categoryId: currentCategory }}>
+                                    แสดงเพิ่มเติม
+                                </Link>
+
                             </div>
                         </div>
                     </div>
