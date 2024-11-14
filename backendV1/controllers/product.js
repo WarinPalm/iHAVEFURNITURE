@@ -34,7 +34,7 @@ exports.getAll = async (req, res) => {
         // เพิ่มฟิลด์ fullPathImage ภายใน object ของแต่ละ product
         products.forEach((product) =>{
             // เพิ่ม fullPathImage เข้าไปภายใน object ของแต่ละ product 
-            product.fullpath = "http://localhost:5500/uploads/" + product.picture
+            product.fullpath = "http://localhost:3000/uploads/" + product.picture
         })
 
         res.json({products});
