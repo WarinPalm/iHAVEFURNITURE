@@ -4,13 +4,10 @@ const jwt = require('jsonwebtoken');
 
 exports.register = async (req,res)=>{
     try{
-        const { username, email, password } = req.body;
-        console.log(username, email, password);
+        const { email, password } = req.body;
 
         // validate body
-        if(!username){
-            return res.status(400).json({message: 'Username is required!!!'})
-        }else if(!email){
+        if(!email){
             return res.status(400).json({message: 'Email is required!!!'})
         }else if (!password){
             return res.status(400).json({message: 'Password is required!!!'})
@@ -32,7 +29,6 @@ exports.register = async (req,res)=>{
         // Register
         await prisma.user.create({
             data:{
-                username: username,
                 email: email,
                 password: hashPassword
             }
@@ -68,7 +64,6 @@ exports.login = async (req,res) => {
         // Create payload สำหรับการเก็บข้อมูลไว้ใน token
         const payload = {
             id: user.id,
-            username: user.username,
             email: user.email,
             role: user.role
         }
@@ -93,7 +88,6 @@ exports.currentUser = async (req,res) => {
             where: { email: req.user.email },
             select:{
                 id: true,
-                username: true,
                 email: true,
                 role: true
             }

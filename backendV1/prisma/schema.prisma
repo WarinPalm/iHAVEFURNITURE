@@ -17,7 +17,6 @@ model User {
   id        Int        @id @default(autoincrement())
   fName     String?
   lName     String?
-  username  String
   password  String
   email     String     @unique
   telNo     String?
@@ -35,10 +34,10 @@ model Product {
   description String?
   price       Float?
   picture     String?
-  stock       Int?
+  stock       Int?       @default(0)
   view        Int?       @default(0)
   cartItems   CartItem[]
-  sold        Int?        @default(0)
+  sold        Int?       @default(0)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   category    Category?  @relation(fields: [categoryId], references: [id])
