@@ -1,6 +1,6 @@
-.my-footer{
-    padding: 5px 0;
-    background-color: #807166;
-    height: 7vh;
+.my-footer {
+    background-color: #BAA495; /* สีของ footer */
+    padding: 20px 0;
+    bottom: 0;
+    width: 100%;
 }
-

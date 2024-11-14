@@ -167,7 +167,10 @@ aside li {
     background-size: contain;
     background-repeat: no-repeat;
 }
-
-
+.my-team{
+    border: 1px solid black;
+    border-radius: 5%;
+    min-height: 30vh;
+}
 
 
