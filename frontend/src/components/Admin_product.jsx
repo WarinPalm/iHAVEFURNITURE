@@ -25,10 +25,6 @@ const Adminproduct = () => {
     const [form, setForm] = useState({ name: '', orderid: '', status: '' }); // สร้าง state สำหรับฟอร์มเพิ่ม/แก้ไข หมวดหมู่สินค้า
     const [editingId, setEditingId] = useState(null); // สร้าง state สำหรับเก็บ ID ของ หมวดหมู่สินค้า ที่กำลังแก้ไข
 
-    
-
-  
-
     useEffect(()=>{
       const fetchCategory = async () => {
         // ฟังก์ชันสำหรับดึงข้อมูลหมวดหมู่สินค้าเข้ามา (API)
