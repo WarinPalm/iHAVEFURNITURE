@@ -7,7 +7,7 @@
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); 
 }
 .bg-login{
-    height: calc(100vh - 6vh - 5vh - 7vh); /*  nav1 + nav2 + footer*/
+    height: calc(100vh - 7vh - 5vh - 7vh); /*  nav1 + nav2 + footer*/
     background-image: url('/image/hero-image/banner1.jpg');
     background-position: center;
     background-repeat: no-repeat;

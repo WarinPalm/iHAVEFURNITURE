@@ -20,6 +20,8 @@ import BillOrder from '../Pages/user/BillOrder'
 import OrderDetail from '../Pages/user/OrderDetail'
 import PaymentDetail from '../Pages/user/PaymentDetail'
 import History from '../Pages/user/History'
+import UserInfo from '../Pages/user/UserInfo'
+import UserEdit from '../Pages/user/UserEdit'
 
 const router = createBrowserRouter([
     {  
@@ -48,7 +50,9 @@ const router = createBrowserRouter([
             { path: 'paymentdetail', element: <PaymentDetail />},
             { path: 'q&a', element: <QandA />},
             { path: 'aboutus', element: <AboutUs />},
-            { path: 'searchProduct', element: <SearchProduct />}
+            { path: 'searchProduct', element: <SearchProduct />},
+            { path: 'userinfo', element: <UserInfo />},
+            { path: 'useredit', element: <UserEdit />}
         ]
     },
 ])

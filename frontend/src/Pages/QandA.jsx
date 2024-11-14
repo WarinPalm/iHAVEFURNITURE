@@ -4,7 +4,7 @@ function QandA() {
   const [openCard, setOpenCard] = useState('');
 
   const toggleCard = (index) => {
-    setOpenCard(openCard === index ? null : index);
+    setOpenCard(openCard === index ? '' : index);
   };
 
   return (

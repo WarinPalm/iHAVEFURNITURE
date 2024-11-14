@@ -172,5 +172,17 @@ aside li {
     border-radius: 5%;
     min-height: 30vh;
 }
+.userprofile {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-color: #000000;
+    background-image: url('/image/profile.jpg'); 
+    background-size: cover; 
+    background-position: right center; 
+    background-repeat: no-repeat; 
+    border: none;
+    cursor: pointer;
+}
 
 

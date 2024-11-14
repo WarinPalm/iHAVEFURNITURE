@@ -70,7 +70,7 @@ const Navbar = ({ activeCategory }) => {
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="profileDropdown">
                             <li><Link className="dropdown-item" to="../user/history">ประวัติการสั่งซื้อ</Link></li>
-                            <li><Link className="dropdown-item" to="../user/">ข้อมูลผู้ใช้</Link></li>
+                            <li><Link className="dropdown-item" to="../user/userinfo">ข้อมูลผู้ใช้</Link></li>
                             <li><hr className="dropdown-divider" /></li>
                             <li><button className="dropdown-item" onClick={handleLogout}>ออกจากระบบ</button></li>                        </ul>
                     </div>
