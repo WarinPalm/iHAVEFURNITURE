@@ -43,7 +43,6 @@ const FormCategory = () => {
 
     // ลบหมวดหมู่
     const handleRemove = async(id)=>{
-        console.log(id)
         try{
             await removeCategory(token,id)
             fetchCategories();

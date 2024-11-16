@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { cartItems } from '../../components/CartItem';
 
 
 const History = () => {
@@ -10,8 +9,7 @@ const History = () => {
         navigate(`../orderDetail`);
     };
     
-    // Filter status 'รอคำอนุมัติ'
-    const approvedItems = cartItems.filter(item => item.status === 'รอชำระเงิน' || item.status === 'รอคำอนุมัติ');
+  
 
     return (
         <>

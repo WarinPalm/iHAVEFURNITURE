@@ -27,6 +27,7 @@ import UserEdit from '../Pages/user/UserEdit'
 import AdminLayout from '../Layouts/AdminLayout'
 import HomeAdmin from '../Pages/admin/HomeAdmin'
 import AdminProduct from '../Pages/admin/AdminProduct'
+import AdminInfo from '../Pages/admin/AdminInfo'
 
 const router = createBrowserRouter([
     {  
@@ -66,6 +67,7 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <HomeAdmin /> },
             { path: 'adminproduct', element: <AdminProduct />},
+            { path: 'admininfo', element: <AdminInfo />},
         ]
     },
 ])

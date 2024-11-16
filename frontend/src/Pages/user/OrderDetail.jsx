@@ -1,13 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { usePriceCalculate } from './PriceCalculate';
 import { Link } from 'react-router-dom';
 
 const OrderDetail = () => {
-  const { cartItems, calNetTotal, calProductPrice} = usePriceCalculate();
-
-  // Filter status 'รอคำอนุมัติ'
-  const approvedItems = cartItems.filter(item => item.status === 'รอชำระเงิน' || item.status === 'รอคำอนุมัติ');
 
   // ฟังก์ชันสำหรับ render สินค้า
   const renderProductItem = () => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom';
 
-import ProductModal from './ProductModal';
+import ProductModal from '../components/user/ProductModal';
 import axios from "axios";
 
 const SearchProduct = () => {

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { updateCartStatus } from '../../components/CartItem';
-import { usePriceCalculate } from './PriceCalculate';
 
 const PaymentDetail = () => {
-    const { calNetTotal, calProductPrice, cartItems } = usePriceCalculate();
 
     const [notificationDateTime, setNotificationDateTime] = useState('');
 

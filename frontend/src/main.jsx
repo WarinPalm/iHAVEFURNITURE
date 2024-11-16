@@ -10,21 +10,19 @@ import './CSS/hero-image.css';
 import './CSS/style.css';
 import './CSS/footer.css';
 import './CSS/Login.css'
+import './CSS/adminstyle.css'
 
-import { PriceProvider } from './Pages/user/PriceCalculate.jsx';
 import App from './App.jsx';
 import Footer from "./components/Footer.jsx"
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <PriceProvider>
       <div className="app-container">
         <div className="main-content">
           <App/>
         </div>
         <Footer />
       </div>
-    </PriceProvider>
   </StrictMode>,
 );
 

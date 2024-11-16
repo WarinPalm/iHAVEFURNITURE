@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { cartItems } from '../../components/CartItem';
 
 
 const BillOrder = () => {
@@ -10,8 +9,7 @@ const BillOrder = () => {
         navigate(`../paymentDetail`);
     };
 
-    // Filter status 'รอคำอนุมัติ'
-    const cartItemsForPayment = cartItems.filter(item => item.status === 'รอชำระเงิน');
+   
 
     return (
         <>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import HeroImage from "../HeroImage";
 import Category from "../Category"
-import ProductModal from '../ProductModal';
+import ProductModal from '../../components/user/ProductModal';
 import axios from "axios";
 
 const HomeUser = () => {
@@ -15,6 +15,7 @@ const HomeUser = () => {
     const [currentName, setCurrentName] = useState('');
     const [currentDetail, setCurrentDetail] = useState('');
     const [currentPrice, setCurrentPrice] = useState('');
+    const [currentId, setCurrentId] = useState('');
 
 
     useEffect(() => {
@@ -52,6 +53,7 @@ const HomeUser = () => {
                         setCurrentName(product.name);
                         setCurrentDetail(product.description);
                         setCurrentPrice(product.price);
+                        setCurrentId(product.id);
                     }}
                 >
                     <img src={product.fullpath} className="card-img-top" alt={product.name} />
@@ -82,6 +84,8 @@ const HomeUser = () => {
                         setCurrentName(product.name);
                         setCurrentDetail(product.description);
                         setCurrentPrice(product.price);
+                        setCurrentId(product.id);
+
                     }} 
                 >
                     <img 
@@ -100,7 +104,7 @@ const HomeUser = () => {
     return (
         <>
          
-            <ProductModal currentImage={currentImage} currentName={currentName} currentDetail={currentDetail} currentPrice={currentPrice} /> 
+            <ProductModal currentImage={currentImage} currentName={currentName} currentDetail={currentDetail} currentPrice={currentPrice} currentId={currentId}/> 
             <HeroImage />
 
             <section className="list-product">

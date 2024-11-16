@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ProductModal from './ProductModal';
+import ProductModal from '../components/user/ProductModal';
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 
@@ -18,7 +18,8 @@ const ViewAll = () => {
     const [currentName, setCurrentName] = useState('');
     const [currentDetail, setCurrentDetail] = useState('');
     const [currentPrice, setCurrentPrice] = useState('');
-
+    const [currentId, setCurrentId] = useState('');
+    
     // ดึงข้อมูลสินค้า
     useEffect(()=>{
         const fetchProduct = ()=>{
@@ -73,6 +74,7 @@ const ViewAll = () => {
                         setCurrentName(product.name);
                         setCurrentDetail(product.description);
                         setCurrentPrice(product.price);
+                        setCurrentId(product.Id);
                     }}
                 >
                     <img src={product.fullpath} className="card-img-top" alt={product.name} />
@@ -111,7 +113,7 @@ const ViewAll = () => {
 
     return (
         <>
-            <ProductModal currentImage={currentImage} currentName={currentName} currentDetail={currentDetail} currentPrice={currentPrice} /> 
+            <ProductModal currentImage={currentImage} currentName={currentName} currentDetail={currentDetail} currentPrice={currentPrice} currentId={currentId}/> 
 
             <section className="list-product">
                 <div className="container text-center">
