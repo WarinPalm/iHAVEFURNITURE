@@ -5,11 +5,6 @@ import ProductModal from './ProductModal';
 import axios from "axios";
 
 const SearchProduct = () => {
-    const [currentCategory, setCurrentCategory] = useState(1);
-    
-    const handleCategoryClick = (id) => {
-        setCurrentCategory(id);
-    };
 
     const [products, setProducts] = useState([]); // สถานะสำหรับผลิตภัณฑ์ทั้งหมด
     const [filteredProducts, setFilteredProducts] = useState([]); // สถานะสำหรับผลิตภัณฑ์ที่กรองแล้ว
@@ -54,7 +49,7 @@ const SearchProduct = () => {
         setTotalPages(Math.ceil(filtered.length / itemsPerPage));
         setCurrentPage(1);
     }, [location.search, products, itemsPerPage]);
-    
+
     const renderProducts = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
@@ -111,17 +106,6 @@ const SearchProduct = () => {
         return pageNumbers;
     };
 
-    const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-    
-    const handlePrevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
 
     return (
         <>
@@ -144,13 +128,17 @@ const SearchProduct = () => {
                         <div className="d-flex justify-content-end">
                             {totalPages > 1 && (
                                 <>
-                                    <button className="btn btn-custom mx-2" onClick={handlePrevPage} disabled={currentPage === 1}>
+                                    <button className="btn btn-custom mx-2" 
+                                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                    disabled={currentPage === 1}>
                                         Previous Page
                                     </button>
 
                                     {renderPageNumbers()}
 
-                                    <button className="btn btn-custom mx-2" onClick={handleNextPage} disabled={currentPage === totalPages}>
+                                    <button className="btn btn-custom mx-2" 
+                                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                     disabled={currentPage === totalPages}>
                                         Next Page
                                     </button>
                                 </>

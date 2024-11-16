@@ -35,7 +35,7 @@ const ViewAll = () => {
     // ดึงข้อมูลหมวดหมู่
     useEffect(() => {
         const fetchCategories = () => {
-            axios.get("http://localhost:3000/api/category")
+            axios.get("http://localhost:3000/api/categories")
                 .then(res => setCategories(res.data))
                 .catch(error => console.error('Error Fetching Categories' + error));
         };
@@ -54,25 +54,6 @@ const ViewAll = () => {
         const pages = Math.ceil(filterProducts.length / itemsPerPage);
         setTotalPages(pages);
     }, [products, currentCategory, itemsPerPage]);
-
-    // หาชื่อหมวดหมู่จาก currentCategory
-    const currentCategoryName = categories.find(category => category.id === currentCategory)?.name || '';
-
-    const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-    
-    const handlePrevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-
-    const handlePageClick = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
 
     const renderProducts = () => {
         // กรองสินค้าตามหมวดหมู่ที่เลือก
@@ -119,7 +100,7 @@ const ViewAll = () => {
         for (let i = startPage; i <= endPage; i++) {
             pageNumbers.push(
                 <button key={i} className={`btn ${i === currentPage ? 'btn-custom2' : 'btn-custom'} mx-1`} 
-                onClick={() => handlePageClick(i)}>
+                onClick={() => setCurrentPage(i)}>
                     {i}
                 </button>
             );
@@ -135,7 +116,7 @@ const ViewAll = () => {
             <section className="list-product">
                 <div className="container text-center">
                     <div className="col-3 pt-5">
-                        <h1>Category: {currentCategoryName}</h1>
+                        <h1>Category: {categories.find(category => category.id === currentCategory)?.name || ''}</h1>
                     </div>
                     <div className="row mt-3 pt-5">
                         <div className="col-12 row-gap-2">
@@ -149,14 +130,18 @@ const ViewAll = () => {
                             {totalPages > 1 && (
                                 <>
                                     {/* ปุ่ม Previous จะไม่มีผลเมื่ออยู่หน้าแรก */}
-                                    <button className="btn btn-custom mx-2" onClick={handlePrevPage} disabled={currentPage === 1}>
+                                    <button className="btn btn-custom mx-2" 
+                                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                    disabled={currentPage === 1}>
                                         ก่อนหน้า
                                     </button>
 
                                     {renderPageNumbers()}
 
                                     {/* ปุ่ม Next จะไม่มีผลเมื่ออยู่หน้าสุดท้าย */}
-                                    <button className="btn btn-custom mx-2" onClick={handleNextPage} disabled={currentPage === totalPages}>
+                                    <button className="btn btn-custom mx-2" 
+                                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                     disabled={currentPage === totalPages}>
                                         ถัดไป
                                     </button>
                                 </>
