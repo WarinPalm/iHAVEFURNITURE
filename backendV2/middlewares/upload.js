@@ -7,6 +7,8 @@ const uploadDir = path.join(__dirname, '../uploads');
 const uploadDirSlip = path.join(__dirname, '../uploads/slip');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true }); // สร้างโฟลเดอร์ 'uploads' ถ้ายังไม่มี
+}
+if (!fs.existsSync(uploadDirSlip)) {
     fs.mkdirSync(uploadDirSlip, { recursive: true }); // สร้างโฟลเดอร์ 'uploads' ถ้ายังไม่มี
 }
 
@@ -35,16 +37,16 @@ const uploadSlip = multer({ storage: storageSlip });
 
 exports.upload = (req, res , next) => {
     // ใช้ตัวกลาง upload.single('picture') ในการอัปโหลดไฟล์
-    upload.single('picture')(req, res, (err) => {
+    upload.single('picture') (req, res, (err) => {
         if (err) {
             return res.status(500).json({ message: 'Error uploading file', error: err });
         }
-        ตรวจสอบว่าไฟล์ถูกอัปโหลดหรือไม่
+        // ตรวจสอบว่าไฟล์ถูกอัปโหลดหรือไม่
         if (!req.file) {
             return res.status(400).json({ message: 'No file uploaded' });
         }
+        next();
     });
-    next();
 };
 exports.updateImage = (req, res , next) => {
     // ใช้ตัวกลาง upload.single('picture') ในการอัปโหลดไฟล์
@@ -53,8 +55,8 @@ exports.updateImage = (req, res , next) => {
             return res.status(500).json({ message: 'Error uploading file', error: err });
         }
         
+        next();
     });
-    next();
 };
 exports.uploadSlip = (req, res , next) => {
     // ใช้ตัวกลาง uploadSlip.single('proofPicture') ในการอัปโหลดไฟล์
@@ -66,6 +68,6 @@ exports.uploadSlip = (req, res , next) => {
         if (!req.file) {
             return res.status(400).json({ message: 'No file uploaded' });
         }
+        next();
     });
-    next();
 };

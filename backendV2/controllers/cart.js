@@ -124,7 +124,7 @@ exports.listItemCart = async (req,res) => {
             ...item,
             product: {
                 ...item.product,
-                fullPathImage: `http://localhost:3000/uploads/${item.product.picture}`
+                fullPathImage: `http://localhost:5500/uploads/${item.product.picture}`
             }
         }));
 
@@ -183,3 +183,13 @@ exports.removeItemCart = async (req,res) => {
     }
 }
 
+exports.submitCart = async (req,res) => {
+    try{
+        const userCart = await prisma.cartitem.findMany({
+            
+        })
+    }catch(err){
+        console.log(err);
+        res.status(500).json({message: 'server error'});
+    }
+}

@@ -7,7 +7,7 @@ const { upload , updateImage } = require('../middlewares/upload');
 
 // Endpoints 
 // สร้าง endpoint สำหรับการสร้างผู้ใช้งาน
-router.post('/product' , upload , authCheck , adminCheck , create) 
+router.post('/product' , upload ,  create) 
 router.get('/products', getAll)
 router.put('/product-edit/:id', updateImage , authCheck , adminCheck, update)
 router.delete('/product-del/:id', remove , authCheck , adminCheck,)

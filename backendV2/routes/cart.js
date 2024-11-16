@@ -9,5 +9,7 @@ router.post('/item-cart' , authCheck , addItemToCart)
 router.get('/cart' , authCheck , listItemCart)
 router.delete('/item-cart/:id' , authCheck ,   removeItemCart)
 
+router.post('submit-cart' , authCheck )
+
 
 module.exports = router;
