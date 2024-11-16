@@ -124,7 +124,7 @@ exports.listItemCart = async (req,res) => {
             ...item,
             product: {
                 ...item.product,
-                fullPathImage: `http://localhost:5500/uploads/${item.product.picture}`
+                fullPathImage: `http://localhost:3000/uploads/${item.product.picture}`
             }
         }));
 

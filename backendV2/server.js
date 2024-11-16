@@ -5,7 +5,7 @@ const morgan = require('morgan'); // middleware for logging request details
 const { readdirSync } = require('fs'); // ใช้เรียกไฟล์ในโฟลเดอร์ได้
 const path = require('path'); // ใช้เรียกใช้ path ของไฟล์
 const cors = require('cors'); 
-const port = 5500;
+const port = 3000;
 
 // import routers , Example 1
 // const authRouter = require('./routes/auth'); // import auth router
