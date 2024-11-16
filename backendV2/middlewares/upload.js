@@ -33,7 +33,7 @@ const upload = multer({ storage: storage });
 const uploadSlip = multer({ storage: storageSlip });
 
 
-exports.upload = (req, res) => {
+exports.upload = (req, res , next) => {
     // ใช้ตัวกลาง upload.single('picture') ในการอัปโหลดไฟล์
     upload.single('picture')(req, res, (err) => {
         if (err) {
@@ -44,8 +44,9 @@ exports.upload = (req, res) => {
             return res.status(400).json({ message: 'No file uploaded' });
         }
     });
+    next();
 };
-exports.uploadSlip = (req, res) => {
+exports.uploadSlip = (req, res , next) => {
     // ใช้ตัวกลาง uploadSlip.single('proofPicture') ในการอัปโหลดไฟล์
     uploadSlip.single('proofPicture')(req, res, (err) => {
         if (err) {
@@ -56,4 +57,5 @@ exports.uploadSlip = (req, res) => {
             return res.status(400).json({ message: 'No file uploaded' });
         }
     });
+    next();
 };

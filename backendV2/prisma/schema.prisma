@@ -35,7 +35,6 @@ model Product {
   price       Float?
   picture     String?
   stock       Int?       @default(0)
-  view        Int?       @default(0)
   cartItems   Cartitem[]
   sold        Int?       @default(0)
   createdAt   DateTime   @default(now())
