@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import useEcomStore from '../../store/ecom_store';
 
-const Navbar = ({ activeCategory }) => {
+const NavbarAdmin = ({ activeCategory }) => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     
@@ -62,7 +62,7 @@ const Navbar = ({ activeCategory }) => {
 
                     <div className="dropdown">
                         <button
-                            className="circle-button-user me-3 dropdown-toggle"
+                            className="circle-button-admin me-3 dropdown-toggle"
                             id="profileDropdown"
                             data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -74,11 +74,7 @@ const Navbar = ({ activeCategory }) => {
                             <li><hr className="dropdown-divider" /></li>
                             <li><button className="dropdown-item" onClick={handleLogout}>ออกจากระบบ</button></li>                        </ul>
                     </div>
-                    <Link to="../user/cart">
-                        <button className="circle-button">
-                            <span className="material-symbols-outlined">shopping_cart</span>
-                        </button>
-                    </Link>
+                    
                 </div>
             </div>
 
@@ -91,8 +87,13 @@ const Navbar = ({ activeCategory }) => {
                     </div>
                     <ul className="nav justify-content-center">
                         <li className="nav-item">
-                            <Link className="nav-link active" aria-current="page" to="../user">หน้าแรก</Link>
+                            <Link className="nav-link active" aria-current="page" to="../user">หน้าของลูกค้า</Link>
                         </li>
+                        <li className="nav-item">   
+                            <Link className="nav-link active" aria-current="page" to="../admin">หน้าแรก</Link>
+                        </li>
+                        
+                        
                         <li className="nav-item dropdown">
                             <a
                                 className={`nav-link dropdown-toggle ${activeCategory ? 'active' : ''}`}
@@ -106,7 +107,7 @@ const Navbar = ({ activeCategory }) => {
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 {categoryNotBanner.map(category => (
                                     <Link
-                                        to='../user/viewall'                   
+                                        to='../admin/adminproduct'
                                         key={category.id}
                                         className={`dropdown-item ${activeCategory === category.id ? 'active' : ''}`}
                                         state={{ categoryId: category.id }}
@@ -115,10 +116,6 @@ const Navbar = ({ activeCategory }) => {
                                     </Link>
                                 ))}
                             </ul>
-                        </li>
-                        
-                        <li className="nav-item">
-                            <Link to="../user/billOrder" className="nav-link">ธุรกรรม</Link>
                         </li>
                         <li className="nav-item">
                             <Link to="../user/q&a" className="nav-link">คำถามที่พบบ่อย</Link>
@@ -133,4 +130,4 @@ const Navbar = ({ activeCategory }) => {
     );
 };
 
-export default Navbar;
+export default NavbarAdmin;

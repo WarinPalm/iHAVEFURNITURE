@@ -23,6 +23,11 @@ import History from '../Pages/user/History'
 import UserInfo from '../Pages/user/UserInfo'
 import UserEdit from '../Pages/user/UserEdit'
 
+// สำหรับ Admin
+import AdminLayout from '../Layouts/AdminLayout'
+import HomeAdmin from '../Pages/admin/HomeAdmin'
+import AdminProduct from '../Pages/admin/AdminProduct'
+
 const router = createBrowserRouter([
     {  
         path: '/', 
@@ -53,6 +58,14 @@ const router = createBrowserRouter([
             { path: 'searchProduct', element: <SearchProduct />},
             { path: 'userinfo', element: <UserInfo />},
             { path: 'useredit', element: <UserEdit />}
+        ]
+    },
+    {
+        path: '/admin',
+        element: <ProtectRouteUser element={<AdminLayout />} />,
+        children: [
+            { index: true, element: <HomeAdmin /> },
+            { path: 'adminproduct', element: <AdminProduct />},
         ]
     },
 ])

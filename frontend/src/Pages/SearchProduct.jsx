@@ -32,7 +32,7 @@ const SearchProduct = () => {
         const fetchProduct = () => {
             axios.get("http://localhost:3000/api/products")
                 .then(res => {
-                    setProducts(res.data); 
+                    setProducts(res.data.products); 
                 })
                 .catch(error => console.error('Error Fetching Products: ' + error));
         }
@@ -72,12 +72,12 @@ const SearchProduct = () => {
             <div className="col-3 mb-4" key={index}>
                 <div className="card card-hover" data-bs-toggle="modal" data-bs-target="#product-detail"
                     onClick={() => {
-                        setCurrentImage(product.image);
-                        setCurrentName(product.title);
-                        setCurrentDetail(product.text);
+                        setCurrentImage(product.fullpath);
+                        setCurrentName(product.name);
+                        setCurrentDetail(product.description);
                         setCurrentPrice(product.price);
                     }} >
-                    <img src={product.image} className="card-img-top" alt={product.title} />
+                    <img src={product.fullpath} className="card-img-top" alt={product.name} />
                     <div className="card-body">
                         <h5 className="card-title">{product.name}</h5>
                         <p className="card-text text-muted">{product.description}</p>
