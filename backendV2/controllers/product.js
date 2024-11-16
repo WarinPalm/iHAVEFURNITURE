@@ -5,6 +5,7 @@ const fs = require('fs');
 exports.create = async (req, res) => {
     try{
         const { name, description, price, stock,categoryId } = req.body;
+
         const product = await prisma.product.create({
             data:{
                 name:name,
@@ -35,7 +36,7 @@ exports.getAll = async (req, res) => {
         products.forEach((product) =>{
             // เพิ่ม fullPathImage เข้าไปภายใน object ของแต่ละ product 
             product.fullpath = "http://localhost:3000/uploads/" + product.picture
-        })
+        });
 
         res.json({products});
     }catch(err){
@@ -46,8 +47,7 @@ exports.getAll = async (req, res) => {
 
 exports.update = async (req, res) => {
     try{
-        const { name, description, price, stock, categoryId } = req.body;
-       
+        
         // ค้นหาสินค้าที่ต้องการแก้ไข
         const product = await prisma.product.findUnique({
             where:{ id: Number(req.params.id)}
@@ -56,12 +56,22 @@ exports.update = async (req, res) => {
         if(!product){
             return res.status(404).json({ message: 'Product not found'});
         }
+        const { name, description, price, stock, categoryId } = {
+            ...product,  // ค่าเดิม
+            ...req.body // ค่าใหม่
+        };
+        
+        let pictureFilename = product.picture; // ตั้งค่าภาพเป็นค่าปัจจุบัน
+        
 
-        // ลบไฟล์ภาพเก่า (ถ้ามีอยู่)
-        if(product.picture){
-            fs.unlink(`uploads/${product.picture}`, (err) => {
-                if (err) console.log("not found image", err);
-            });
+        if (req.file) {
+            // ลบไฟล์ภาพเก่า (ถ้ามีอยู่)
+            if(product.picture){
+                fs.unlink(`uploads/${product.picture}`, (err) => {
+                    if (err) console.log("not found image", err);
+                });
+            }
+            pictureFilename = req.file.filename; // ตั้งค่าภาพเป็นไฟล์ใหม่
         }
         const updateProduct = await prisma.product.update({
             where:{
@@ -71,7 +81,7 @@ exports.update = async (req, res) => {
                 name:name,
                 description: description,
                 price:parseFloat(price),
-                picture: req.file.filename, // เก็บชื่อไฟล์ภาพ
+                picture: pictureFilename, // เก็บชื่อไฟล์ภาพ
                 stock:parseInt(stock),
                 categoryId:parseInt(categoryId)
             }

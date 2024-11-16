@@ -5,17 +5,9 @@ import useEcomStore from '../../store/ecom_store';
 
 const NavbarAdmin = ({ activeCategory }) => {
     const navigate = useNavigate();
-    const [searchTerm, setSearchTerm] = useState('');
     
     const [categories, setCategories] = useState([]);
 
-    const handleSearch = (event) => {
-        event.preventDefault();
-        if (searchTerm) {
-            navigate(`../user/searchProduct?query=${searchTerm}`);
-            setSearchTerm('');
-        }
-    };
     const Logout = useEcomStore((state) => state.actionLogout);
 
     const handleLogout = () => {
@@ -41,21 +33,6 @@ const NavbarAdmin = ({ activeCategory }) => {
             <nav className="my-nav" style={{height:"6vh"}}>
             <div className="container nav-content">
                 <h1 className="h1-text m-0">iHAVEFurniture</h1>
-
-                {/* Search Bar */}
-                <form onSubmit={handleSearch} className="input-group w-25 ms-auto">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="ค้นหาสินค้า..."
-                        aria-label="Search"
-                        value={searchTerm}
-                        onChange={(event) => setSearchTerm(event.target.value)}
-                    />
-                    <button className="btn search-btn" type="submit">
-                        <span className="material-symbols-outlined">search</span>
-                    </button>
-                </form>
 
                 {/* Profile and Cart Buttons */}
                 <div className="d-flex align-items-center ms-3">

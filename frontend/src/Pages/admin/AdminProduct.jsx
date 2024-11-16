@@ -1,32 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import FormCategory from '../../components/admin/FormCategory';
+import { deleteProduct } from '../../api/Product';
+import useEcomStore from '../../store/ecom_store';
+import FormProduct from '../../components/admin/FormProduct';
 
 function AdminProduct() {
+  const token = useEcomStore((state) => state.token);
+
   const location = useLocation();
   const categoryNow = location.state?.categoryId || 2;
-
-  const [currentCategory, setCurrentCategory] = useState(categoryNow); // default category id == sofa
-
+  
+  const [currentCategory, setCurrentCategory] = useState(categoryNow);
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]); // สินค้าที่ผ่านการค้นหา
-  const [searchTerm, setSearchTerm] = useState(''); // คำค้นหา
-
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [itemsPerPage] = useState(10); // จำนวนสินค้าต่อหน้า
-  const [categories, setCategories] = useState([]); // เพิ่ม state สำหรับเก็บข้อมูลหมวดหมู่
-  const currentCategoryName = categories.find(category => category.id === currentCategory)?.name || ''
+  const [itemsPerPage] = useState(10);
+  const [categories, setCategories] = useState([]);
+
+  const currentCategoryName = categories.find(category => category.id === currentCategory)?.name || '';
+
   // ดึงข้อมูลสินค้า
-  useEffect(() => {
-    const fetchProduct = () => {
-      axios.get("http://localhost:3000/api/products")
-        .then(res => {
-          setProducts(res.data.products);
-          setFilteredProducts(res.data.products.filter(product => product.categoryId === currentCategory));
-        })
-        .catch(error => console.error('Error Fetching Products' + error));
+  const fetchProduct = async () => {
+    try {
+        const res = await axios.get("http://localhost:3000/api/products");
+        setProducts(res.data.products);
+        setFilteredProducts(res.data.products.filter(product => product.categoryId === currentCategory));
+    } catch (error) {
+        console.error('Error fetching products:', error);
     }
+};
+
+  useEffect(() => {
     fetchProduct();
   }, [currentCategory]);
 
@@ -35,17 +44,17 @@ function AdminProduct() {
     const fetchCategories = () => {
       axios.get("http://localhost:3000/api/categories")
         .then(res => setCategories(res.data))
-        .catch(error => console.error('Error Fetching Categories' + error));
+        .catch(error => console.error('Error Fetching Categories:', error));
     };
     fetchCategories();
   }, []);
 
-  //ดึงค่าของ category ปัจจุบันมา
+  // อัปเดต currentCategory เมื่อ categoryNow เปลี่ยน
   useEffect(() => {
     setCurrentCategory(categoryNow);
     setCurrentPage(1);
   }, [categoryNow]);
-  
+
   // ฟิลเตอร์สินค้าตามคำค้นหา
   useEffect(() => {
     const filtered = products.filter(product =>
@@ -54,23 +63,23 @@ function AdminProduct() {
     );
     setFilteredProducts(filtered);
     setTotalPages(Math.ceil(filtered.length / itemsPerPage));
-    setCurrentPage(1); // รีเซ็ตหน้ากลับไปหน้าแรก
+    setCurrentPage(1);
   }, [searchTerm, products, currentCategory, itemsPerPage]);
 
   const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value); // อัปเดตคำค้นหา
+    setSearchTerm(event.target.value);
   };
 
-  //method สำหรับลบข้อมูล
-  const deleteProduct = async (id) => {
+  // ลบสินค้า
+  const handleDeleteProduct = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/product-del/${id}`);
-      setProducts(prevProducts => prevProducts.filter(product => product.id !== id));
-    } catch (error) {
-      console.error('Error deleting product:', error);
+      await deleteProduct(token, id);
+      toast.success("ลบสินค้าเรียบร้อยแล้ว");
+      fetchProduct();
+    } catch (err) {
+      toast.error(err)
     }
   };
-
 
   const renderProducts = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -103,7 +112,7 @@ function AdminProduct() {
           <button className="btn btn-link text-primary">แก้ไข</button>
         </td>
         <td>
-          <button className="btn btn-link text-danger" onClick={() => deleteProduct(product.id)}>ลบ</button>
+          <button className="btn btn-link text-danger" onClick={() => handleDeleteProduct(product.id)}>ลบ</button>
         </td>
       </tr>
     ));
@@ -131,16 +140,26 @@ function AdminProduct() {
           <input
             type="text"
             className="form-control w-25"
-            placeholder="ค้นหาสินค้า..."
+            placeholder="ค้นหาชื่อสินค้า..."
             value={searchTerm}
             onChange={handleSearchChange}
           />
         </div>
 
         <div className="d-flex justify-content-start mb-3">
-          <a href="#" className="nav-link me-3">Catalog Filter</a>
-          <a href="#" className="nav-link me-3">Add new product</a>
-          <a href="#" className="nav-link me-3">View all</a>
+          
+          <button
+            className="btn btn-custom"
+            data-bs-toggle="modal"
+            data-bs-target="#formCategoryModal">
+            จัดการหมวดหมู่
+          </button>
+          <button 
+          className='btn btn-custom ms-3'
+          data-bs-toggle="modal"
+          data-bs-target="#formProductModal">
+            เพิ่มสินค้า
+          </button>
         </div>
 
         <table className="table table-bordered">
@@ -178,6 +197,9 @@ function AdminProduct() {
           </button>
         </div>
       </div>
+
+      <FormCategory/>
+      <FormProduct/>
     </div>
   );
 }
