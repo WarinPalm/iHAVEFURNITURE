@@ -39,10 +39,20 @@ exports.upload = (req, res , next) => {
         if (err) {
             return res.status(500).json({ message: 'Error uploading file', error: err });
         }
-        // ตรวจสอบว่าไฟล์ถูกอัปโหลดหรือไม่
+        ตรวจสอบว่าไฟล์ถูกอัปโหลดหรือไม่
         if (!req.file) {
             return res.status(400).json({ message: 'No file uploaded' });
         }
+    });
+    next();
+};
+exports.updateImage = (req, res , next) => {
+    // ใช้ตัวกลาง upload.single('picture') ในการอัปโหลดไฟล์
+    upload.single('picture')(req, res, (err) => {
+        if (err) {
+            return res.status(500).json({ message: 'Error uploading file', error: err });
+        }
+        
     });
     next();
 };

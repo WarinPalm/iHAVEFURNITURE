@@ -26,6 +26,33 @@ exports.getAll = async (req,res) => {
     }
 }
 
+exports.editCategory = async (req,res) => {
+    try{
+        const cate = await prisma.category.findUnique({
+            where:{
+                id: Number(req.params.id)
+            }
+        });
+
+        const { name } = {
+            ...cate,
+            ...req.body
+        };
+        await prisma.category.update({
+            where:{
+                id: Number(req.params.id)
+            },
+            data:{
+                name: name
+            }
+        });
+        res.send({ message: "Edit category successfully"});
+    }catch(err){
+        console.log(err);
+        res.status(500).json({ message: "Server Error"});
+    }
+}
+
 exports.remove = async (req,res) => {
     try{
         const { id } = req.params;
