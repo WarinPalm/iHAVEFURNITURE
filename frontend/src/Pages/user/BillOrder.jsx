@@ -18,7 +18,7 @@ const BillOrder = () => {
 
             <div className="container">
                 <div className="row">
-                    <h1 className="mt-5 mb-5">Payment</h1>
+                    <h1 className="mt-5 mb-5">ธุรกรรม</h1>
                     {cartItemsForPayment.length > 0 && (
                         <div className="card mb-3 card-bill card-hover" onClick={goToPaymentDetail}>
                             <div className="row">
@@ -47,7 +47,7 @@ const BillOrder = () => {
                         </div>
                     )}
                     {cartItemsForPayment.length === 0 && (
-                        <p>No orders waiting for approval.</p>
+                        <p>ไม่มีบิลชำระ</p>
                     )}
                 </div>
             </div>

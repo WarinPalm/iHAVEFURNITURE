@@ -38,7 +38,7 @@ const PaymentDetail = () => {
             return <div className='col-12'>Your Bill is empty</div>;
         } else {
             return cartItemsForPayment.map((item, index) => (
-                <div key={index} className="mb-3 mt-2">
+                <div key={index} className="mb-3 mt-5">
                     <div className="row">
                         <div className="col-6">
                             <h5 className="card-title">{item.name}</h5>
@@ -66,7 +66,7 @@ const PaymentDetail = () => {
             <div className="mb-3 mt-5">
                 <div className="row">
                     <div className="col-6">
-                        <h5 className="card-title">Product Price:</h5>
+                        <h5 className="card-title">ราคาสินค้า :</h5>
                     </div>
                     <div className="col-1"></div>
                     <div className="col-4 text-end">
@@ -80,7 +80,7 @@ const PaymentDetail = () => {
 
                 <div className="row">
                     <div className="col-6">
-                        <h5 className="card-title">Net Total:</h5>
+                        <h5 className="card-title">รวมสุทธิ :</h5>
                     </div>
                     <div className="col-1"></div>
                     <div className="col-4 text-end">
@@ -98,7 +98,7 @@ const PaymentDetail = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-4 mb-3">
-                            <h1>Purchase Summary</h1>
+                            <h1>สรุปคำสั่งซื้อ</h1>
                         </div>
                     </div>
                     <div className="row">
@@ -106,13 +106,20 @@ const PaymentDetail = () => {
                         <div className="col-10">
                             <div className="card card-bill">
                                 <div className="card-body">
-                                    <h1 className='mb-5 mt-4'>Receipt</h1>
-
+                                    <h1 className='mb-5 mt-4'>ใบแจ้งหนี้</h1>
+                                    <div className="col-12">
+                                        <h5 className="card-title">วันที่แจ้งโอน : <input type="datetime-local" 
+                                        value={notificationDateTime} onChange={(e) => setNotificationDateTime(e.target.value)} disabled/>
+                                        </h5>
+                                    </div>
+                                    
+                                    
                                     <div className="mt-4 ms-5 bill-items">{renderBillItems()}</div>
 
                                     <div className="ms-5">
                                         {renderPrice()}
                                     </div>
+                                    
                                 </div>
                             </div>
 
@@ -131,20 +138,7 @@ const PaymentDetail = () => {
                                         </div>
                                     </div>
 
-                                    <div className="mb-3 mt-2">
-                                        <div className="row">
-                                            <div className="col-1"></div>
-                                            <div className="col-2">
-                                                <h5 className="card-title">วันที่แจ้งโอน</h5>
-                                            </div>
-                                            <div className="col-1">
-                                                <h5 className="card-title">:</h5>
-                                            </div>
-                                            <div className="col-1">
-                                                <input type="datetime-local" value={notificationDateTime} onChange={(e) => setNotificationDateTime(e.target.value)} disabled/>
-                                            </div>
-                                        </div>
-                                    </div>
+                
                                     <div className="mb-3 mt-2">
                                         <div className="row">
                                             <div className="col-1"></div>

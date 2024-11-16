@@ -6,10 +6,7 @@ const Register = () => {
     const [form, setForm] = useState({ email: "", password: "", confirmPassword: "" });
 
     const handleOnChange = (event) => {
-        setForm({
-            ...form,
-            [event.target.name]: event.target.value,
-        });
+        setForm({...form,[event.target.name]: event.target.value});
     };
 
     const handleSubmit = async (e) => {
@@ -32,54 +29,56 @@ const Register = () => {
     };
 
     return (
-        <section className="register">
-            <div className="container">
-                <div className="row">
-                    <div className="col-12 mt-3">
-                        <h1 className="text-center">Register</h1>
-                        <form className="forgot-password-form mt-4 offset-md-3" onSubmit={handleSubmit}>
-                            <div className="mb-3 col-md-8">
-                                <label htmlFor="email" className="form-label">อีเมล</label>
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    id="email"
-                                    name="email"
-                                    placeholder="อีเมล"
-                                    onChange={handleOnChange}
-                                    value={form.email}
-                                />
-                            </div>
-                            <div className="mb-3 col-md-8">
-                                <label htmlFor="password" className="form-label">รหัสผ่าน</label>
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    id="password"
-                                    name="password"
-                                    placeholder="รหัสผ่าน"
-                                    onChange={handleOnChange}
-                                    value={form.password}
-                                />
-                            </div>
-                            <div className="mb-3 col-md-8">
-                                <label htmlFor="confirm-password" className="form-label">ยืนยันรหัสผ่าน</label>
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    id="confirm-password"
-                                    name="confirmPassword"
-                                    placeholder="ยืนยันรหัสผ่าน"
-                                    onChange={handleOnChange}
-                                    value={form.confirmPassword}
-                                />
-                            </div>
-                            <button type="submit" className="btn btn-primary">Register</button>
-                        </form>
+            <div className="d-flex justify-content-center align-items-center bg-login" style={{ minHeight: '100vh' }}>
+                <div className="card p-5 shadow-lg login-form w-50" style={{ minHeight: '500px' }}>
+                <h3 className="card-title text-center mb-4">สมัครสมาชิก</h3>
+                <form className="mt-4" onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="email" className="form-label">อีเมล</label>
+                        <input
+                            type="email"
+                            className="form-control input-login"
+                            id="email"
+                            name="email"
+                            placeholder="อีเมล"
+                            onChange={handleOnChange}
+                            value={form.email}
+                            required
+                        />
                     </div>
+                    <div className="mb-3">
+                        <label htmlFor="password" className="form-label">รหัสผ่าน</label>
+                        <input
+                            type="password"
+                            className="form-control input-login"
+                            id="password"
+                            name="password"
+                            placeholder="รหัสผ่าน"
+                            onChange={handleOnChange}
+                            value={form.password}
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="confirm-password" className="form-label">ยืนยันรหัสผ่าน</label>
+                        <input
+                            type="password"
+                            className="form-control input-login"
+                            id="confirm-password"
+                            name="confirmPassword"
+                            placeholder="ยืนยันรหัสผ่าน"
+                            onChange={handleOnChange}
+                            value={form.confirmPassword}
+                            required
+                        />
+                    </div>
+                    <div className="d-flex justify-content-center">
+                        <button type="submit" className="btn btn-custom w-50">Register</button>
+                    </div>
+                </form>
                 </div>
             </div>
-        </section>
+
     );
 };
 

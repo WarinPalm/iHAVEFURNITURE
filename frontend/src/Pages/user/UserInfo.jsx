@@ -22,34 +22,7 @@ function UserInfo() {
                     </div>
                 </div>
             </div>
-            <div className="row d-flex justify-content-between mt-5">
-                <div className='col-1'>
-                    <h1>ที่อยู่</h1>
-                </div>
-                <div className='col-8'></div>
-                <div className="col-2 me-2">
-                    <button className="btn btn-custom w-100">เพิ่มที่อยู่</button>
-                </div>
-
-            </div>
-            <div className="card h-100 d-flex">
-                <div className="card-body w-100">
-                    <div className="row align-items-center">
-                        <div className="col-2 text-center">
-                            <h4>บ้าน</h4>
-                        </div>
-                        <div className="col-8">
-                            <h4>เลขที่ 83 หมู่2 sdsdsdddsdff</h4>
-                        </div>
-                        <div className="col-1 text-end">
-                            <button className="circle-button border">s</button>
-                        </div>
-                        <div className="col-1">
-                            <button className="circle-button border">s</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
 
         </div>
     </div>

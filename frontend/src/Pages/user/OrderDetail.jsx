@@ -1,16 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePriceCalculate } from './PriceCalculate';
-
+import { Link } from 'react-router-dom';
 
 const OrderDetail = () => {
   const { cartItems, calNetTotal, calProductPrice} = usePriceCalculate();
-  const navigate = useNavigate();
 
-  const goToHistory = () => {
-    navigate(`../user/history`);
-  };
-  
   // Filter status 'รอคำอนุมัติ'
   const approvedItems = cartItems.filter(item => item.status === 'รอชำระเงิน' || item.status === 'รอคำอนุมัติ');
 
@@ -70,6 +65,7 @@ const OrderDetail = () => {
     <>
       
       <div className="container">
+        <h1 className="mt-5">หมายเลขคำสั่งซื้อ : 1234567</h1>
         <div className="row">
           <div className="col-1"></div>
 
@@ -77,11 +73,11 @@ const OrderDetail = () => {
             <div className="card card-bill card-order mb-3 mt-5">
               <div className="card-body">
                 
-                <h5 className="card-title mt-3">Order#s5554545454545</h5>
-                <h1 className="card-title mt-3">Your order is in the process of being shipped</h1>
-                <h5 className="card-title mt-3">Order Status: Currently Shipping</h5>
-                <h5 className="card-title mt-3">Ordered date: Jul. 5 2024</h5>
-                <h5 className="card-title mt-3">Address: 88/2 Banglang Gorkai Bangkokk 77159</h5>
+                <h1 className="card-title mt-3">ใบเสร็จ</h1>
+                <p className="card-title mt-3">ลูกค้า : วฤณ พรหมวรานนท์</p>
+                <h5 className="card-title mt-3">ที่อยู่ : เลขที่ 83 หมู่ 2</h5>
+                <h5 className="card-title mt-3">วันที่: 14-11-2024</h5>
+                <h5 className="card-title mt-3">หมายเลขคำสั่งซื้อ : 123456789</h5>
 
                 {/* โซนแสดงสินค้า */}
                 <div className="card card-bill mt-5">
@@ -98,7 +94,7 @@ const OrderDetail = () => {
                 </div>
 
                 <div className="d-flex justify-content-end mt-5">
-                  <button className="btn btn-danger" onClick={goToHistory}>BACK</button>
+                  <Link to="../history"><button className="btn btn-danger">BACK</button></Link>
                 </div>
               </div>
             </div>
