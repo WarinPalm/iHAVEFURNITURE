@@ -1,6 +1,24 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import useEcomStore from '../../store/ecom_store';
+import { infoAboutMe } from '../../api/auth';
+
 function UserEdit() {
+    const [user, setUser] = useState(null); // Initialize user as null
+    const token = useEcomStore((state) => state.token);
+
+    const fetchAboutMe = async () => {
+        try {
+            const res = await infoAboutMe(token);
+            setUser(res.data);
+        } catch (err) {
+            console.error('Error fetching user info:', err);
+        }
+    };
+
+    useEffect(() => {
+        fetchAboutMe();
+    }, []);
   return (
     <div>
         <div className="container">

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 const HeroImage = () => {
     const myBanner = {
-        banner1: "/image/hero-image/1.png",
-        banner2: "/image/hero-image/2.png",
-        banner3: "/image/hero-image/3.png",
-        banner4: "/image/hero-image/4.png"
+        banner1: "/image/hero-image/banner1.png",
+        banner2: "/image/hero-image/banner2.png",
+        banner3: "/image/hero-image/banner3.png",
+        banner4: "/image/hero-image/banner4.png"
     };
 
     const [currentIndex, setCurrentIndex] = useState(0);

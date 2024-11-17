@@ -5,7 +5,7 @@ import useEcomStore from '../../store/ecom_store';
 import { toast } from 'react-toastify';
 
 const Cart = () => {
-    const [cartItems, setCartItems] = useState([]); // เก็บข้อมูลตะกร้า
+    const [cartItems, setCartItems] = useState([]); 
     const token = useEcomStore((state) => state.token);
 
     // ดึงข้อมูลสินค้าในตะกร้า
@@ -37,7 +37,6 @@ const Cart = () => {
         }
     
         try {
-            // ใช้ API เพิ่มจำนวนสินค้าในตะกร้า
             await addProductToCart(token, { productId: currentItem.prodId, quantity: quantityChange });
             fetchCartItems();
         } catch (error) {

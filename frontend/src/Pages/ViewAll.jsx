@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 
 const ViewAll = () => {
     const location = useLocation();
-    const categoryNow = location.state?.categoryId || 2;
+    const categoryNow = location.state?.categoryId || 1;
     const [currentCategory, setCurrentCategory] = useState(categoryNow); // default category id == sofa
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(12);

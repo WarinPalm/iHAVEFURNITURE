@@ -12,7 +12,7 @@ function AdminProduct() {
 
   const location = useLocation();
   const categoryNow = location.state?.categoryId || 2;
-  
+
   const [currentCategory, setCurrentCategory] = useState(categoryNow);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -21,31 +21,31 @@ function AdminProduct() {
   const [totalPages, setTotalPages] = useState(0);
   const [itemsPerPage] = useState(10);
   const [categories, setCategories] = useState([]);
-
+  
   const currentCategoryName = categories.find(category => category.id === currentCategory)?.name || '';
 
   // ดึงข้อมูลสินค้า
   const fetchProduct = async () => {
     try {
-        const res = await axios.get("http://localhost:3000/api/products");
-        setProducts(res.data.products);
-        setFilteredProducts(res.data.products.filter(product => product.categoryId === currentCategory));
+      const res = await axios.get("http://localhost:3000/api/products");
+      setProducts(res.data.products);
+      setFilteredProducts(res.data.products.filter(product => product.categoryId === currentCategory));
     } catch (error) {
-        console.error('Error fetching products:', error);
+      console.error('Error fetching products:', error);
     }
-};
+  };
+  // ดึงข้อมูลหมวดหมู่
+  const fetchCategories = () => {
+    axios.get("http://localhost:3000/api/categories")
+      .then(res => setCategories(res.data))
+      .catch(error => console.error('Error Fetching Categories:', error));
+  };
 
   useEffect(() => {
     fetchProduct();
   }, [currentCategory]);
 
-  // ดึงข้อมูลหมวดหมู่
   useEffect(() => {
-    const fetchCategories = () => {
-      axios.get("http://localhost:3000/api/categories")
-        .then(res => setCategories(res.data))
-        .catch(error => console.error('Error Fetching Categories:', error));
-    };
     fetchCategories();
   }, []);
 
@@ -147,17 +147,23 @@ function AdminProduct() {
         </div>
 
         <div className="d-flex justify-content-start mb-3">
-          
+
           <button
             className="btn btn-custom"
             data-bs-toggle="modal"
-            data-bs-target="#formCategoryModal">
-            จัดการหมวดหมู่
+            data-bs-target="#formShowCategoriesModal">
+            จัดการหมวดหมู่สินค้า
           </button>
-          <button 
-          className='btn btn-custom ms-3'
-          data-bs-toggle="modal"
-          data-bs-target="#formProductModal">
+          <button
+            className='btn btn-custom ms-3'
+            data-bs-toggle="modal"
+            data-bs-target="#formCreateCategoryModal">
+            เพิ่มหมวดหมู่
+          </button>
+          <button
+            className='btn btn-custom ms-3'
+            data-bs-toggle="modal"
+            data-bs-target="#formProductModal">
             เพิ่มสินค้า
           </button>
         </div>
@@ -198,8 +204,8 @@ function AdminProduct() {
         </div>
       </div>
 
-      <FormCategory/>
-      <FormProduct/>
+      <FormCategory />
+      <FormProduct />
     </div>
   );
 }

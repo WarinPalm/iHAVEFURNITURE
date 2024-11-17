@@ -9,8 +9,6 @@ const BillOrder = () => {
         navigate(`../paymentDetail`);
     };
 
-   
-
     return (
         <>
 
