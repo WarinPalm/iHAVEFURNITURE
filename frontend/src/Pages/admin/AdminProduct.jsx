@@ -21,7 +21,8 @@ function AdminProduct() {
   const [totalPages, setTotalPages] = useState(0);
   const [itemsPerPage] = useState(10);
   const [categories, setCategories] = useState([]);
-  
+
+  const [editProduct, setEditProduct] = useState(null);
   const currentCategoryName = categories.find(category => category.id === currentCategory)?.name || '';
 
   // ดึงข้อมูลสินค้า
@@ -99,6 +100,7 @@ function AdminProduct() {
       <tr key={product.id}>
         <td>{product.id}</td>
         <td>{product.name}</td>
+        <td>{product.description}</td>
         <td>฿{product.price}</td>
         <td>
           <img
@@ -109,7 +111,9 @@ function AdminProduct() {
         </td>
         <td className="text-center">{product.stock}</td>
         <td>
-          <button className="btn btn-link text-primary">แก้ไข</button>
+          <button className="btn btn-link text-primary" data-bs-toggle="modal" 
+          data-bs-target="#formEditProductModal"
+          onClick={()=>setEditProduct(product)}>แก้ไข</button>
         </td>
         <td>
           <button className="btn btn-link text-danger" onClick={() => handleDeleteProduct(product.id)}>ลบ</button>
@@ -163,7 +167,7 @@ function AdminProduct() {
           <button
             className='btn btn-custom ms-3'
             data-bs-toggle="modal"
-            data-bs-target="#formProductModal">
+            data-bs-target="#formCreateProductModal">
             เพิ่มสินค้า
           </button>
         </div>
@@ -173,6 +177,7 @@ function AdminProduct() {
             <tr>
               <th>รหัสสินค้า</th>
               <th>ชื่อสินค้า</th>
+              <th>รายละเอียด</th>
               <th>ราคา (บาท)</th>
               <th>รูปภาพ</th>
               <th>จำนวนสินค้าในร้าน</th>
@@ -205,7 +210,8 @@ function AdminProduct() {
       </div>
 
       <FormCategory />
-      <FormProduct />
+      <FormProduct currentEditProduct={editProduct} onSuccess={fetchProduct}/>
+
     </div>
   );
 }

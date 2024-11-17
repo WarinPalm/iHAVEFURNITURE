@@ -16,11 +16,11 @@ export const deleteProduct = async (token, id) => {
       },
     });
   };
-export const updateProduct = async (token, id, form) => {
+export const editProduct = async (token, id, form) => {
     // code body
-    return axios.put("http://localhost:3000/api/product/" + id, form, {
+    return axios.put(`http://localhost:3000/api/product-edit/${id}`, form, {
         headers: {
-        Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         },
     });
 };
