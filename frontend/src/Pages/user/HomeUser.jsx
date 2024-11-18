@@ -68,7 +68,7 @@ const HomeUser = () => {
         const recomProduct = products
         .slice()
         .reverse()
-        .filter(product => product.categoryId !== 8)
+        .filter(product => product.categoryId !== 7)
         .slice(0, 4); // กรองแล้วเลือกเฉพาะ 4 รายการแรกที่ไม่ใช่ category banner
         return recomProduct.map((product, index) => (
             <div className="col-3 mb-4 text-center" key={index}>
