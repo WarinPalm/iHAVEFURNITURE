@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import useEcomStore from '../../store/ecom_store';
 
-const NavbarAdmin = ({ activeCategory }) => {
+const NavbarAdmin = () => {
     const navigate = useNavigate();
     
     const [categories, setCategories] = useState([]);
@@ -23,7 +23,7 @@ const NavbarAdmin = ({ activeCategory }) => {
     useEffect(() => {
         fetchCategories();
     }, [categories]);
-    
+
     return (
         <div style={{ position: 'sticky', top: "0", zIndex: "100"}}>
             <nav className="my-nav" style={{height:"6vh"}}>
@@ -68,7 +68,7 @@ const NavbarAdmin = ({ activeCategory }) => {
                         
                         <li className="nav-item dropdown">
                             <a
-                                className={`nav-link dropdown-toggle ${activeCategory ? 'active' : ''}`}
+                                className={`nav-link dropdown-toggle`}
                                 id="navbarDropdown"
                                 role="button"
                                 data-bs-toggle="dropdown"
@@ -77,11 +77,19 @@ const NavbarAdmin = ({ activeCategory }) => {
                                 สินค้า
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <Link
+                                to='../admin/adminproduct'
+                                
+                                className={`dropdown-item`}
+                                state={{ categoryId: 0 }}
+                                >
+                                    <li>สินค้าทั้งหมด</li>
+                                </Link>
                                 {categoriesNotBanner.map(category => (
                                     <Link
                                         to='../admin/adminproduct'
                                         key={category.id}
-                                        className={`dropdown-item ${activeCategory === category.id ? 'active' : ''}`}
+                                        className={`dropdown-item `}
                                         state={{ categoryId: category.id }}
                                     >
                                         <li>{category.name}</li>
@@ -89,12 +97,10 @@ const NavbarAdmin = ({ activeCategory }) => {
                                 ))}
                             </ul>
                         </li>
-                        <li className="nav-item">
-                            <Link to="../user/q&a" className="nav-link">คำถามที่พบบ่อย</Link>
+                        <li className="nav-item">   
+                            <Link className="nav-link active" aria-current="page" to="../admin/orderuser">คำสั่งซื้อ</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link to="../user/aboutus" className="nav-link">เกี่ยวกับเรา</Link>
-                        </li>
+                        
                     </ul>
                 </div>
             </nav>

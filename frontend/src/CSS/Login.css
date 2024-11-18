@@ -8,7 +8,7 @@
 }
 .bg-login{
     height: calc(100vh - 7vh - 5vh - 7vh); /*  nav1 + nav2 + footer*/
-    background-image: url('/image/hero-image/banner1.jpg');
+    background-image: url('/image/Other/bglogin.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

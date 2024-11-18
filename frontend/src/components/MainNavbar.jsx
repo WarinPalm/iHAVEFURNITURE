@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
-const MainNavbar = ({activeCategory }) => {
+const MainNavbar = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
 
@@ -77,7 +77,7 @@ const MainNavbar = ({activeCategory }) => {
                         </li>
                         <li className="nav-item dropdown">
                             <a
-                                className={`nav-link dropdown-toggle ${activeCategory ? 'active' : ''}`}
+                                className={`nav-link dropdown-toggle`}
                                 id="navbarDropdown"
                                 role="button"
                                 data-bs-toggle="dropdown"
@@ -90,7 +90,7 @@ const MainNavbar = ({activeCategory }) => {
                                     <Link
                                         to='../viewall'
                                         key={category.id}
-                                        className={`dropdown-item ${activeCategory === category.id ? 'active' : ''}`}
+                                        className={`dropdown-item`}
                                         state={{ categoryId: category.id }}
                                     >
                                         <li>{category.name}</li>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useEcomStore from '../../store/ecom_store';
-import { infoAboutMe } from '../../api/auth';
+import { infoAboutMe } from '../../api/User';
 
 function UserInfo() {
-    const [user, setUser] = useState(null); // Initialize user as null
+    const [user, setUser] = useState(null); 
     const token = useEcomStore((state) => state.token);
 
     const fetchAboutMe = async () => {
@@ -18,7 +18,7 @@ function UserInfo() {
 
     useEffect(() => {
         fetchAboutMe();
-    }, []);
+    }, [user]);
 
     const renderUserInfo = () => {
         if (!user) {
@@ -41,11 +41,12 @@ function UserInfo() {
 
         return (
             <>
-                <h2>
+                <h2 className='mb-3'>
                     {user.fName} {user.lName}
                 </h2>
-                <h4>อีเมล: {user.email}</h4>
-                <h4>เบอร์โทร: {user.telNo}</h4>
+                <h4 className='mb-3'>อีเมล: {user.email}</h4>
+                <h4 className='mb-3'>เบอร์โทร: {user.telNo}</h4>
+                <p>ที่อยู่: {user.address}</p>
             </>
         );
     };

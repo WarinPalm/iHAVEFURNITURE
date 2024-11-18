@@ -11,7 +11,7 @@ function AdminProduct() {
   const token = useEcomStore((state) => state.token);
 
   const location = useLocation();
-  const categoryNow = location.state?.categoryId || 2;
+  const categoryNow = location.state?.categoryId || 0;
 
   const [currentCategory, setCurrentCategory] = useState(categoryNow);
   const [products, setProducts] = useState([]);
@@ -29,7 +29,7 @@ function AdminProduct() {
   const fetchProduct = async () => {
     try {
       const res = await axios.get("http://localhost:3000/api/products");
-      setProducts(res.data.products);
+      setProducts(res.data.products.filter(product => product.categoryId !== 7));
       setFilteredProducts(res.data.products.filter(product => product.categoryId === currentCategory));
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -44,9 +44,13 @@ function AdminProduct() {
 
   
   useEffect(() => {
-    fetchCategories();
-    fetchProduct();
-  }, [products,categories]);
+      fetchCategories();
+      fetchProduct();
+      // const intervalId = setInterval(fetchProduct, 10000); // Fetch ทุก 10 วิ
+
+      // return () => clearInterval(intervalId);
+
+  }, []);
 
   // อัปเดต currentCategory เมื่อ categoryNow เปลี่ยน
   useEffect(() => {
@@ -56,15 +60,19 @@ function AdminProduct() {
 
   // ฟิลเตอร์สินค้าตามคำค้นหา
   useEffect(() => {
-    const filtered = products.filter(product =>
-      product.categoryId === currentCategory &&
-      product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filtered = products.filter(product => {
+      const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = currentCategory === 0 || product.categoryId === currentCategory;
+  
+      // รวมเงื่อนไขการค้นหาและหมวดหมู่
+      return matchesSearch && matchesCategory;
+    });
+  
     setFilteredProducts(filtered);
     setTotalPages(Math.ceil(filtered.length / itemsPerPage));
     setCurrentPage(1);
   }, [searchTerm, products, currentCategory, itemsPerPage]);
-
+  
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -93,7 +101,32 @@ function AdminProduct() {
         </tr>
       );
     }
-
+    if(currentCategory==0){
+      return products.slice(startIndex, endIndex).map(product => (
+        <tr key={product.id}>
+          <td>{product.id}</td>
+          <td>{product.name}</td>
+          <td>{product.description}</td>
+          <td>฿{product.price}</td>
+          <td>
+            <img
+              src={product.fullpath}
+              alt={product.name}
+              style={{ width: '50px', height: 'auto', objectFit: 'cover' }}
+            />
+          </td>
+          <td className="text-center">{product.stock}</td>
+          <td>
+            <button className="btn btn-link text-primary w-100" data-bs-toggle="modal" 
+            data-bs-target="#formEditProductModal"
+            onClick={()=>setEditProduct(product)}><i className="bi bi-pencil-square"></i></button>
+          </td>
+          <td>
+            <button className="btn btn-link text-danger w-100" onClick={() => handleDeleteProduct(product.id)}><i className="bi bi-trash"></i></button>
+          </td>
+        </tr>
+      ));
+    }
     return filteredProducts.slice(startIndex, endIndex).map(product => (
       <tr key={product.id}>
         <td>{product.id}</td>
@@ -138,7 +171,8 @@ function AdminProduct() {
       <div className="container mt-5">
 
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h1 className="fw-bold">สินค้า | {currentCategoryName}</h1>
+          {currentCategory === 0 ? <h1 className="fw-bold">สินค้า | สินค้าทั้งหมด </h1>:
+          <h1 className="fw-bold">สินค้า | {currentCategoryName}</h1>}
           <input
             type="text"
             className="form-control w-25"

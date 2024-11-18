@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import useEcomStore from '../../store/ecom_store';
 
-const Navbar = ({ activeCategory }) => {
+const Navbar = () => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     
@@ -91,7 +91,7 @@ const Navbar = ({ activeCategory }) => {
                         </li>
                         <li className="nav-item dropdown">
                             <a
-                                className={`nav-link dropdown-toggle ${activeCategory ? 'active' : ''}`}
+                                className={`nav-link dropdown-toggle`}
                                 id="navbarDropdown"
                                 role="button"
                                 data-bs-toggle="dropdown"
@@ -104,7 +104,7 @@ const Navbar = ({ activeCategory }) => {
                                     <Link
                                         to='../user/viewall'                   
                                         key={category.id}
-                                        className={`dropdown-item ${activeCategory === category.id ? 'active' : ''}`}
+                                        className={`dropdown-item`}
                                         state={{ categoryId: category.id }}
                                     >
                                         <li>{category.name}</li>

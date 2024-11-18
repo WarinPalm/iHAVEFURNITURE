@@ -4,7 +4,7 @@ import useEcomStore from '../../store/ecom_store';
 import { infoAboutMe, updateUserInfo } from '../../api/User';
 import { toast } from "react-toastify";
 
-function UserEdit() {
+function AdminEdit() {
     const [user, setUser] = useState(null);
     const [form, setForm] = useState({
         fName: '',
@@ -58,12 +58,12 @@ function UserEdit() {
         <div>
             <div className="container">
                 <form onSubmit={handleEditProfile}>
-                    <h1 className="mt-5">แก้ไขข้อมูลผู้ใช้</h1>
+                    <h1 className="mt-5">แก้ไขข้อมูลแอดมิน</h1>
                     <div className="card mt-4">
                         <div className="card-body">
                             <div className="row">
                                 <div className="col-2 ms-5">
-                                    <div className="userprofile"></div>
+                                    <div className="adminprofile"></div>
                                 </div>
                                 <div className="col-9 row">
                                     <div className="col-6">
@@ -120,7 +120,7 @@ function UserEdit() {
                     <div className="row mt-3">
                         <div className="col-10"></div>
                         <div className="col-1 text-end">
-                            <Link to="../userinfo"><button type="button" className="btn btn-custom w-100">กลับ</button></Link>
+                            <Link to="../admininfo"><button type="button" className="btn btn-custom w-100">กลับ</button></Link>
                         </div>
                         <div className="col-1 text-end">
                             <button type="submit" className="btn btn-custom w-100">ยืนยัน</button>
@@ -132,4 +132,4 @@ function UserEdit() {
     );
 }
 
-export default UserEdit;
+export default AdminEdit;

@@ -61,8 +61,6 @@ const FormCategory = () => {
             fetchCategories();
             toast.success('แก้ไขหมวดหมู่สำเร็จ');
             setCurrentEditCategory(null); 
-
-    
         } catch (err) {
             console.error('Error editing category:', err);
             toast.error('แก้ไขหมวดหมู่ไม่สำเร็จ');

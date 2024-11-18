@@ -20,12 +20,6 @@ export const currentAdmin = async (token) => {
     })
 }
 
-export const infoAboutMe = async (token) => {
-    return await axios.get('http://localhost:3000/api/user', {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        }
-    })
-};
+
 
 

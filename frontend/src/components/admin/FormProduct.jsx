@@ -19,10 +19,10 @@ const FormProduct = ({ currentEditProduct}) => {
 
     useEffect(() => {
         fetchCategories();
-    }, [categories]);
+    }, []);
 
     useEffect(() => {
-        if (currentEditProduct) {
+        if (currentEditProduct) { //ตอนคลิ้ก edit ให้มีข้อมูลก่อนหน้า
             setForm({
                 name: currentEditProduct.name,
                 description: currentEditProduct.description,
