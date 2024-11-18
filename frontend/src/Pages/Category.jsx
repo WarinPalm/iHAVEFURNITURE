@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const Category = ({ onCategoryClick, activeCategory }) => {
     const [categories, setCategories] = useState([]);
+    const categoriesNotBanner = categories.filter(category => category.name !== 'banner')
 
     useEffect(() => {
         const fetchCategories = () => {
@@ -17,13 +18,12 @@ const Category = ({ onCategoryClick, activeCategory }) => {
         return () => clearInterval(intervalId);
     }, []);
     
-    const categoryNotBanner = categories.filter(category => category.name != 'Banner')
     return (
         <>
         <aside className="col-2 full-height-overflow text-center">
             <ul className="nav-aside">
         
-            {categoryNotBanner.map(category => (
+            {categoriesNotBanner.map(category => (
                 <li
                     key={category.id}
                     className={`category-nav ${activeCategory === category.id ? 'active' : ''}`}

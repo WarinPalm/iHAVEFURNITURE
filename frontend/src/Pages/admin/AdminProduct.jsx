@@ -42,13 +42,11 @@ function AdminProduct() {
       .catch(error => console.error('Error Fetching Categories:', error));
   };
 
-  useEffect(() => {
-    fetchProduct();
-  }, [currentCategory]);
-
+  
   useEffect(() => {
     fetchCategories();
-  }, []);
+    fetchProduct();
+  }, [products,categories]);
 
   // อัปเดต currentCategory เมื่อ categoryNow เปลี่ยน
   useEffect(() => {
@@ -111,12 +109,12 @@ function AdminProduct() {
         </td>
         <td className="text-center">{product.stock}</td>
         <td>
-          <button className="btn btn-link text-primary" data-bs-toggle="modal" 
+          <button className="btn btn-link text-primary w-100" data-bs-toggle="modal" 
           data-bs-target="#formEditProductModal"
-          onClick={()=>setEditProduct(product)}>แก้ไข</button>
+          onClick={()=>setEditProduct(product)}><i className="bi bi-pencil-square"></i></button>
         </td>
         <td>
-          <button className="btn btn-link text-danger" onClick={() => handleDeleteProduct(product.id)}>ลบ</button>
+          <button className="btn btn-link text-danger w-100" onClick={() => handleDeleteProduct(product.id)}><i className="bi bi-trash"></i></button>
         </td>
       </tr>
     ));
@@ -210,7 +208,7 @@ function AdminProduct() {
       </div>
 
       <FormCategory />
-      <FormProduct currentEditProduct={editProduct} onSuccess={fetchProduct}/>
+      <FormProduct currentEditProduct={editProduct}/>
 
     </div>
   );

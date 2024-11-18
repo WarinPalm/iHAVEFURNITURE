@@ -9,7 +9,7 @@ const FormCategory = () => {
     const [categories, setCategories] = useState([]); // เก็บข้อมูลหมวดหมู่ทั้งหมด
     const [name, setName] = useState(''); // สำหรับเพิ่มหมวดหมู่ใหม่
     const [currentEditCategory, setCurrentEditCategory] = useState(null); // เก็บข้อมูลหมวดหมู่ที่แก้ไข
-
+    const categoriesNotBanner = categories.filter(category => category.name !== 'banner');
     // ดึงข้อมูลหมวดหมู่
     const fetchCategories = async () => {
         try {
@@ -82,7 +82,7 @@ const FormCategory = () => {
                         </div>
                         <div className="modal-body">
                             <ul className="list-group">
-                                {categories.map((category) => (
+                                {categoriesNotBanner.map((category) => (
                                     <li key={category.id} className="list-group-item d-flex justify-content-between align-items-center">
                                         <span>{category.name}</span>
                                         <div>

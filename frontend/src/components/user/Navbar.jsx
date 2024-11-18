@@ -8,6 +8,7 @@ const Navbar = ({ activeCategory }) => {
     const [searchTerm, setSearchTerm] = useState('');
     
     const [categories, setCategories] = useState([]);
+    const categoriesNotBanner = categories.filter(category => category.name !== 'banner')
 
     const handleSearch = (event) => {
         event.preventDefault();
@@ -22,19 +23,14 @@ const Navbar = ({ activeCategory }) => {
         Logout();
         navigate('/');
     };
-
+    const fetchCategories = () => {
+        axios.get("http://localhost:3000/api/categories")
+            .then(res => setCategories(res.data))
+            .catch(error => console.error("Error fetching categories:", error));
+    };
     useEffect(() => {
-        const fetchCategories = () => {
-            axios.get("http://localhost:3000/api/categories")
-                .then(res => setCategories(res.data))
-                .catch(error => console.error("Error fetching categories:", error));
-        };
-
         fetchCategories();
-        const intervalId = setInterval(fetchCategories, 1000);
-        return () => clearInterval(intervalId);
-    }, []);
-    const categoryNotBanner = categories.filter(category => category.name != 'Banner')
+    }, [categories]);
 
     return (
         <div style={{ position: 'sticky', top: "0", zIndex: "100"}}>
@@ -104,7 +100,7 @@ const Navbar = ({ activeCategory }) => {
                                 สินค้า
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {categoryNotBanner.map(category => (
+                                {categoriesNotBanner.map(category => (
                                     <Link
                                         to='../user/viewall'                   
                                         key={category.id}

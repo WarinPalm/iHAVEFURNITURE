@@ -14,20 +14,16 @@ const MainNavbar = ({activeCategory }) => {
     };
 
     const [categories, setCategories] = useState([]);
+    const categoriesNotBanner = categories.filter(category => category.name !== 'banner')
+    const fetchCategories = () => {
+        axios.get("http://localhost:3000/api/categories")
+            .then(res => setCategories(res.data))
+            .catch(error => console.error("Error fetching categories:", error));
+    };
 
     useEffect(() => {
-        const fetchCategories = () => {
-            axios.get("http://localhost:3000/api/categories")
-                .then(res => setCategories(res.data))
-                .catch(error => console.error("Error fetching categories:", error));
-        };
-
         fetchCategories();
-        const intervalId = setInterval(fetchCategories, 1000); // Fetch ทุก 1 วิ
-
-        return () => clearInterval(intervalId);
-    }, []);
-    const categoryNotBanner = categories.filter(category => category.name != 'Banner')
+    }, [categories]);
 
     return (
 
@@ -90,7 +86,7 @@ const MainNavbar = ({activeCategory }) => {
                                 สินค้า
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {categoryNotBanner.map(category => (
+                                {categoriesNotBanner.map(category => (
                                     <Link
                                         to='../viewall'
                                         key={category.id}

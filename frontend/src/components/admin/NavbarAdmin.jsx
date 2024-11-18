@@ -7,6 +7,7 @@ const NavbarAdmin = ({ activeCategory }) => {
     const navigate = useNavigate();
     
     const [categories, setCategories] = useState([]);
+    const categoriesNotBanner = categories.filter(category => category.name !== 'banner');
 
     const Logout = useEcomStore((state) => state.actionLogout);
 
@@ -14,20 +15,15 @@ const NavbarAdmin = ({ activeCategory }) => {
         Logout();
         navigate('/');
     };
-
+    const fetchCategories = () => {
+        axios.get("http://localhost:3000/api/categories")
+            .then(res => setCategories(res.data))
+            .catch(error => console.error("Error fetching categories:", error));
+    };
     useEffect(() => {
-        const fetchCategories = () => {
-            axios.get("http://localhost:3000/api/categories")
-                .then(res => setCategories(res.data))
-                .catch(error => console.error("Error fetching categories:", error));
-        };
-
         fetchCategories();
-        const intervalId = setInterval(fetchCategories, 1000);
-        return () => clearInterval(intervalId);
-    }, []);
-    const categoryNotBanner = categories.filter(category => category.name != 'Banner')
-
+    }, [categories]);
+    
     return (
         <div style={{ position: 'sticky', top: "0", zIndex: "100"}}>
             <nav className="my-nav" style={{height:"6vh"}}>
@@ -66,7 +62,7 @@ const NavbarAdmin = ({ activeCategory }) => {
                             <Link className="nav-link active" aria-current="page" to="../user">หน้าของลูกค้า</Link>
                         </li>
                         <li className="nav-item">   
-                            <Link className="nav-link active" aria-current="page" to="../admin">หน้าแรก</Link>
+                            <Link className="nav-link active" aria-current="page" to="../admin">จัดการแบนเนอร์</Link>
                         </li>
                         
                         
@@ -81,7 +77,7 @@ const NavbarAdmin = ({ activeCategory }) => {
                                 สินค้า
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {categoryNotBanner.map(category => (
+                                {categoriesNotBanner.map(category => (
                                     <Link
                                         to='../admin/adminproduct'
                                         key={category.id}

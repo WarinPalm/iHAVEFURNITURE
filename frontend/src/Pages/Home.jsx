@@ -17,20 +17,16 @@ const Home = () => {
     const [currentPrice, setCurrentPrice] = useState('');
     const [currentId, setCurrentId] = useState('');
 
-
+    const fetchProduct = () => {
+        axios.get("http://localhost:3000/api/products")
+            .then(res => {
+                setProducts(res.data.products);
+            })
+            .catch(error => console.error('Error Fetching Products' + error));
+    };
     useEffect(() => {
-        const fetchProduct = () => {
-            axios.get("http://localhost:3000/api/products")
-                .then(res => {
-                    setProducts(res.data.products);
-                })
-                .catch(error => console.error('Error Fetching Products' + error));
-        };
         fetchProduct();
-        const intervalId = setInterval(fetchProduct, 10000); // Fetch ทุก 10 วิ
-
-        return () => clearInterval(intervalId);
-    }, []);
+    }, [products]);
 
 
     const handleCategoryClick = (id) => { 

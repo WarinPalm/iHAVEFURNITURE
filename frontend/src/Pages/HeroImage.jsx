@@ -1,28 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const HeroImage = () => {
-    const myBanner = {
-        banner1: "/image/hero-image/banner1.png",
-        banner2: "/image/hero-image/banner2.png",
-        banner3: "/image/hero-image/banner3.png",
-        banner4: "/image/hero-image/banner4.png"
-    };
+    const [banners, setBanners] = useState([]); 
+    const [currentIndex, setCurrentIndex] = useState(0); 
 
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    const updateImage = (index) => {
-        return Object.values(myBanner)[index];
-    };
-
-    const autoSlide = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % Object.keys(myBanner).length);
+    const fetchBanners = async () => {
+        try {
+            const res = await axios.get("http://localhost:3000/api/products");
+            //เอาแค่ product ที่มีหมวดหมู่เป็น banner
+            const bannerProducts = res.data.products.filter(product => product.categoryId === 7);
+            setBanners(bannerProducts);
+        } catch (error) {
+            console.error("Error fetching banners:", error);
+        }
     };
 
     useEffect(() => {
-        const interval = setInterval(autoSlide, 3000);
-        return () => clearInterval(interval);
-    }, []);
+        fetchBanners();
+    }, [banners]);
 
+    // เปลี่ยนภาพทุกๆ 3 วิ
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex(prevIndex => (prevIndex + 1) % banners.length);
+        }, 3000);
+        return () => clearInterval(interval); 
+    }, [banners.length]);
+
+    // ตอนกดคลิ้กเพื่อเปลี่ยนภาพ
     const handleButtonClick = (index) => {
         setCurrentIndex(index);
     };
@@ -33,20 +39,20 @@ const HeroImage = () => {
                 <div
                     className="col-12 hero-image"
                     style={{
-                        backgroundImage: `url('${updateImage(currentIndex)}')`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        height: '70vh',
-                        borderRadius: '3%',
+                        backgroundImage: banners.length > 0 ? `url('${banners[currentIndex]?.fullpath}')` : "none",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        height: "70vh",
+                        borderRadius: "3%",
                     }}
                 >
-                    {/* Hero Image Content */}
+                    
                 </div>
-                <div className="btn-hero-image">
-                    {Object.keys(myBanner).map((key, index) => (
+                <div className="btn-hero-image mt-3">
+                    {banners.map((_, index) => (
                         <button
-                            key={key}
-                            className={`btn btn-dark btn-banner ${index === currentIndex ? 'active' : ''}`}
+                            key={index}
+                            className={`btn btn-dark btn-banner mx-1 ${index === currentIndex ? "active" : ""}`}
                             onClick={() => handleButtonClick(index)}
                         ></button>
                     ))}

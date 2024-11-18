@@ -6,20 +6,20 @@ import { toast } from "react-toastify";
 
 const initialState = { name: "", description: "", price: "", stock: "", categoryId: "" };
 
-const FormProduct = ({ currentEditProduct, onSuccess }) => {
+const FormProduct = ({ currentEditProduct}) => {
     const token = useEcomStore((state) => state.token);
     const [form, setForm] = useState(initialState);
     const [pictureFile, setPictureFile] = useState(null);
     const [categories, setCategories] = useState([]);
-
-    useEffect(() => {
+    const categoriesNotBanner = categories.filter(category => category.name !== 'banner');
+    const fetchCategories = ()=>{
         axios.get("http://localhost:3000/api/categories")
             .then(res => setCategories(res.data))
-            .catch(err => {
-                console.error("Error fetching categories:", err);
-                toast.error("ไม่สามารถดึงข้อมูลหมวดหมู่ได้");
-            });
-    }, []);
+            .catch(err => { console.error("Error fetching categories:", err);});}
+
+    useEffect(() => {
+        fetchCategories();
+    }, [categories]);
 
     useEffect(() => {
         if (currentEditProduct) {
@@ -44,13 +44,11 @@ const FormProduct = ({ currentEditProduct, onSuccess }) => {
         const formData = new FormData();
         Object.keys(form).forEach(key => formData.append(key, form[key]));
         if (pictureFile) formData.append("picture", pictureFile);
-
         try {
             const res = await createProduct(token, formData);
-            toast.success(`เพิ่มสินค้า ${res.data.name} สำเร็จ`);
+            toast.success(`เพิ่มสินค้าสำเร็จ`);
             setForm(initialState);
             setPictureFile(null);
-            onSuccess && onSuccess();
         } catch (err) {
             console.error(err);
             toast.error("ไม่สามารถเพิ่มสินค้าได้");
@@ -66,13 +64,12 @@ const FormProduct = ({ currentEditProduct, onSuccess }) => {
 
         try {
             await editProduct(token, currentEditProduct.id, formData);
-            toast.success(`แก้ไขสินค้า ${form.name} สำเร็จ`);
+            toast.success(`แก้ไขแบนเนอร์สำเร็จ`);
             setForm(initialState);
             setPictureFile(null);
-            onSuccess && onSuccess();
         } catch (err) {
             console.error(err);
-            toast.error("ไม่สามารถแก้ไขสินค้าได้");
+            toast.error("ไม่สามารถแก้ไขแบนเนอร์ได้");
         }
     };
 
@@ -98,7 +95,7 @@ const FormProduct = ({ currentEditProduct, onSuccess }) => {
                 <label htmlFor="categoryId" className="form-label">หมวดหมู่</label>
                 <select className="form-select" id="categoryId" name="categoryId" value={form.categoryId} onChange={handleOnChange} required>
                     <option value="" disabled>เลือกหมวดหมู่</option>
-                    {categories.map(category => (
+                    {categoriesNotBanner.map(category => (
                         <option key={category.id} value={category.id}>{category.name}</option>
                     ))}
                 </select>
