@@ -42,7 +42,7 @@ const ViewAll = () => {
     useEffect(() => {
         setCurrentCategory(categoryNow);
         setCurrentPage(1); 
-    }, [categoryNow]);
+    }, []);
 
     useEffect(() => {
         // คำนวณจำนวนหน้าทั้งหมดตามสินค้าที่กรองแล้ว

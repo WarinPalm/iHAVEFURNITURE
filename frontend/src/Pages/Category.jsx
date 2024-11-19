@@ -13,7 +13,7 @@ const Category = ({ onCategoryClick, activeCategory }) => {
 
     useEffect(() => {    
         fetchCategories();
-    }, [categories]);
+    }, []);
     
     return (
         <>

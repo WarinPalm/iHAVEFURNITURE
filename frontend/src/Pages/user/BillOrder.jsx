@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useEcomStore from '../../store/ecom_store';
 import { fetchOrders } from '../../api/Order';
+import { toast } from 'react-toastify';
 
 const BillOrder = () => {
     const navigate = useNavigate();
@@ -24,12 +25,14 @@ const BillOrder = () => {
     const goToPaymentDetail = (order) => {
         navigate(`../paymentDetail`, { state: { order } }); // ส่ง order ไปยัง PaymentDetail
     };
-
+    
     return (
         <div className="container">
             <div className="row">
                 <h1 className="mt-5 mb-5">ธุรกรรม</h1>
+                {orders.length ===0?(<h2>ไม่มีรายการชำระเงิน</h2>):''}
                 {orders.map((order, index) => (
+                    <>
                     <div
                         className="card mb-5 card-bill card-hover"
                         key={index}
@@ -57,7 +60,10 @@ const BillOrder = () => {
                             </div>
                         </div>
                     </div>
+                    <hr className='mb-5'/>
+                    </>
                 ))}
+                
             </div>
         </div>
     );
