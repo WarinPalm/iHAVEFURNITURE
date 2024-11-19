@@ -4,9 +4,9 @@ import { useLocation } from 'react-router-dom';
 const PaymentDetail = () => {
     const [notificationDateTime, setNotificationDateTime] = useState('');
     const location = useLocation();
-    const order = location.state?.order; // Receive the order data passed from BillOrder
+    const order = location.state?.order; 
 
-    // Update the current time every second
+    // Update เวลาตลอด
     useEffect(() => {
         const updateCurrentTime = () => {
             const now = new Date();
@@ -30,8 +30,8 @@ const PaymentDetail = () => {
         return <h1>ไม่พบข้อมูลคำสั่งซื้อ</h1>;
     }
 
-    const renderBillItems = (cart) => {
-        return cart.map((item) => (
+    const renderBillItems = (cartInOrder) => {
+        return cartInOrder.map((item) => (
             <div key={item.id} className="row">
                 <div className="col-6 mt-5 mb-3">
                     <h5 className="card-title">{item.product?.name || 'Unknown Product'}</h5>

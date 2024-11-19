@@ -38,7 +38,7 @@ const BillOrder = () => {
                         <div className="row">
                             <div className="col-3">
                                 <img
-                                    src={order.cart[0]?.product?.fullPathImage || 'default-image-path.jpg'}
+                                    src={order.cart[0]?.product?.fullPathImage || 'image'}
                                     className="img-fluid custom-cart-img rounded-start"
                                     alt={order.cart[0]?.product?.name || 'No Image'}
                                 />
