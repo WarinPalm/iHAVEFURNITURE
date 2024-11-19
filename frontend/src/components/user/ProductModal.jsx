@@ -30,6 +30,8 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice, 
 
     const handleAddToCart = async () => {
         const form = { productId: currentId, quantity }; 
+        console.log(currentId,quantity);
+          
         try {
             console.log(form)
             await addProductToCart(token, form);

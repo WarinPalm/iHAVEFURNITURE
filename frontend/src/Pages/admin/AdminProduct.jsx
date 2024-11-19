@@ -46,10 +46,6 @@ function AdminProduct() {
   useEffect(() => {
       fetchCategories();
       fetchProduct();
-      const intervalId = setInterval(fetchProduct, 10000); // Fetch ทุก 10 วิ
-
-      return () => clearInterval(intervalId);
-
   }, [ ]);
 
   // อัปเดต currentCategory เมื่อ categoryNow เปลี่ยน
@@ -242,7 +238,7 @@ function AdminProduct() {
       </div>
 
       <FormCategory />
-      <FormProduct currentEditProduct={editProduct}/>
+      <FormProduct currentEditProduct={editProduct} fetchProduct={fetchProduct} />
 
     </div>
   );

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { getAllCart, addProductToCart, deleteProduct } from '../../api/Cart'; // ใช้ addProductToCart สำหรับเพิ่มจำนวน
+import { useNavigate } from 'react-router-dom';
+import { getAllCart, addProductToCart, deleteProduct, buyProducts } from '../../api/Cart'; // ใช้ addProductToCart สำหรับเพิ่มจำนวน
 import useEcomStore from '../../store/ecom_store';
 import { toast } from 'react-toastify';
-
+import axios from 'axios';
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]); 
+    const cartItemInCart = cartItems.filter(item=> item.status === 'อยู่ในตะกร้า')
     const token = useEcomStore((state) => state.token);
-
+    const navigate = useNavigate();
     // ดึงข้อมูลสินค้าในตะกร้า
     const fetchCartItems = async () => {
         try {
@@ -18,10 +19,22 @@ const Cart = () => {
             toast.error('ไม่สามารถดึงข้อมูลตะกร้าได้');
         }
     };
-
+    const buyProduct = async () => {
+        console.log('Token:', token);
+        try {
+            await buyProducts(token);
+            toast.success('สั่งซื้อสินค้าสำเร็จ');
+            navigate('../paymentdetail');
+        } catch (err) {
+            console.error('Error:', err.response?.data || err.message);
+            toast.error('ไม่สามารถสั่งซื้อสินค้าได้ โปรดใส่ข้อมูลให้ครบ');
+            navigate('../userinfo');
+        }
+    };
+    
     useEffect(() => {
         fetchCartItems();
-    }, []);
+    }, [cartItems]);
 
     const handleQuantityChange = async (id, action) => {
         // หา item ปัจจุบัน
@@ -58,16 +71,16 @@ const Cart = () => {
     };
 
     const renderCartItems = () => {
-        if (!Array.isArray(cartItems) || cartItems.length === 0) {
+        if (!Array.isArray(cartItemInCart) || cartItemInCart.length === 0) {
             return <div className="col-12">Your cart is empty</div>;
         }
 
-        return cartItems.map((item, index) => (
+        return cartItemInCart.map((item, index) => (
             <div key={index} className="card mb-3">
                 <div className="row">
                     <div className="col-4">
                         <img
-                            src={item.product.fullPathImage} // ใช้ fullPathImage จาก product
+                            src={item.product.fullPathImage} 
                             className="img-fluid custom-cart-img"
                             alt={item.product.name}
                         />
@@ -77,7 +90,6 @@ const Cart = () => {
                             <h5 className="card-title">{item.product.name}</h5>
                             <p className="card-text">{item.product.description}</p>
                             <p className="card-text text-muted">Price: ฿{item.product.price}</p>
-                            <p className="card-text text-muted">Total: ฿{item.totalPrice}</p>
                             <div className="d-flex align-items-center mb-3 justify-content-between">
                                 <div className="col-6 d-flex align-items-center">
                                     <button
@@ -119,19 +131,17 @@ const Cart = () => {
                             <div className="d-flex justify-content-between mb-4">
                                 <span>Product Price:</span>
                                 <span>
-                                    ฿{cartItems.reduce((sum, item) => sum + item.totalPrice, 0)} {/* ราคารวม */}
+                                    ฿{cartItemInCart.reduce((sum, item) => sum + item.totalPrice, 0)} 
                                 </span>
                             </div>
                             <hr />
                             <div className="d-flex justify-content-between mb-3">
                                 <span>Net Total:</span>
                                 <span>
-                                    ฿{cartItems.reduce((sum, item) => sum + item.totalPrice, 0)} {/* ราคารวมสุทธิ */}
+                                    ฿{cartItemInCart.reduce((sum, item) => sum + item.totalPrice, 0)}
                                 </span>
                             </div>
-                            <Link to="../billOrder">
-                                <button className="col-12 mt-3 btn btn-primary">BUY</button>
-                            </Link>
+                            <button className="col-12 mt-3 btn btn-primary" onClick={buyProduct}>BUY</button>
                         </div>
                     </div>
                 </div>

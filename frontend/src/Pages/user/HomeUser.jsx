@@ -6,7 +6,7 @@ import ProductModal from '../../components/user/ProductModal';
 import axios from "axios";
 
 const HomeUser = () => {
-    const [currentCategory, setCurrentCategory] = useState(2); // default category id
+    const [currentCategory, setCurrentCategory] = useState(1); 
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(6);
@@ -27,8 +27,7 @@ const HomeUser = () => {
     };
     useEffect(() => {
         fetchProduct();
-    }, [products]);
-
+    }, []);
 
     const handleCategoryClick = (id) => { 
         setCurrentCategory(id);

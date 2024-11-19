@@ -11,7 +11,7 @@ const ViewAll = () => {
     const [itemsPerPage] = useState(12);
     const [products, setProducts] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
-    const [categories, setCategories] = useState([]); // เพิ่ม state สำหรับเก็บข้อมูลหมวดหมู่
+    const [categories, setCategories] = useState([]);
     
     // ส่งค่าไปให้ popup show product
     const [currentImage, setCurrentImage] = useState('');
@@ -26,17 +26,15 @@ const ViewAll = () => {
             .then(res => setProducts(res.data.products))
             .catch(error => console.error('Error Fetching Products' + error));
     }
-    useEffect(()=>{    
-        fetchProduct();
-    },[])
-
     // ดึงข้อมูลหมวดหมู่
+    const fetchCategories = () => {
+        axios.get("http://localhost:3000/api/categories")
+            .then(res => setCategories(res.data))
+            .catch(error => console.error('Error Fetching Categories' + error));
+    };
+
     useEffect(() => {
-        const fetchCategories = () => {
-            axios.get("http://localhost:3000/api/categories")
-                .then(res => setCategories(res.data))
-                .catch(error => console.error('Error Fetching Categories' + error));
-        };
+        fetchProduct();
         fetchCategories();
     }, []);
 
@@ -71,7 +69,7 @@ const ViewAll = () => {
                         setCurrentName(product.name);
                         setCurrentDetail(product.description);
                         setCurrentPrice(product.price);
-                        setCurrentId(product.Id);
+                        setCurrentId(product.id);
                     }}
                 >
                     <img src={product.fullpath} className="card-img-top" alt={product.name} />
@@ -114,8 +112,8 @@ const ViewAll = () => {
 
             <section className="list-product">
                 <div className="container text-center">
-                    <div className="col-3 pt-5">
-                        <h1>Category: {categories.find(category => category.id === currentCategory)?.name || ''}</h1>
+                    <div className="col-4 pt-5">
+                        <h1>หมวดหมู่: {categories.find(category => category.id === currentCategory)?.name || ''}</h1>
                     </div>
                     <div className="row mt-3 pt-5">
                         <div className="col-12 row-gap-2">

@@ -42,7 +42,7 @@ function AdminEdit() {
     const handleEditProfile = async (e) => {
         e.preventDefault();
         try {
-            const res = await updateUserInfo(token, form);
+            await updateUserInfo(token, form);
             toast.success('แก้ไขข้อมูลสำเร็จ');
         } catch (err) {
             console.error(err);

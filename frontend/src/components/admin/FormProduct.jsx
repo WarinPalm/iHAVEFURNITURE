@@ -4,9 +4,10 @@ import useEcomStore from "../../store/ecom_store";
 import { createProduct, editProduct } from "../../api/Product";
 import { toast } from "react-toastify";
 
+
 const initialState = { name: "", description: "", price: "", stock: "", categoryId: "" };
 
-const FormProduct = ({ currentEditProduct}) => {
+const FormProduct = ({ currentEditProduct, fetchProduct}) => {
     const token = useEcomStore((state) => state.token);
     const [form, setForm] = useState(initialState);
     const [pictureFile, setPictureFile] = useState(null);
@@ -17,12 +18,14 @@ const FormProduct = ({ currentEditProduct}) => {
             .then(res => setCategories(res.data))
             .catch(err => { console.error("Error fetching categories:", err);});}
 
+    // ดึงข้อมูลสินค้า
+  
     useEffect(() => {
         fetchCategories();
     }, []);
 
     useEffect(() => {
-        if (currentEditProduct) { //ตอนคลิ้ก edit ให้มีข้อมูลก่อนหน้า
+        if (currentEditProduct) { //ตอนคลิ๊ก edit ให้มีข้อมูลก่อนหน้า
             setForm({
                 name: currentEditProduct.name,
                 description: currentEditProduct.description,
@@ -45,7 +48,7 @@ const FormProduct = ({ currentEditProduct}) => {
         Object.keys(form).forEach(key => formData.append(key, form[key]));
         if (pictureFile) formData.append("picture", pictureFile);
         try {
-            const res = await createProduct(token, formData);
+            await createProduct(token, formData);
             toast.success(`เพิ่มสินค้าสำเร็จ`);
             setForm(initialState);
             setPictureFile(null);
@@ -61,16 +64,15 @@ const FormProduct = ({ currentEditProduct}) => {
         const formData = new FormData();
         Object.keys(form).forEach(key => formData.append(key, form[key]));
         if (pictureFile) formData.append("picture", pictureFile);
-
         try {
             await editProduct(token, currentEditProduct.id, formData);
-            toast.success(`แก้ไขแบนเนอร์สำเร็จ`);
+            toast.success(`แก้ไขสินค้าสำเร็จ`);
             setForm(initialState);
             setPictureFile(null);
-            
+            fetchProduct();
         } catch (err) {
             console.error(err);
-            toast.error("ไม่สามารถแก้ไขแบนเนอร์ได้");
+            toast.error("ไม่สามารถแก้ไขสินค้าได้");
         }
     };
 

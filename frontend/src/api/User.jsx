@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const infoAboutMe = async (token) => {
-    return await axios.get('http://localhost:3000/api/user', {
+    return await axios.get('http://localhost:3000/api/profile', {
         headers: {
             Authorization: `Bearer ${token}`,
         }

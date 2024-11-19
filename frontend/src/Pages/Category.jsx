@@ -4,19 +4,16 @@ import axios from 'axios';
 const Category = ({ onCategoryClick, activeCategory }) => {
     const [categories, setCategories] = useState([]);
     const categoriesNotBanner = categories.filter(category => category.name !== 'banner')
+    //ดึงข้อมูลหมวดหมู่
+    const fetchCategories = () => {
+        axios.get("http://localhost:3000/api/categories")
+            .then(res => setCategories(res.data))
+            .catch(error => console.error("Error fetching categories:", error));
+    };
 
-    useEffect(() => {
-        const fetchCategories = () => {
-            axios.get("http://localhost:3000/api/categories")
-                .then(res => setCategories(res.data))
-                .catch(error => console.error("Error fetching categories:", error));
-        };
-    
+    useEffect(() => {    
         fetchCategories();
-        const intervalId = setInterval(fetchCategories, 10000); // Fetch ทุก 10 วิ
-    
-        return () => clearInterval(intervalId);
-    }, []);
+    }, [categories]);
     
     return (
         <>

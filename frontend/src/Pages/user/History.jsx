@@ -8,8 +8,6 @@ const History = () => {
     const goToPaymentDetail = () => {
         navigate(`../orderDetail`);
     };
-    
-  
 
     return (
         <>

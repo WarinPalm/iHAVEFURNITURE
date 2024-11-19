@@ -32,7 +32,7 @@ const SearchProduct = () => {
     }
     useEffect(() => {     
         fetchProduct();
-    }, [products])
+    }, [])
 
     useEffect(() => { // สำหรับการค้นหา
         const query = new URLSearchParams(location.search).get('query') || '';

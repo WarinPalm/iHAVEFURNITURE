@@ -21,5 +21,11 @@ export const deleteProduct = async (token, id) => {
         },
     });
 };
-
+export const buyProducts = async (token) =>{
+    return axios.post('http://localhost:3000/api/submit-cart',{},{
+        headers:{
+            Authorization: `Bearer ${token}`,
+        }
+    });
+}
 
