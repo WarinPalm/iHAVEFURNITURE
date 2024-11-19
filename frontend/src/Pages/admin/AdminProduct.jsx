@@ -46,11 +46,11 @@ function AdminProduct() {
   useEffect(() => {
       fetchCategories();
       fetchProduct();
-      // const intervalId = setInterval(fetchProduct, 10000); // Fetch ทุก 10 วิ
+      const intervalId = setInterval(fetchProduct, 10000); // Fetch ทุก 10 วิ
 
-      // return () => clearInterval(intervalId);
+      return () => clearInterval(intervalId);
 
-  }, []);
+  }, [ ]);
 
   // อัปเดต currentCategory เมื่อ categoryNow เปลี่ยน
   useEffect(() => {

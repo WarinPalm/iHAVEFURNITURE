@@ -67,6 +67,7 @@ const FormProduct = ({ currentEditProduct}) => {
             toast.success(`แก้ไขแบนเนอร์สำเร็จ`);
             setForm(initialState);
             setPictureFile(null);
+            
         } catch (err) {
             console.error(err);
             toast.error("ไม่สามารถแก้ไขแบนเนอร์ได้");
