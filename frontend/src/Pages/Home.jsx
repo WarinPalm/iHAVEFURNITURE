@@ -4,7 +4,7 @@ import HeroImage from "./HeroImage";
 import Category from './Category';
 import ProductModal from '../components/user/ProductModal';
 import axios from "axios";
-
+import { toast } from "react-toastify";
 const Home = () => {
     const [currentCategory, setCurrentCategory] = useState(1); // default category id
     const [products, setProducts] = useState([]);
@@ -16,6 +16,7 @@ const Home = () => {
     const [currentDetail, setCurrentDetail] = useState('');
     const [currentPrice, setCurrentPrice] = useState('');
     const [currentId, setCurrentId] = useState('');
+    const [currentAmount, setCurrentAmount] = useState('');
 
     const fetchProduct = () => {
         axios.get("http://localhost:3000/api/products")
@@ -37,68 +38,118 @@ const Home = () => {
         const filterProducts = products.filter(product => product.categoryId === currentCategory);
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, filterProducts.length);
-
-        return filterProducts.slice(startIndex, endIndex).map((product, index) => (
-            <div className="col-4 mb-4 text-center" key={index}>
-                <div
-                    className="card card-hover"
-                    data-bs-toggle="modal"
-                    data-bs-target="#product-detail"
-                    onClick={() => {
-                        setCurrentImage(product.fullpath);
-                        setCurrentName(product.name);
-                        setCurrentDetail(product.description);
-                        setCurrentPrice(product.price);
-                        setCurrentId(product.Id);
-                    }}
-                >
-                    <img src={product.fullpath} className="card-img-top" alt={product.name} />
-                    <div className="card-body">
-                        <h5 className="card-title">{product.name}</h5>
-                        <p className="mt-4 card-text text-muted">{product.description}</p>
-                        <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
+    
+        return filterProducts.slice(startIndex, endIndex).map(product => (
+            <div className="col-4 mb-4 text-center" key={product.id}>
+                {product.stock === 0 ? (
+                    <div
+                        className="card card-hover"
+                        onClick={() => { toast.error('สินค้าหมด'); }}
+                    >
+                        <div className="image-soldout">
+                            <img
+                                src={product.fullpath}
+                                className="product-image card-img-top"
+                                alt={product.name}
+                            />
+                            <img
+                                src="/image/Other/soldout.png"
+                                className="sold-out-image"
+                                alt="Sold Out"
+                            />
+                        </div>
+                        <div className="card-body">
+                            <h5 className="card-title">{product.name}</h5>
+                            <p className="mt-4 card-text text-muted">{product.description}</p>
+                            <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    <div
+                        className="card card-hover"
+                        data-bs-toggle="modal"
+                        data-bs-target="#product-detail"
+                        onClick={() => {
+                            setCurrentImage(product.fullpath);
+                            setCurrentName(product.name);
+                            setCurrentDetail(product.description);
+                            setCurrentPrice(product.price);
+                            setCurrentId(product.id);
+                            setCurrentAmount(product.stock);
+                        }}
+                    >
+                        <img src={product.fullpath} className="card-img-top" alt={product.name} />
+                        <div className="card-body">
+                            <h5 className="card-title">{product.name}</h5>
+                            <p className="mt-4 card-text text-muted">{product.description}</p>
+                            <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
+                        </div>
+                    </div>
+                )}
             </div>
         ));
     };
 
     const renderRecommendedProducts = () => {
         const recomProduct = products
-        .slice()
-        .reverse()
-        .filter(product => product.categoryId !== 7)
-        .slice(0, 4); // กรองแล้วเลือกเฉพาะ 4 รายการแรกที่ไม่ใช่ category banner
+            .slice()
+            .reverse()
+            .filter(product => product.categoryId !== 7)
+            .slice(0, 4); // กรองแล้วเลือกเฉพาะ 4 รายการแรกที่ไม่ใช่ category banner
         return recomProduct.map((product, index) => (
-            <div className="col-3 mb-4 text-center" key={index}>
-                <div
-                    className="card card-recom-hover"
-                    data-bs-toggle="modal"
-                    data-bs-target="#product-detail"
-                    onClick={() => {
-                        setCurrentImage(product.fullpath);
-                        setCurrentName(product.name);
-                        setCurrentDetail(product.description);
-                        setCurrentPrice(product.price);
-                        setCurrentId(product.Id);
-                    }} 
-                >
-                    <img 
-                        src={product.fullpath} 
-                        className="card-img-recom" 
-                        alt={product.name} 
-                    />
-                    <div className="card-body">
-                        <h5 className="mt-4 text-start">฿{product.price}</h5>
+            <div className="col-3 mb-4 text-center" key={product.id}>
+                {product.stock === 0 ? (
+                    <div
+                        className="card card-hover"
+                        onClick={() => { toast.error('สินค้าหมด'); }}
+                    >
+                        <div className="image-soldout">
+                            <img
+                                src={product.fullpath}
+                                className="product-image card-img-top"
+                                alt={product.name}
+                            />
+                            <img
+                                src="/image/Other/soldout.png"
+                                className="sold-out-image"
+                                alt="Sold Out"
+                            />
+                        </div>
+                        <div className="card-body">
+                            <h5 className="card-title">{product.name}</h5>
+                            <p className="mt-4 card-text text-muted">{product.description}</p>
+                            <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    <div
+                        className="card card-hover"
+                        data-bs-toggle="modal"
+                        data-bs-target="#product-detail"
+                        onClick={() => {
+                            setCurrentImage(product.fullpath);
+                            setCurrentName(product.name);
+                            setCurrentDetail(product.description);
+                            setCurrentPrice(product.price);
+                            setCurrentId(product.id);
+                            setCurrentAmount(product.stock);
+                        }}
+                    >
+                        <img src={product.fullpath} className="card-img-top" alt={product.name} />
+                        <div className="card-body">
+                            <h5 className="card-title">{product.name}</h5>
+                            <p className="mt-4 card-text text-muted">{product.description}</p>
+                            <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
+                        </div>
+                    </div>
+                )}
             </div>
         ));
     };
     
     return (
         <>
-            <ProductModal currentImage={currentImage} currentName={currentName} currentDetail={currentDetail} currentPrice={currentPrice} currentId={currentId}/> 
+            <ProductModal currentImage={currentImage} currentName={currentName} currentDetail={currentDetail} currentPrice={currentPrice} currentId={currentId} currentAmount={currentAmount}/> 
             <HeroImage />
 
             <section className="list-product">

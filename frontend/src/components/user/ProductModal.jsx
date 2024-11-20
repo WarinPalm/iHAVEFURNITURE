@@ -4,7 +4,7 @@ import { addProductToCart } from '../../api/Cart';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice, currentId }) => {
+const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice, currentId , currentAmount}) => {
     const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate();
     const token = useEcomStore((state) => state.token);
@@ -22,26 +22,38 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice, 
 
     const handleQuantityChange = (type) => {
         if (type === 'add') {
-            setQuantity(quantity + 1);
+            if (quantity >= currentAmount) {
+                toast.error('สินค้ามีจำนวนไม่พอ');
+            } else {
+                setQuantity(quantity + 1);
+            }
         } else if (type === 'sub' && quantity > 1) {
             setQuantity(quantity - 1);
         }
     };
-
+    
     const handleAddToCart = async () => {
-        const form = { productId: currentId, quantity }; 
-        console.log(currentId,quantity);
-          
+        if (quantity > currentAmount) {
+            toast.error('สินค้ามีจำนวนไม่พอ');
+            return;
+        }
+    
+        const form = { productId: currentId, quantity };
+    
         try {
-            console.log(form)
             await addProductToCart(token, form);
-            toast.success(`เพิ่มสินค้าลงในรถเข็นสำเร็จ!`);
+            toast.success('เพิ่มสินค้าลงในรถเข็นสำเร็จ!');
         } catch (err) {
             console.error(err);
-            navigate('../login')
-            toast.error("ไม่สามารถเพิ่มสินค้าในรถเข็นได้");
+            if (!token) {
+                toast.error('กรุณาเข้าสู่ระบบก่อนเพิ่มสินค้าในรถเข็น');
+                navigate('../login');
+            } else {
+                toast.error('ไม่สามารถเพิ่มสินค้าในรถเข็นได้');
+            }
         }
     };
+    
 
     return (
         <div className="modal fade" tabIndex="-1" id="product-detail">
@@ -70,6 +82,9 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice, 
                                 </div>
                                 <div style={{ fontSize: '30px', fontWeight: '500' }} className="col-12 mb-5">
                                     ฿{currentPrice}
+                                </div>
+                                <div className="col-12">
+                                    จำนวนสินค้าภายในร้าน : {currentAmount} ชิ้น
                                 </div>
 
                                 <div className="mt-5 pb-5 row align-items-center">

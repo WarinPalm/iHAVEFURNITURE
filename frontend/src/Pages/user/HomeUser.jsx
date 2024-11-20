@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import HeroImage from "../HeroImage";
 import Category from "../Category"
 import ProductModal from '../../components/user/ProductModal';
+import { toast } from "react-toastify";
 import axios from "axios";
 
 const HomeUser = () => {
-    const [currentCategory, setCurrentCategory] = useState(1); 
+    const [currentCategory, setCurrentCategory] = useState(1);
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(6);
@@ -16,6 +17,7 @@ const HomeUser = () => {
     const [currentDetail, setCurrentDetail] = useState('');
     const [currentPrice, setCurrentPrice] = useState('');
     const [currentId, setCurrentId] = useState('');
+    const [currentAmount, setCurrentAmount] = useState('');
 
     //ดึงข้อมูลสินค้า
     const fetchProduct = () => {
@@ -29,7 +31,7 @@ const HomeUser = () => {
         fetchProduct();
     }, []);
 
-    const handleCategoryClick = (id) => { 
+    const handleCategoryClick = (id) => {
         setCurrentCategory(id);
     };
 
@@ -37,70 +39,120 @@ const HomeUser = () => {
         const filterProducts = products.filter(product => product.categoryId === currentCategory);
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, filterProducts.length);
-
-        return filterProducts.slice(startIndex, endIndex).map((product, index) => (
-            <div className="col-4 mb-4 text-center" key={index}>
-                <div
-                    className="card card-hover"
-                    data-bs-toggle="modal"
-                    data-bs-target="#product-detail"
-                    onClick={() => {
-                        setCurrentImage(product.fullpath);
-                        setCurrentName(product.name);
-                        setCurrentDetail(product.description);
-                        setCurrentPrice(product.price);
-                        setCurrentId(product.id);
-                    }}
-                >
-                    <img src={product.fullpath} className="card-img-top" alt={product.name} />
-                    <div className="card-body">
-                        <h5 className="card-title">{product.name}</h5>
-                        <p className="mt-4 card-text text-muted">{product.description}</p>
-                        <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
+    
+        return filterProducts.slice(startIndex, endIndex).map(product => (
+            <div className="col-4 mb-4 text-center" key={product.id}>
+                {product.stock === 0 ? (
+                    <div
+                        className="card card-hover"
+                        onClick={() => { toast.error('สินค้าหมด'); }}
+                    >
+                        <div className="image-soldout">
+                            <img
+                                src={product.fullpath}
+                                className="product-image card-img-top"
+                                alt={product.name}
+                            />
+                            <img
+                                src="/image/Other/soldout.png"
+                                className="sold-out-image"
+                                alt="Sold Out"
+                            />
+                        </div>
+                        <div className="card-body">
+                            <h5 className="card-title">{product.name}</h5>
+                            <p className="mt-4 card-text text-muted">{product.description}</p>
+                            <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
+                        </div>
                     </div>
-                </div>
-            </div>
-        ));
-    };
-
-    const renderRecommendedProducts = () => {
-        const recomProduct = products
-        .slice()
-        .reverse()
-        .filter(product => product.categoryId !== 7)
-        .slice(0, 4); // กรองแล้วเลือกเฉพาะ 4 รายการแรกที่ไม่ใช่ category banner
-        return recomProduct.map((product, index) => (
-            <div className="col-3 mb-4 text-center" key={index}>
-                <div
-                    className="card card-recom-hover"
-                    data-bs-toggle="modal"
-                    data-bs-target="#product-detail"
-                    onClick={() => {
-                        setCurrentImage(product.fullpath);
-                        setCurrentName(product.name);
-                        setCurrentDetail(product.description);
-                        setCurrentPrice(product.price);
-                        setCurrentId(product.id);
-
-                    }} 
-                >
-                    <img 
-                        src={product.fullpath} 
-                        className="card-img-recom" 
-                        alt={product.name} 
-                    />
-                    <div className="card-body">
-                        <h5 className="mt-4 text-start">฿{product.price}</h5>
+                ) : (
+                    <div
+                        className="card card-hover"
+                        data-bs-toggle="modal"
+                        data-bs-target="#product-detail"
+                        onClick={() => {
+                            setCurrentImage(product.fullpath);
+                            setCurrentName(product.name);
+                            setCurrentDetail(product.description);
+                            setCurrentPrice(product.price);
+                            setCurrentId(product.id);
+                            setCurrentAmount(product.stock);
+                        }}
+                    >
+                        <img src={product.fullpath} className="card-img-top" alt={product.name} />
+                        <div className="card-body">
+                            <h5 className="card-title">{product.name}</h5>
+                            <p className="mt-4 card-text text-muted">{product.description}</p>
+                            <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         ));
     };
     
+
+    const renderRecommendedProducts = () => {
+        const recomProduct = products
+            .slice()
+            .reverse()
+            .filter(product => product.categoryId !== 7)
+            .slice(0, 4); // กรองแล้วเลือกเฉพาะ 4 รายการแรกที่ไม่ใช่ category banner
+        return recomProduct.map((product, index) => (
+            <div className="col-3 mb-4 text-center" key={product.id}>
+                {product.stock === 0 ? (
+                    <div
+                        className="card card-hover"
+                        onClick={() => { toast.error('สินค้าหมด'); }}
+                    >
+                        <div className="image-soldout">
+                            <img
+                                src={product.fullpath}
+                                className="product-image card-img-top"
+                                alt={product.name}
+                            />
+                            <img
+                                src="/image/Other/soldout.png"
+                                className="sold-out-image"
+                                alt="Sold Out"
+                            />
+                        </div>
+                        <div className="card-body">
+                            <h5 className="card-title">{product.name}</h5>
+                            <p className="mt-4 card-text text-muted">{product.description}</p>
+                            <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
+                        </div>
+                    </div>
+                ) : (
+                    <div
+                        className="card card-hover"
+                        data-bs-toggle="modal"
+                        data-bs-target="#product-detail"
+                        onClick={() => {
+                            setCurrentImage(product.fullpath);
+                            setCurrentName(product.name);
+                            setCurrentDetail(product.description);
+                            setCurrentPrice(product.price);
+                            setCurrentId(product.id);
+                            setCurrentAmount(product.stock);
+                        }}
+                    >
+                        <img src={product.fullpath} className="card-img-top" alt={product.name} />
+                        <div className="card-body">
+                            <h5 className="card-title">{product.name}</h5>
+                            <p className="mt-4 card-text text-muted">{product.description}</p>
+                            <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
+                        </div>
+                    </div>
+                )}
+            </div>
+        ));
+    };
+
     return (
         <>
-         
-            <ProductModal currentImage={currentImage} currentName={currentName} currentDetail={currentDetail} currentPrice={currentPrice} currentId={currentId}/> 
+
+            <ProductModal currentImage={currentImage} currentName={currentName} currentDetail={currentDetail} currentPrice={currentPrice} currentId={currentId} currentAmount={currentAmount} />
             <HeroImage />
 
             <section className="list-product">
@@ -113,15 +165,15 @@ const HomeUser = () => {
                             {renderRecommendedProducts()}
                         </div>
                     </div>
-                    
+
                     <div className="col-12 pt-5">
                         <h1>หมวดหมู่สินค้า</h1>
                     </div>
-                    <div className="row mt-2 pt-5"> 
+                    <div className="row mt-2 pt-5">
                         <Category activeCategory={currentCategory} onCategoryClick={handleCategoryClick} />
                         <div className="col-1"></div>
                         <div className="col-9 row-gap-2">
-                            
+
 
                             <div className="row" id="show-product">
                                 {renderProducts()}

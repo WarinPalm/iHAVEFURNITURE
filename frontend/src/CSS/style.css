@@ -103,6 +103,28 @@ aside li {
     padding: 10px;
 }
 
+.image-soldout {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.sold-out-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%; /* Adjust as needed */
+    z-index: 1; /* Ensure it's above the product image */
+    opacity: 0.9; /* Optional transparency */
+}
+
 /*product */
 .custom-modal-dialog {  /*popup show */
     padding-left: 20px;
