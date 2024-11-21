@@ -106,7 +106,7 @@ exports.addItemToCart = async (req, res) => {
 exports.listItemCart = async (req,res) => {
     try{
         const cart = await prisma.cartitem.findMany({
-            where: { userById: Number(req.user.id) },
+            where: { userById: Number(req.user.id) , status: 'อยู่ในตะกร้า'},
             include: {
                 product: {
                     select: {

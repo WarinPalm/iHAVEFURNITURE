@@ -8,6 +8,7 @@ const PaymentDetail = () => {
     const [notificationDateTime, setNotificationDateTime] = useState('');//วันที่แจ้งโอน
     const [proofDate, setProofDate] = useState(''); // วันที่โอน
     const [proofPicture, setProofPicture] = useState(null); // ไฟล์แนบ
+    const [previewImage, setPreviewImage] = useState(null); // URL ของภาพตัวอย่าง
 
     const token = useEcomStore((state) => state.token);
     const location = useLocation();
@@ -29,12 +30,25 @@ const PaymentDetail = () => {
             });
             setNotificationDateTime(formattedDateTime);
         };
-    
+
         const intervalId = setInterval(updateCurrentTime, 1000);
-    
+
         return () => clearInterval(intervalId); // ล้าง interval
     }, []);
-    
+
+    // จัดการอัปโหลดไฟล์และแสดงภาพตัวอย่าง
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setProofPicture(file);
+
+        // สร้าง URL ของภาพตัวอย่าง
+        if (file) {
+            const previewUrl = URL.createObjectURL(file);
+            setPreviewImage(previewUrl);
+        } else {
+            setPreviewImage(null);
+        }
+    };
 
     // ฟังก์ชันยกเลิกคำสั่งซื้อ
     const handleCancleOrder = async (id) => {
@@ -55,42 +69,45 @@ const PaymentDetail = () => {
             toast.error('กรุณากรอกข้อมูลให้ครบถ้วน');
             return;
         }
-    
+
         const formData = new FormData();
-        formData.append('transferDate', notificationDateTime); 
+        formData.append('transferDate', notificationDateTime);
         formData.append('proofDate', proofDate);
-        formData.append('proofPicture', proofPicture); 
-    
+        formData.append('proofPicture', proofPicture);
+
         try {
             await submitPayment(token, order.id, formData);
             toast.success('ส่งข้อมูลการชำระเงินสำเร็จ');
-            navigate('../history'); 
+            navigate('../history');
         } catch (err) {
             console.error(err);
             toast.error('ส่งข้อมูลการชำระเงินไม่สำเร็จ');
         }
     };
-    
+
 
     if (!order) {
         return <h1>ไม่พบข้อมูลคำสั่งซื้อ</h1>;
     }
 
     const renderBillItems = (cartInOrder) =>
-        cartInOrder.map((item) => (
-            <div key={item.id} className="row">
-                <div className="col-6 mt-5 mb-3">
-                    <h5 className="card-title">{item.product?.name || 'Unknown Product'}</h5>
+        cartInOrder.map((item, index) => (
+            <div className="row" key={index} >
+                <div className="col-3">
+                    <img src={item.product?.fullPathImage} alt="img" className="img-fluid custom-cart-img" />
                 </div>
-                <div className="col-1 mt-5 mb-3">
-                    <h5 className="card-title">x{item.quantity}</h5>
+                <div className="col-4 mt-4">
+                    <h5 className="card-title mt-3">{item.product?.name}</h5>
+
                 </div>
-                <div className="col-4 mt-5 mb-3 text-end">
+                <div className="col-2 mt-4">
+                    <h5 className="card-title mt-3">{item.quantity}</h5>
+
+                </div>
+                <div className="col-3 mt-5 text-end">
                     <h5 className="card-title">{(item.product?.price || 0) * item.quantity}฿</h5>
                 </div>
-                <div className="col-11">
-                    <hr />
-                </div>
+                <hr />
             </div>
         ));
 
@@ -106,34 +123,35 @@ const PaymentDetail = () => {
                 <div className="row">
                     <div className="col-1"></div>
                     <div className="col-10">
-                        <div className="card card-bill">
-                            <div className="card-body">
-                                <h1 className="mb-5 mt-4">ใบแจ้งหนี้</h1>
-                                <div className="col-12">
-                                    <h5 className="ms-4 mb-4">
-                                        ลูกค้า: {order.userBy?.fName} {order.userBy?.lName}
-                                    </h5>
-                                    <h5 className="ms-4 mb-4">ที่อยู่: {order.userBy?.address}</h5>
-                                    <h5 className="ms-4 mb-4">เบอร์โทร: {order.userBy?.telNo}</h5>
-                                    <h5 className="ms-4 mb-4">
-                                        วันที่สั่งซื้อ: {new Date(order.createdAt).toLocaleString()}
-                                    </h5>
-                                    <h5 className="ms-4 mb-4">สถานะ: {order.status}</h5>
-                                </div>
-                                <div className="mt-4 ms-5 bill-items">
-                                    {renderBillItems(order.cart)}
-                                </div>
-                                <hr className="me-4" />
-                                <div className="row">
-                                    <div className="col-9 ms-5 mb-5 mt-5">
-                                        <h5 className="card-title">รวมสุทธิ:</h5>
+                        <div className="card card-bill card-order mb-5 mt-5 ">
+                            <div className="card-body me-4">
+
+                                <h1 className="card-title mt-3 mb-5">ใบเสร็จ</h1>
+                                <h5 className="ms-4 mb-4">
+                                    ลูกค้า: {order.userBy?.fName} {order.userBy?.lName}
+                                </h5>
+                                <h5 className="ms-4 mb-4">ที่อยู่: {order.userBy?.address}</h5>
+                                <h5 className="ms-4 mb-4">เบอร์โทร: {order.userBy?.telNo}</h5>
+                                <h5 className="ms-4 mb-4">
+                                    วันที่สั่งซื้อ: {new Date(order.createdAt).toLocaleString()}
+                                </h5>
+                                <h5 className="ms-4 mb-4">สถานะ: {order.status}</h5>
+
+                                {/* โซนแสดงสินค้า */}
+                                <div className="card card-bill mt-5">
+                                    <div className="card-body me-5">
+                                        {renderBillItems(order.cart)}
                                     </div>
-                                    <div className="col-2 ms-3 mb-5 mt-5">
-                                        <h5 className="card-title">฿{order.netPrice}</h5>
-                                    </div>
+                                </div>
+
+                                {/* โซนแสดงราคา */}
+                                <div className='d-flex justify-content-between ms-5 me-5 mt-5'>
+                                    <h5>รวมสุทธิ :</h5>
+                                    <h5 className='me-3'>{order.netPrice}฿</h5>
                                 </div>
                             </div>
                         </div>
+                        <hr className='mb-5' />
                         <div className="card card-bill mt-5 mb-5 pe-4">
                             <div className="card-body ms-4 me-4">
                                 {/* ข้อมูลบัญชี */}
@@ -185,7 +203,7 @@ const PaymentDetail = () => {
 
                                 {/* แนบสลิป */}
                                 <div className="mb-3 mt-2">
-                                    <div className="row align-items-center">
+                                    <div className="row">
                                         <div className="col-3">
                                             <h5 className="card-title">แนบสลิป (ไฟล์รูปภาพ):</h5>
                                         </div>
@@ -193,8 +211,17 @@ const PaymentDetail = () => {
                                             <input
                                                 type="file"
                                                 className="form-control"
-                                                onChange={(e) => setProofPicture(e.target.files[0])}
+                                                accept="image/*"
+                                                onChange={handleFileChange}
                                             />
+                                            {previewImage && (
+                                                <img
+                                                    src={previewImage}
+                                                    alt="Preview"
+                                                    className="img-thumbnail mt-3"
+                                                    style={{ maxWidth: '500px' }}
+                                                />
+                                            )}
                                         </div>
                                     </div>
                                 </div>

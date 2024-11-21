@@ -30,6 +30,8 @@ import AdminProduct from '../Pages/admin/AdminProduct'
 import AdminInfo from '../Pages/admin/AdminInfo'
 import OrderUser from '../Pages/admin/OrderUser'
 import AdminEdit from '../Pages/admin/AdminEdit'
+import OrderDetails from '../Pages/admin/OrderDetails'
+import UserData from '../Pages/admin/UserData'
 
 const router = createBrowserRouter([
     {  
@@ -73,6 +75,8 @@ const router = createBrowserRouter([
             { path: 'admininfo', element: <AdminInfo />},
             { path: 'orderuser', element: <OrderUser />},
             { path: 'adminedit', element: <AdminEdit />},
+            { path: 'userdata', element: <UserData />},
+            { path: 'orderdetails', element: <OrderDetails />},
         ]
     },
 ])

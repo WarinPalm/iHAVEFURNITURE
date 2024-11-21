@@ -20,8 +20,8 @@ const HomeUser = () => {
     const [currentAmount, setCurrentAmount] = useState('');
 
     //ดึงข้อมูลสินค้า
-    const fetchProduct = () => {
-        axios.get("http://localhost:3000/api/products")
+    const fetchProduct = async () => {
+        await axios.get("http://localhost:3000/api/products")
             .then(res => {
                 setProducts(res.data.products);
             })

@@ -30,7 +30,7 @@ model User {
 
 model Product {
   id          Int        @id @default(autoincrement())
-  name        String
+  name        String     @unique
   description String?
   price       Float?
   picture     String?
@@ -45,7 +45,7 @@ model Product {
 
 model Category {
   id        Int       @id @default(autoincrement())
-  name      String
+  name      String    @unique
   products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -68,7 +68,7 @@ model Cartitem {
 
 model Order {
   id           Int        @id @default(autoincrement())
-  cart     Cartitem[]
+  cart         Cartitem[]
   netPrice     Float
   transferDate String?
   proofPicture String?

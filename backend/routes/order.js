@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { authCheck, adminCheck } = require('../middlewares/authCheck');
+const { authCheck } = require('../middlewares/authCheck');
 const { readOrder , orderPayment ,historyOrder ,cancelOrder } = require('../controllers/order');
 const { uploadSlip } = require('../middlewares/upload')
 

@@ -59,7 +59,7 @@ const NavbarAdmin = () => {
                     </div>
                     <ul className="nav justify-content-center">
                         <li className="nav-item">
-                            <Link className="nav-link active" aria-current="page" to="../user">หน้าของลูกค้า</Link>
+                            <Link className="nav-link active" aria-current="page" to="../admin/userdata">ข้อมูลลูกค้า</Link>
                         </li>
                         <li className="nav-item">   
                             <Link className="nav-link active" aria-current="page" to="../admin">จัดการแบนเนอร์</Link>
@@ -97,8 +97,24 @@ const NavbarAdmin = () => {
                                 ))}
                             </ul>
                         </li>
-                        <li className="nav-item">   
-                            <Link className="nav-link active" aria-current="page" to="../admin/orderuser">คำสั่งซื้อ</Link>
+                       
+                        <li className="nav-item dropdown">
+                            <a
+                                className={`nav-link dropdown-toggle`}
+                                id="navbarDropdown"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                คำสั่งซื้อ
+                            </a>
+                            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <Link to='../admin/orderuser' className={`dropdown-item`} state={{orderStatus:"รอการตรวจสอบ"}} ><li>รอการตรวจสอบ</li></Link>
+                                <Link to='../admin/orderuser' className={`dropdown-item`} state={{orderStatus:"รอการชำระเงิน"}}><li>รอการชำระเงิน</li></Link>
+                                <Link to='../admin/orderuser' className={`dropdown-item`} state={{orderStatus:"อนุมัติคำสั่งซื้อ"}}><li>อนุมัติเสร็จสิ้น</li></Link>
+                                <Link to='../admin/orderuser' className={`dropdown-item`} state={{orderStatus:"ไม่อนุมัติคำสั่งซื้อ"}}><li>ไม่อนุมัติคำสั่งซื้อ</li></Link>
+                                <Link to='../admin/orderuser' className={`dropdown-item`} state={{orderStatus:"ยกเลิกรายการสั่งซื้อ"}}><li>ยกเลิกรายการสั่งซื้อ</li></Link>   
+                            </ul>
                         </li>
                         
                     </ul>

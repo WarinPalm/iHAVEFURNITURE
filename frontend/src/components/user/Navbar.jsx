@@ -23,8 +23,8 @@ const Navbar = () => {
         Logout();
         navigate('/');
     };
-    const fetchCategories = () => {
-        axios.get("http://localhost:3000/api/categories")
+    const fetchCategories = async () => {
+        await axios.get("http://localhost:3000/api/categories")
             .then(res => setCategories(res.data))
             .catch(error => console.error("Error fetching categories:", error));
     };

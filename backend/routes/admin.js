@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { authCheck, adminCheck } = require('../middlewares/authCheck');
-const {  } = require('../controllers/admin');
+const { listUser , listOrder , changeStatusOrder } = require('../controllers/admin');
 
-router.post('/change-statusOrder' , authCheck , adminCheck );
-router.get('/oders' , authCheck , adminCheck );
+router.put('/admin/status-order/:id' , authCheck , adminCheck , changeStatusOrder);
+router.get('/admin/list-orders' , authCheck , adminCheck , listOrder );
+router.get('/admin/list-users' , authCheck , adminCheck , listUser );
 
 module.exports = router;

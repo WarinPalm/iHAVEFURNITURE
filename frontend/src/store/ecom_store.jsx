@@ -2,6 +2,7 @@ import axios from 'axios';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
+
 const ecomStore = (set) => ({
     user: null,
     token: null,
@@ -14,6 +15,7 @@ const ecomStore = (set) => ({
 
     actionLogout: () => {
         set({ user: '', token: ''});
+        
         localStorage.removeItem('ecom-store'); 
     }
 });

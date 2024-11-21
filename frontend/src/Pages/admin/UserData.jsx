@@ -1,86 +1,80 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { fetchAllUser } from '../../api/Admin';
+import useEcomStore from '../../store/ecom_store';
+import { Link, useLocation } from 'react-router-dom';
 
-import { myProduct } from './MyProduct';
-import Navbar from './Navbar';
-import LoginModal from './Modal/LoginModal';
-import EditHeroImageModal from "./Modal/EditHeroImage";
-import HeroImage from './HeroImage';
-import ProductModal from './Modal/ProductModal';
-
-const UserData = () => {
-    const [currentCategory, setCurrentCategory] = useState(() => {
-        const savedCategory = localStorage.getItem('currentCategory');
-        return savedCategory ? savedCategory : 'sofa';
-    });
+function UserData() {
+  const [customers, setCustomers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const token = useEcomStore((state)=>state.token);
 
 
-    useEffect(() => { 
-        const categoryItems = myProduct[currentCategory] || [];
-        setProducts(categoryItems); // สำหรับนำไปคำนวณจำนวนสินค้า products.length
+  const customerInfo = async () => {
+      try {
+          const res = await fetchAllUser(token);
+          console.log(res.data)
+          setCustomers(res.data);
+      } catch (err) {
+          console.error('Error fetching user info:', err);
+      }
+  };
+  useEffect(() => {
+    customerInfo();
+  }, []);
+  
+  // ค้นหา
+  const filteredCustomer = customers.filter(customer =>
+    `${customer.id}`.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-    }, [currentCategory]);
+  return (
+    <div className="container mt-5">
+      <h1 className="fw-bold">ข้อมูลลูกค้า</h1>
 
-    const handleCategoryClick = (category) => { 
-        setCurrentCategory(category);
-        localStorage.setItem('currentCategory', category);
-        setCurrentPage(1);
-    };
+      {/* ช่องค้นหา */}
+      <div className="my-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="ค้นหารหัสลูกค้า..."
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+        />
+      </div>
 
-
-    return (
-        <>
-            <Navbar onCategoryClick={handleCategoryClick}/>            
-            <LoginModal />
-
-            <section className="list-product">
-                <div className="container">
-                    {/* สำหรับเขียนหน้าตา _html */}
-                    <br />
-                    <h2>User data</h2>
-                    <div>
-                    <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col">Name</th>
-                              <th scope="col"></th>
-                              <th scope="col">Phone number</th>
-                              <th scope="col">Email</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">Jomprach</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>081-xxx-xxxx</td> {/*Phone number*/}
-                              <td>xxx@gmail.com</td> {/*Email*/}
-                            </tr>
-                            <tr>
-                            <th scope="row">Jomprach</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>081-xxx-xxxx</td> {/*Phone number*/}
-                              <td>xxx@gmail.com</td> {/*Email*/}
-                            </tr>
-                            <tr>
-                            <th scope="row">Jomprach</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>081-xxx-xxxx</td> {/*Phone number*/}
-                              <td>xxx@gmail.com</td> {/*Email*/}
-                            </tr>
-                            <tr>
-                              <th scope="row">Jomprach</th> {/*Name*/}
-                              <td>remove</td> {/*remove*/}
-                              <td>081-xxx-xxxx</td> {/*Phone number*/}
-                              <td>xxx@gmail.com</td> {/*Email*/}
-                            </tr>
-                          </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-        </>
-    );
-};
+      {/* ตาราง */}
+      <table className="table table-bordered text-center">
+        <thead>
+          <tr>
+            <th>รหัสลูกค้า</th>
+            <th>ชื่อจริง</th>
+            <th>นามสกุล</th>
+            <th>เบอร์โทร</th>
+            <th>อีเมล</th>
+            <th>ที่อยู่</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredCustomer.length > 0 ? (
+            filteredCustomer.map(customer => (
+              <tr key={customer.id}>
+                <td>{customer.id}</td>
+                <td>{customer.fName}</td>
+                <td>{customer.lName}</td>
+                <td>{customer.telNo}</td>
+                <td>{customer.email}</td>
+                <td>{customer.address}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5">ไม่พบลูกค้าในระบบ</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 export default UserData;

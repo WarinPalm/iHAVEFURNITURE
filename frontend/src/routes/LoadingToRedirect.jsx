@@ -19,7 +19,7 @@ const LoadingToRedirect = () => {
 
 
         return () => clearInterval(interval) // เคลียร์ interval ก่อนจะทำงานรอบใหม่
-    }, []) //  ,[] คือการทำงานเพียงครั้งเดียว , กัน infinity loop
+    }, []) 
 
     if (redirect) {
         return <Navigate to={'/'} />

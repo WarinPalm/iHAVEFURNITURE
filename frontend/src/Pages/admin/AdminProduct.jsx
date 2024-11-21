@@ -56,18 +56,32 @@ function AdminProduct() {
 
   // ฟิลเตอร์สินค้าตามคำค้นหา
   useEffect(() => {
-    const filtered = products.filter(product => {
-      const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = currentCategory === 0 || product.categoryId === currentCategory;
+    const filterProducts = () => {
+      const matchesSearch = (product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchTerm.toLowerCase());
   
-      // รวมเงื่อนไขการค้นหาและหมวดหมู่
-      return matchesSearch && matchesCategory;
-    });
+      if (currentCategory === 0) {
+        // กรณีแสดงสินค้าทั้งหมด
+        const allFiltered = products.filter((product) => matchesSearch(product));
+        setFilteredProducts(allFiltered);
+        setTotalPages(Math.ceil(allFiltered.length / itemsPerPage));
+      } else {
+        // กรณีแสดงสินค้าตามหมวดหมู่
+        const categoryFiltered = products.filter(
+          (product) =>
+            product.categoryId === currentCategory && matchesSearch(product)
+        );
+        setFilteredProducts(categoryFiltered);
+        setTotalPages(Math.ceil(categoryFiltered.length / itemsPerPage));
+      }
+      // รีเซ็ตไปหน้าแรกเมื่อกรองเสร็จ
+      setCurrentPage(1);
+    };
   
-    setFilteredProducts(filtered);
-    setTotalPages(Math.ceil(filtered.length / itemsPerPage));
-    setCurrentPage(1);
+    filterProducts();
   }, [searchTerm, products, currentCategory, itemsPerPage]);
+  
   
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -87,7 +101,7 @@ function AdminProduct() {
   const renderProducts = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
-
+  
     if (filteredProducts.length === 0) {
       return (
         <tr>
@@ -97,33 +111,8 @@ function AdminProduct() {
         </tr>
       );
     }
-    if(currentCategory==0){
-      return products.slice(startIndex, endIndex).map(product => (
-        <tr key={product.id}>
-          <td>{product.id}</td>
-          <td>{product.name}</td>
-          <td>{product.description}</td>
-          <td>฿{product.price}</td>
-          <td>
-            <img
-              src={product.fullpath}
-              alt={product.name}
-              style={{ width: '50px', height: 'auto', objectFit: 'cover' }}
-            />
-          </td>
-          <td className="text-center">{product.stock}</td>
-          <td>
-            <button className="btn btn-link text-primary w-100" data-bs-toggle="modal" 
-            data-bs-target="#formEditProductModal"
-            onClick={()=>setEditProduct(product)}><i className="bi bi-pencil-square"></i></button>
-          </td>
-          <td>
-            <button className="btn btn-link text-danger w-100" onClick={() => handleDeleteProduct(product.id)}><i className="bi bi-trash"></i></button>
-          </td>
-        </tr>
-      ));
-    }
-    return filteredProducts.slice(startIndex, endIndex).map(product => (
+  
+    return filteredProducts.slice(startIndex, endIndex).map((product) => (
       <tr key={product.id}>
         <td>{product.id}</td>
         <td>{product.name}</td>
@@ -138,17 +127,27 @@ function AdminProduct() {
         </td>
         <td className="text-center">{product.stock}</td>
         <td>
-          <button className="btn btn-link text-primary w-100" data-bs-toggle="modal" 
-          data-bs-target="#formEditProductModal"
-          onClick={()=>setEditProduct(product)}><i className="bi bi-pencil-square"></i></button>
+          <button
+            className="btn btn-link text-primary w-100"
+            data-bs-toggle="modal"
+            data-bs-target="#formEditProductModal"
+            onClick={() => setEditProduct(product)}
+          >
+            <i className="bi bi-pencil-square"></i>
+          </button>
         </td>
         <td>
-          <button className="btn btn-link text-danger w-100" onClick={() => handleDeleteProduct(product.id)}><i className="bi bi-trash"></i></button>
+          <button
+            className="btn btn-link text-danger w-100"
+            onClick={() => handleDeleteProduct(product.id)}
+          >
+            <i className="bi bi-trash"></i>
+          </button>
         </td>
       </tr>
     ));
   };
-
+  
   const renderPageNumbers = () => {
     const pageNumbers = [];
     for (let i = 1; i <= totalPages; i++) {

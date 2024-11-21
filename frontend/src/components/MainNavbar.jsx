@@ -101,10 +101,10 @@ const MainNavbar = () => {
                         </li>
 
                         <li className="nav-item">
-                            <Link to='../q&a'className="nav-link" href="#about">คำถามที่พบบ่อย</Link>
+                            <Link to='../q&a'className="nav-link">คำถามที่พบบ่อย</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="../aboutus" className="nav-link" href="#about">เกี่ยวกับเรา</Link>
+                            <Link to="../aboutus" className="nav-link">เกี่ยวกับเรา</Link>
                         </li>
                     </ul>
                 </div>

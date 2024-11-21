@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { userData , editProfile } = require('../controllers/user');
-const { authCheck, adminCheck } = require('../middlewares/authCheck');
+const { authCheck } = require('../middlewares/authCheck');
 
 
 router.get('/profile', authCheck , userData);
