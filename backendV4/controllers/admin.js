@@ -92,7 +92,45 @@ exports.changeStatusOrder = async (req, res) => {
         if(checkStatusOrder.status !== 'รอการตรวจสอบ'){
             return res.status(400).json({ message: 'ไม่สามารถอนุมัติการสั่งซื้อได้' });
         };
-        
+
+        if(status == 'ไม่อนุมัติการสั่งซื้อ'){
+            const productOfoder = await prisma.order.findFirst({
+                where: { id: Number(req.params.id) , status: 'รอการตรวจสอบ'},
+                select:{
+                    id: true,
+                    status: true,
+                    cart: {
+                        select:{
+                            id: true,
+                            prodId: true,
+                            quantity: true,
+                            product:{
+                                select:{
+                                    id: true,
+                                    stock: true,
+                                    sold: true
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            if(!productOfoder){
+                return res.status(404).json({ message : 'ไม่พบรายการที่ต้องตรวจสอบ' });
+            };
+
+            for( let i of productOfoder.cart){
+                await prisma.product.update({
+                    where: { id: i.product.id},
+                    data: { 
+                        stock: i.product.stock + i.quantity,
+                        sold: i.product.sold - i.quantity
+                    }
+                });
+            }
+        }
+
         const order = await prisma.order.update({
             where: { id: Number(req.params.id) , status: 'รอการตรวจสอบ'},
             data: { status: status }

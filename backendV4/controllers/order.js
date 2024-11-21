@@ -23,6 +23,7 @@ exports.readOrder = async (req,res) => {
                     select: {
                         id: true,
                         quantity: true,
+                        totalPrice: true,
                         product: {
                             select: {
                                 id: true,
@@ -178,7 +179,7 @@ exports.cancelOrder = async (req,res) => {
 
         // ตรวจสอบว่ามีรายการสั่งซื้อหรือไม่ !!หาก  !order จะตรวจสอบด้วย order ใช้กับ findfirst 
         if(!order){
-            return res.status(400).json({ message : 'ไม่พบรายการสั่งซื้อ' });
+            return res.status(404).json({ message : 'ไม่พบรายการสั่งซื้อ' });
         };
 
         

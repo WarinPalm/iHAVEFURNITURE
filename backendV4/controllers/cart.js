@@ -43,21 +43,45 @@ exports.addItemToCart = async (req, res) => {
             }
         });
 
+        const checkProductInCart = checkCartItem.find((item) => item.prodId === parseInt(productId));
+        
         // ตรวจสอบว่าสินค้ามีจำนวนพอหรือไม่
-        if(checkCartItem.quantity > productPrice.stock || quantity > productPrice.stock){
-            return res.status(400).json({message: 'สินค้ามีจำนวนไม่พอ'});
+        const checkItem = await prisma.cartitem.findFirst({
+            where: {
+                userById: userData.id,
+                prodId: parseInt(productId),
+                status: 'อยู่ในตะกร้า'
+            }
+        });
+        
+        // ตรวจสอบว่ามีสินค้าอยู่ในตะกร้าหรือไม่
+        if (checkItem) {
+            // ตรวจสอบจำนวนสินค้า
+            if (checkItem.quantity > productPrice.stock || 
+                (checkItem.quantity + quantity > productPrice.stock) || 
+                quantity > productPrice.stock) {
+                return res.status(400).json({ 
+                    message: 'สินค้ามีจำนวนไม่พอ', 
+                    Q: checkItem.quantity 
+                });
+            }
+        } else {
+            // ตรวจสอบกรณีไม่มีสินค้าในตะกร้า
+            if (quantity > productPrice.stock) {
+                return res.status(400).json({ 
+                    message: 'สินค้ามีจำนวนไม่พอ', 
+                    Q: 0 
+                });
+            }
         }
         
-
+        
         
 
-        // ตรวจสอบว่าสินค้าที่เพิ่มลงในตะกร้ามีอยู่แล้วหรือไม่
-        const checkProductInCart = checkCartItem.find((item) => item.prodId === parseInt(productId));
+
         let item;
 
-        
-
-        
+        // ถ้ามีสินค้าอยู่ในตะกร้าแล้วให้เพิ่มจำนวนสินค้า ถ้าไม่มีให้เพิ่มสินค้าใหม่ในตะกร้า
         if(checkProductInCart){
             item = await prisma.cartitem.update({
                 where: { id : checkProductInCart.id},
@@ -67,6 +91,7 @@ exports.addItemToCart = async (req, res) => {
                 }
             });
         }else{
+            
             item = await prisma.cartitem.create({
                 data:{
                     prodId : parseInt(productId),
@@ -77,6 +102,7 @@ exports.addItemToCart = async (req, res) => {
                     userById: userData.id
                 }
             });
+            
         }
        
         // ดึงข้อมูลราคาสินค้าที่อยู่ในตะกร้า
@@ -91,12 +117,14 @@ exports.addItemToCart = async (req, res) => {
         // คำนวนราคาสินค้าที่อยู่ในตะกร้า โดยเช็คว่ามีสินค้าอยู่ในตะกร้าหรือไม่ ถ้ามีให้คำนวนราคาสินค้าทั้งหมด ถ้าไม่มีให้เป็น 0
         let cartTotal = listCartItem.length > 0 ? listCartItem.map(item => item.totalPrice).reduce((sum, price) => sum + price, 0): 0;
 
+        // อัพเดทราคาสินค้ารวมสุทธิที่อยู่ในตะกร้า
         order = await prisma.order.update({
             where: { id: order.id},
             data: { netPrice: parseFloat(cartTotal)}
         });
 
         res.json({item , message: 'เพิ่มสินค้าลงในตะกร้าสำเร็จ'});
+
     }catch(err){
         console.log(err);
         res.status(500).json({message: 'server error'});
@@ -145,7 +173,7 @@ exports.removeItemCart = async (req,res) => {
         });
         
         if(!findItem){
-            return res.json({ message : 'ไม่มีสินค้าชิ้นนี้ในตะกร้าของคุณ' });
+            return res.status(404).json({ message : 'ไม่มีสินค้าชิ้นนี้ในตะกร้าของคุณ' });
         }
 
         await prisma.cartitem.delete({
