@@ -3,9 +3,12 @@ import ProductModal from '../components/user/ProductModal';
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getAllCategory } from "../api/category";
+import { getAllProducts } from "../api/Product";
 const ViewAll = () => {
     const location = useLocation();
-    const categoryNow = location.state?.categoryId || 1;
+    const categoryNow = location.state?.categoryId || 1; //ดึงค่าหมวดหมู่ล่าสุดที่มาจาก home
+
     const [currentCategory, setCurrentCategory] = useState(categoryNow); // default category id == sofa
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(12);
@@ -21,24 +24,29 @@ const ViewAll = () => {
     const [currentId, setCurrentId] = useState('');
     const [currentAmount, setCurrentAmount] = useState('');
     
+    
     // ดึงข้อมูลสินค้า
-    const fetchProduct = ()=>{
-        axios.get("http://localhost:3000/api/products")
-            .then(res => setProducts(res.data.products))
-            .catch(error => console.error('Error Fetching Products' + error));
+    const fetchProducts = async ()=>{
+        try{
+            const res = await getAllProducts();
+            setProducts(res.data.products);
+        }catch(err){
+            console.error(err)
+        }
     }
-    // ดึงข้อมูลหมวดหมู่
-    const fetchCategories = () => {
-        axios.get("http://localhost:3000/api/categories")
-            .then(res => setCategories(res.data))
-            .catch(error => console.error('Error Fetching Categories' + error));
+     //ดึงหมวดหมู่
+     const fetchCategories = async () => {
+        try{
+            const res = await getAllCategory();
+            setCategories(res.data);
+        }catch(err){
+            console.error(err)
+        }
     };
-
     useEffect(() => {
-        fetchProduct();
+        fetchProducts();
         fetchCategories();
     }, []);
-
     // อัปเดต currentCategory เมื่อ categoryNow เปลี่ยนแปลง
     useEffect(() => {
         setCurrentCategory(categoryNow);
@@ -58,7 +66,12 @@ const ViewAll = () => {
     
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
-    
+        
+        if(filteredProducts.length===0){
+            return(
+                <h1>.....ไม่มีสินค้าในหมวดหมู่นี้.....</h1>
+            )
+        }
         return filteredProducts.slice(startIndex, endIndex).map((product, index) => (
             <div className="col-3 mb-4 text-center" key={product.id}>
                 {product.stock === 0 ? (
@@ -132,6 +145,7 @@ const ViewAll = () => {
     
         return pageNumbers;
     };
+    
 
     return (
         <>
@@ -140,9 +154,8 @@ const ViewAll = () => {
 
             <section className="list-product">
                 <div className="container text-center">
-                    <div className="col-4 pt-5">
-                        <h1>หมวดหมู่: {categories.find(category => category.id === currentCategory)?.name || ''}</h1>
-                    </div>
+                    <h1 className="text-start mt-5">หมวดหมู่: {categories.find(category => category.id === currentCategory)?.name || ''}</h1>
+                    <hr className="mt-5 mb-5"/>
                     <div className="row mt-3 pt-5">
                         <div className="col-12 row-gap-2">
                             <div className="row" id="show-product">

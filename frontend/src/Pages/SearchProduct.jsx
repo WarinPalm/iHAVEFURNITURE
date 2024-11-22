@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import ProductModal from '../components/user/ProductModal';
 import axios from "axios";
+import { getAllProducts } from "../api/Product";
 
 const SearchProduct = () => {
 
@@ -23,15 +24,16 @@ const SearchProduct = () => {
 
     const location = useLocation();
     //ดึงข้อมูลสินค้า
-    const fetchProduct = () => {
-        axios.get("http://localhost:3000/api/products")
-            .then(res => {
-                setProducts(res.data.products); 
-            })
-            .catch(error => console.error('Error Fetching Products: ' + error));
+    const fetchProducts = async ()=>{
+        try{
+            const res = await getAllProducts();
+            setProducts(res.data.products);
+        }catch(err){
+            console.error(err)
+        }
     }
     useEffect(() => {     
-        fetchProduct();
+        fetchProducts();
     }, [])
 
     useEffect(() => { // สำหรับการค้นหา

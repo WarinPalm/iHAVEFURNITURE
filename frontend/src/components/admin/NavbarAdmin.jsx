@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
 import useEcomStore from '../../store/ecom_store';
+import { getAllCategory } from '../../api/category';
 
 const NavbarAdmin = () => {
     const navigate = useNavigate();
@@ -15,10 +15,14 @@ const NavbarAdmin = () => {
         Logout();
         navigate('/');
     };
-    const fetchCategories = () => {
-        axios.get("http://localhost:3000/api/categories")
-            .then(res => setCategories(res.data))
-            .catch(error => console.error("Error fetching categories:", error));
+     //ดึงหมวดหมู่
+     const fetchCategories = async () => {
+        try{
+            const res = await getAllCategory();
+            setCategories(res.data);
+        }catch(err){
+            console.error(err)
+        }
     };
     useEffect(() => {
         fetchCategories();
@@ -111,8 +115,8 @@ const NavbarAdmin = () => {
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <Link to='../admin/orderuser' className={`dropdown-item`} state={{orderStatus:"รอการตรวจสอบ"}} ><li>รอการตรวจสอบ</li></Link>
                                 <Link to='../admin/orderuser' className={`dropdown-item`} state={{orderStatus:"รอการชำระเงิน"}}><li>รอการชำระเงิน</li></Link>
-                                <Link to='../admin/orderuser' className={`dropdown-item`} state={{orderStatus:"อนุมัติคำสั่งซื้อ"}}><li>อนุมัติเสร็จสิ้น</li></Link>
-                                <Link to='../admin/orderuser' className={`dropdown-item`} state={{orderStatus:"ไม่อนุมัติคำสั่งซื้อ"}}><li>ไม่อนุมัติคำสั่งซื้อ</li></Link>
+                                <Link to='../admin/orderuser' className={`dropdown-item`} state={{orderStatus:"อนุมัติการสั่งซื้อ"}}><li>อนุมัติการสั่งซื้อ</li></Link>
+                                <Link to='../admin/orderuser' className={`dropdown-item`} state={{orderStatus:"ไม่อนุมัติการสั่งซื้อ"}}><li>ไม่อนุมัติการสั่งซื้อ</li></Link>
                                 <Link to='../admin/orderuser' className={`dropdown-item`} state={{orderStatus:"ยกเลิกรายการสั่งซื้อ"}}><li>ยกเลิกรายการสั่งซื้อ</li></Link>   
                             </ul>
                         </li>

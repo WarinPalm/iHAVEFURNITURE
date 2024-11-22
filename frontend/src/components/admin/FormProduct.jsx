@@ -22,7 +22,7 @@ const FormProduct = ({ currentEditProduct, fetchProduct}) => {
   
     useEffect(() => {
         fetchCategories();
-    }, []);
+    }, [categories]);
 
     useEffect(() => {
         if (currentEditProduct) { //ตอนคลิ๊ก edit ให้มีข้อมูลก่อนหน้า
@@ -52,6 +52,7 @@ const FormProduct = ({ currentEditProduct, fetchProduct}) => {
             toast.success(`เพิ่มสินค้าสำเร็จ`);
             setForm(initialState);
             setPictureFile(null);
+            fetchProduct();
         } catch (err) {
             console.error(err);
             toast.error("ไม่สามารถเพิ่มสินค้าได้");

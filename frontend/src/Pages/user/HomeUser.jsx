@@ -5,6 +5,7 @@ import Category from "../Category"
 import ProductModal from '../../components/user/ProductModal';
 import { toast } from "react-toastify";
 import axios from "axios";
+import { getAllProducts } from "../../api/Product";
 
 const HomeUser = () => {
     const [currentCategory, setCurrentCategory] = useState(1);
@@ -20,15 +21,16 @@ const HomeUser = () => {
     const [currentAmount, setCurrentAmount] = useState('');
 
     //ดึงข้อมูลสินค้า
-    const fetchProduct = async () => {
-        await axios.get("http://localhost:3000/api/products")
-            .then(res => {
-                setProducts(res.data.products);
-            })
-            .catch(error => console.error('Error Fetching Products' + error));
-    };
+    const fetchProducts = async ()=>{
+        try{
+            const res = await getAllProducts();
+            setProducts(res.data.products);
+        }catch(err){
+            console.error(err)
+        }
+    }
     useEffect(() => {
-        fetchProduct();
+        fetchProducts();
     }, []);
 
     const handleCategoryClick = (id) => {

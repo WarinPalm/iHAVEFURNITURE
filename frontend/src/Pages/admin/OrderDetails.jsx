@@ -128,8 +128,8 @@ const OrderDetails = () => {
                         {
                             order.status === 'รอการตรวจสอบ'?(
                             <div> 
-                                <button className="btn btn-danger me-3" onClick={()=> approveOrder('ไม่อนุมัติคำสั่งซื้อ')}>ไม่อนุมัติ</button>
-                                <button className="btn btn-success" onClick={()=> approveOrder('อนุมัติคำสั่งซื้อ')}>อนุมัติ</button>
+                                <button className="btn btn-danger me-3" onClick={()=> approveOrder('ไม่อนุมัติการสั่งซื้อ')}>ไม่อนุมัติ</button>
+                                <button className="btn btn-success" onClick={()=> approveOrder('อนุมัติการสั่งซื้อ')}>อนุมัติ</button>
                             </div>
                             ):''
                         }

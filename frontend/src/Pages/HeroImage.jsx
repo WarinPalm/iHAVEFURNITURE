@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { getAllProducts } from "../api/Product";
 
 const HeroImage = () => {
     const [banners, setBanners] = useState([]); 
@@ -7,7 +8,7 @@ const HeroImage = () => {
 
     const fetchBanners = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/api/products");
+            const res = await getAllProducts();
             //เอาแค่ product ที่มีหมวดหมู่เป็น banner
             const bannerProducts = res.data.products.filter(product => product.categoryId === 7);
             setBanners(bannerProducts);
@@ -18,7 +19,7 @@ const HeroImage = () => {
 
     useEffect(() => {
         fetchBanners();
-    }, [banners]);
+    }, []);
 
     // เปลี่ยนภาพทุกๆ 3 วิ
     useEffect(() => {

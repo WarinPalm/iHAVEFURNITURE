@@ -8,7 +8,7 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice, 
     const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate();
     const token = useEcomStore((state) => state.token);
-
+    
     useEffect(() => {
         const modal = document.getElementById('product-detail');
         modal.addEventListener('shown.bs.modal', () => {
@@ -44,7 +44,6 @@ const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice, 
             await addProductToCart(token, form);
             toast.success('เพิ่มสินค้าลงในรถเข็นสำเร็จ!');
         } catch (err) {
-            console.error(err);
             if (!token) {
                 toast.error('กรุณาเข้าสู่ระบบก่อนเพิ่มสินค้าในรถเข็น');
                 navigate('../login');

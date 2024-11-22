@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
+import { getAllCategory } from '../api/category';
 const MainNavbar = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
+    
 
     const handleSearch = (event) => {
         event.preventDefault(); // ป้องกันการส่งแบบฟอร์ม
@@ -15,15 +16,18 @@ const MainNavbar = () => {
 
     const [categories, setCategories] = useState([]);
     const categoriesNotBanner = categories.filter(category => category.name !== 'banner')
-    const fetchCategories = () => {
-        axios.get("http://localhost:3000/api/categories")
-            .then(res => setCategories(res.data))
-            .catch(error => console.error("Error fetching categories:", error));
+    //ดึงหมวดหมู่
+    const fetchCategories = async () => {
+        try{
+            const res = await getAllCategory();
+            setCategories(res.data);
+        }catch(err){
+            console.error(err)
+        }
     };
-
     useEffect(() => {
         fetchCategories();
-    }, [categories]);
+    }, []);
 
     return (
 

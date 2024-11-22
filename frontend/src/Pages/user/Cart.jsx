@@ -20,11 +20,14 @@ const Cart = () => {
         }
     };
     const buyProduct = async () => {
-        console.log('Token:', token);
+        if(cartItems.length ===0){ //ในกรณ๊ที่ไม่มีสินค้าในตะกร้า
+            toast.error('ยังไม่มีสินค้าในตะกร้า');
+            return;
+        }
         try {
             await buyProducts(token);
             toast.success('สั่งซื้อสินค้าสำเร็จ');
-            navigate('../paymentdetail');
+            navigate('../billorder');
         } catch (err) {
             console.error('Error:', err.response?.data || err.message);
             toast.error('ไม่สามารถสั่งซื้อสินค้าได้ โปรดใส่ข้อมูลให้ครบ');
@@ -72,7 +75,7 @@ const Cart = () => {
 
     const renderCartItems = () => {
         if (!Array.isArray(cartItemInCart) || cartItemInCart.length === 0) {
-            return <div className="col-12">Your cart is empty</div>;
+            return <div className="col-12">ตะกร้าของคุณไม่มีสินค้า</div>;
         }
 
         return cartItemInCart.map((item, index) => (
@@ -121,27 +124,22 @@ const Cart = () => {
 
     return (
         <div className="container">
-            <h2 className="mt-5 mb-5">Your Cart</h2>
+            <h1 className="mt-5 mb-5">ตะกร้าของคุณ</h1>
             <div className="row">
                 <div className="col-8">{renderCartItems()}</div>
                 <div className="col-4">
                     <div className="card" style={{ position: 'sticky', top: '10px' }}>
                         <div className="card-body">
-                            <h4 className="mb-4">Order Summary</h4>
-                            <div className="d-flex justify-content-between mb-4">
-                                <span>Product Price:</span>
-                                <span>
-                                    ฿{cartItemInCart.reduce((sum, item) => sum + item.totalPrice, 0)} 
-                                </span>
-                            </div>
+                            <h4 className="mb-4">ราคา</h4>
+                        
                             <hr />
                             <div className="d-flex justify-content-between mb-3">
-                                <span>Net Total:</span>
+                                <span>รวมสุทธิ:</span>
                                 <span>
                                     ฿{cartItemInCart.reduce((sum, item) => sum + item.totalPrice, 0)}
                                 </span>
                             </div>
-                            <button className="col-12 mt-3 btn btn-primary" onClick={buyProduct}>BUY</button>
+                            <button className="col-12 mt-3 btn btn-custom" onClick={buyProduct}>BUY</button>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,8 @@
 import axios from "axios";
 
+export const getAllProducts = async () =>{
+  return axios.get("http://localhost:3000/api/products");
+}
 export const createProduct = async (token, form) => {
 
   return axios.post("http://localhost:3000/api/product", form, {

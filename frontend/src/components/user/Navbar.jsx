@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
 import useEcomStore from '../../store/ecom_store';
+import { getAllCategory } from '../../api/category';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -23,14 +23,18 @@ const Navbar = () => {
         Logout();
         navigate('/');
     };
+    //ดึงหมวดหมู่
     const fetchCategories = async () => {
-        await axios.get("http://localhost:3000/api/categories")
-            .then(res => setCategories(res.data))
-            .catch(error => console.error("Error fetching categories:", error));
+        try{
+            const res = await getAllCategory();
+            setCategories(res.data);
+        }catch(err){
+            console.error(err)
+        }
     };
     useEffect(() => {
         fetchCategories();
-    }, [categories]);
+    }, []);
 
     return (
         <div style={{ position: 'sticky', top: "0", zIndex: "100"}}>

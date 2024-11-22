@@ -1,6 +1,8 @@
 import axios from 'axios'
 
-
+export const getAllCategory = async () =>{
+    return axios.get("http://localhost:3000/api/categories");
+}
 export const createCategory = async (token, form) => {
 
     return axios.post('http://localhost:3000/api/category', form, {

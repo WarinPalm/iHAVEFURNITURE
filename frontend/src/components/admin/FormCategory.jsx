@@ -58,8 +58,8 @@ const FormCategory = () => {
         if (!currentEditCategory) return;
         try {
             await editCategory(token, currentEditCategory.id, { name: currentEditCategory.name });
-            fetchCategories();
             toast.success('แก้ไขหมวดหมู่สำเร็จ');
+            fetchCategories();
             setCurrentEditCategory(null); 
         } catch (err) {
             console.error('Error editing category:', err);

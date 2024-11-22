@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { Link, useNavigate } from "react-router-dom";
 const Register = () => {
     const [form, setForm] = useState({ email: "", password: "", confirmPassword: "" });
-
+    const navigate = useNavigate();
     const handleOnChange = (event) => {
         setForm({...form,[event.target.name]: event.target.value});
     };
@@ -12,25 +12,25 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();// ป้องกันการรีเฟรช
         if (form.password !== form.confirmPassword) {
-            return alert("Confirm password does not match!");
-        }
-        console.log(form);
+            toast.error("รหัสผ่านไม่ตรงกัน!");
+            return;
+        } 
 
         try {
             // เมื่อมีเวลาติดต่อกับหลังบ้านจะต้องใช้ async await
-            const res = await axios.post("http://localhost:3000/api/register", form);
-            toast.success(res.data);
-            console.log(res.data);
+            await axios.post("http://localhost:3000/api/register", form);
+            toast.success('สมัครสมาชิกเรียบร้อย');
+            navigate('../login')
         } catch (err) {
-            const errMsg = err.response?.data?.message;
-            toast.error(errMsg);
-            console.log(err);
+
+            toast.error('มีบัญชีผู้ใช้นี้อยู่แล้ว');
+            
         }
     };
 
     return (
             <div className="d-flex justify-content-center align-items-center bg-login" style={{ minHeight: '100vh' }}>
-                <div className="card p-5 shadow-lg login-form w-50" style={{ minHeight: '500px' }}>
+                <div className="card p-5 shadow-lg login-form w-25" style={{ minHeight: '500px' }}>
                 <h3 className="card-title text-center mb-4">สมัครสมาชิก</h3>
                 <form className="mt-4" onSubmit={handleSubmit}>
                     <div className="mb-3">

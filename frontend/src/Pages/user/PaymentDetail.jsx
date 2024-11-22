@@ -105,7 +105,7 @@ const PaymentDetail = () => {
 
                 </div>
                 <div className="col-3 mt-5 text-end">
-                    <h5 className="card-title">{(item.product?.price || 0) * item.quantity}฿</h5>
+                    <h5 className="card-title">{item.totalPrice}฿</h5>
                 </div>
                 <hr />
             </div>

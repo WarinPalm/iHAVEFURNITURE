@@ -27,11 +27,11 @@ const Login = () => {
             const res = await actionLogin(form);
             const role = res.data.payload.role;
             roleRedirect(role);
-            toast.success('Welcome User');
+            toast.success('ยินดีต้อนรับ');
         } catch (err) {
             console.log(err);
-            const errMsg = err.response?.data?.message;
-            toast.error(errMsg);
+
+            toast.error('ไม่พบผู้ใช้ หรือ รหัสผ่านไม่ถูกต้อง');
         }
     };
 

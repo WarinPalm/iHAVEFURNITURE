@@ -42,11 +42,15 @@ function AdminProduct() {
       .catch(error => console.error('Error Fetching Categories:', error));
   };
 
-  
+
   useEffect(() => {
-      fetchCategories();
-      fetchProduct();
-  }, [ ]);
+    fetchCategories();
+  }, [categories]);
+  useEffect(() => {
+    fetchProduct();
+    fetchCategories();
+  }, []);
+
 
   // อัปเดต currentCategory เมื่อ categoryNow เปลี่ยน
   useEffect(() => {
@@ -58,9 +62,9 @@ function AdminProduct() {
   useEffect(() => {
     const filterProducts = () => {
       const matchesSearch = (product) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase());
-  
+        product.id.toString().toLowerCase().includes(searchTerm.toLowerCase()) || // ค้นหา id
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()); // ค้นหาชื่อ
+      
       if (currentCategory === 0) {
         // กรณีแสดงสินค้าทั้งหมด
         const allFiltered = products.filter((product) => matchesSearch(product));
@@ -78,14 +82,9 @@ function AdminProduct() {
       // รีเซ็ตไปหน้าแรกเมื่อกรองเสร็จ
       setCurrentPage(1);
     };
-  
+
     filterProducts();
   }, [searchTerm, products, currentCategory, itemsPerPage]);
-  
-  
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
 
   // ลบสินค้า
   const handleDeleteProduct = async (id) => {
@@ -101,7 +100,7 @@ function AdminProduct() {
   const renderProducts = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
-  
+
     if (filteredProducts.length === 0) {
       return (
         <tr>
@@ -111,7 +110,7 @@ function AdminProduct() {
         </tr>
       );
     }
-  
+
     return filteredProducts.slice(startIndex, endIndex).map((product) => (
       <tr key={product.id}>
         <td>{product.id}</td>
@@ -147,17 +146,27 @@ function AdminProduct() {
       </tr>
     ));
   };
-  
+
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
+    let startPage = Math.max(1, currentPage - 1); // เริ่มที่หน้าปัจจุบัน - 1
+    let endPage = Math.min(totalPages, currentPage + 1); // สิ้นสุดที่หน้าปัจจุบัน + 1
+
+    if (currentPage === 1) { // กรณีอยู่หน้าแรก
+      endPage = Math.min(totalPages, 3); // แสดง 1, 2, 3
+    } else if (currentPage === totalPages) { // กรณีอยู่หน้าสุดท้าย
+      startPage = Math.max(1, totalPages - 2); // แสดง totalPages - 2, totalPages - 1, totalPages
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
-        <button key={i} className={`btn ${i === currentPage ? 'btn-custom' : 'btn-custom2'} mx-1`}
+        <button key={i} className={`btn ${i === currentPage ? 'btn-custom2' : 'btn-custom'} mx-1`}
           onClick={() => setCurrentPage(i)}>
           {i}
         </button>
       );
     }
+
     return pageNumbers;
   };
 
@@ -166,14 +175,14 @@ function AdminProduct() {
       <div className="container mt-5">
 
         <div className="d-flex justify-content-between align-items-center mb-4">
-          {currentCategory === 0 ? <h1 className="fw-bold">สินค้า | สินค้าทั้งหมด </h1>:
-          <h1 className="fw-bold">สินค้า | {currentCategoryName}</h1>}
+          {currentCategory === 0 ? <h1 className="fw-bold">สินค้า | สินค้าทั้งหมด </h1> :
+            <h1 className="fw-bold">สินค้า | {currentCategoryName}</h1>}
           <input
             type="text"
             className="form-control w-25"
-            placeholder="ค้นหาชื่อสินค้า..."
+            placeholder="ค้นหารหัสหรือชื่อสินค้า..."
             value={searchTerm}
-            onChange={handleSearchChange}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
@@ -217,22 +226,28 @@ function AdminProduct() {
           </tbody>
         </table>
 
-        <div className="d-flex justify-content-between mt-4 mb-4">
-          <button
-            className="btn btn-custom"
-            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-          >
-            ก่อนหน้า
-          </button>
-          <div>{renderPageNumbers()}</div>
-          <button
-            className="btn btn-custom"
-            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
-          >
-            ถัดไป
-          </button>
+        <div id="pagination" className="mt-4 mb-4">
+          <div className="d-flex justify-content-end">
+            {totalPages > 1 && (
+              <>
+                {/* ปุ่ม Previous จะไม่มีผลเมื่ออยู่หน้าแรก */}
+                <button className="btn btn-custom mx-2"
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}>
+                  ก่อนหน้า
+                </button>
+
+                {renderPageNumbers()}
+
+                {/* ปุ่ม Next จะไม่มีผลเมื่ออยู่หน้าสุดท้าย */}
+                <button className="btn btn-custom mx-2"
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}>
+                  ถัดไป
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
