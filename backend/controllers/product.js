@@ -6,10 +6,10 @@ const { host , port } = require('../config/connectENV');
 exports.create = async (req, res) => {
     try{
         const { name, description, price, stock, categoryId } = req.body;
+
+        // ตรวจสอบว่าชื่อสินค้าซ้ำหรือไม่
         const checkName = await prisma.product.findFirst({
-            where:{
-                name:name
-            },
+            where:{ name:name },
             include:{
                 category: {
                     where: { id: parseInt(categoryId) }
@@ -24,9 +24,9 @@ exports.create = async (req, res) => {
             data:{
                 name:name,
                 description: description,
-                price:parseFloat(price),
+                price:parseFloat(Math.abs(price)), // แปลงเป็นค่าบวกหากเป็นค่าลบ
                 picture: req.file.filename, // เก็บชื่อไฟล์ภาพ
-                stock:parseInt(stock),
+                stock:parseInt(Math.abs(stock)), // แปลงเป็นค่าบวกหากเป็นค่าลบ
                 categoryId:parseInt(categoryId)
             }
         });
@@ -69,10 +69,24 @@ exports.update = async (req, res) => {
         // ถ้าไม่พบสินค้า
         if(!product){
             return res.status(404).json({ message: 'Product not found'});
-        }
+        };
+        
         const { name, description, price, stock, categoryId } = {
             ...product,  // ค่าเดิม
             ...req.body // ค่าใหม่
+        };
+
+        // ตรวจสอบว่าชื่อสินค้าซ้ำหรือไม่
+        const checkName = await prisma.product.findFirst({
+            where:{ name:name },
+            include:{
+                category: {
+                    where: { id: parseInt(categoryId) }
+                }
+            }
+        });
+        if(checkName){
+           return res.status(400).json({ message: 'สินค้านี้มีอยู่แล้ว'});
         };
         
         let pictureFilename = product.picture; // ตั้งค่าภาพเป็นค่าปัจจุบัน
@@ -86,17 +100,19 @@ exports.update = async (req, res) => {
                 });
             }
             pictureFilename = req.file.filename; // ตั้งค่าภาพเป็นไฟล์ใหม่
-        }
-        const updateProduct = await prisma.product.update({
+        };
+
+        // อัพเดทข้อมูลสินค้า
+        await prisma.product.update({
             where:{
                 id: Number(req.params.id)
             },
             data:{
                 name:name,
                 description: description,
-                price:parseFloat(price),
+                price:parseFloat(Math.abs(price)), // แปลงเป็นค่าบวกหากเป็นค่าลบ
                 picture: pictureFilename, // เก็บชื่อไฟล์ภาพ
-                stock:parseInt(stock),
+                stock:parseInt(Math.abs(stock)), // แปลงเป็นค่าบวกหากเป็นค่าลบ
                 categoryId:parseInt(categoryId)
             }
         });

@@ -6,6 +6,10 @@ exports.addItemToCart = async (req, res) => {
     try{
         const { productId , quantity } = req.body;
 
+        if(quantity <= 0){
+            return res.status(400).json({ message: 'จำนวนสินค้าต้องมากกว่า 0' });
+        }
+
         // ดูว่า user ที่ login อยู่ในขณะนี้เป็นใคร
         const userData = await prisma.user.findFirst({
             where: { id: Number(req.user.id) }
