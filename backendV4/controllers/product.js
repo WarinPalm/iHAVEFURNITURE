@@ -78,7 +78,7 @@ exports.update = async (req, res) => {
 
         // ตรวจสอบว่าชื่อสินค้าซ้ำหรือไม่
         const checkName = await prisma.product.findFirst({
-            where:{ name:name },
+            where:{ name:name , id: { not: Number(req.params.id) }},
             include:{
                 category: {
                     where: { id: parseInt(categoryId) }
