@@ -12,19 +12,21 @@ const HomeAdmin = () => {
     const token = useEcomStore((state)=>{state.token})
     const [banner, setBanner] = useState([])
     const [editBanner, setEditBanner] = useState(null);
-    // ดึงข้อมูลสินค้า
+
+    // ดึงข้อมูลแบบเนอร์
     const fetchBanner = async () => {
         try {
             const res = await axios.get("http://localhost:3000/api/products");
-            setBanner(res.data.products.filter(product => product.categoryId === 7));
+            setBanner(res.data.products.filter(product => product.categoryId === 7)); //เอาเฉพาะสินค้าที่มีหมวดหมู่แบนเนอร์
         } catch (error) {
-            console.error('Error fetching products:', error);
+            console.error(error);
         }
     };
 
     useEffect(() => {
         fetchBanner();
     }, [banner]);
+    
     // ลบ banner
     const handleDeleteBanner = async (id) => {
         try {

@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import useEcomStore from "../../store/ecom_store";
 import { createProduct, editProduct } from "../../api/Product";
 import { toast } from "react-toastify";
-
-
-const initialState = { name: "", description: "", price: "", stock: "", categoryId: "" };
+import { getAllCategory } from "../../api/category";
 
 const FormProduct = ({ currentEditProduct, fetchProduct}) => {
-    const token = useEcomStore((state) => state.token);
-    const [form, setForm] = useState(initialState);
-    const [pictureFile, setPictureFile] = useState(null);
-    const [categories, setCategories] = useState([]);
-    const categoriesNotBanner = categories.filter(category => category.name !== 'banner');
-    const fetchCategories = ()=>{
-        axios.get("http://localhost:3000/api/categories")
-            .then(res => setCategories(res.data))
-            .catch(err => { console.error("Error fetching categories:", err);});}
+    const productForm = { name: "", description: "", price: "", stock: "", categoryId: "" }; //สร้างค่าในฟอร์ม
+    const token = useEcomStore((state) => state.token); //เรียกใช้โทเคน
+    const [form, setForm] = useState(productForm); //สร้างฟอร์มสำหรับส่งไปยัง backend
+    const [pictureFile, setPictureFile] = useState(null); //ตัวแปรสำหรับเก็บภาพ
+    const [categories, setCategories] = useState([]); //ตัวแปรเก็บหมวดหมู่
+    const categoriesNotBanner = categories.filter(category => category.name !== 'banner'); //เอาหมวดหมู่ทุกอันยกเว้น แบนเนอร์
 
-    // ดึงข้อมูลสินค้า
+    // ดึงข้อมูลหมวดหมู่
+    const fetchCategories = async ()=>{
+        try{
+            const res = await getAllCategory();
+            setCategories(res.data);
+        }catch(err){
+            console.error(err)
+        }
+    }   
   
     useEffect(() => {
         fetchCategories();
@@ -34,7 +36,7 @@ const FormProduct = ({ currentEditProduct, fetchProduct}) => {
                 categoryId: currentEditProduct.categoryId,
             });
         } else {
-            setForm(initialState);
+            setForm(productForm);
             setPictureFile(null);
         }
     }, [currentEditProduct]);
@@ -50,7 +52,7 @@ const FormProduct = ({ currentEditProduct, fetchProduct}) => {
         try {
             await createProduct(token, formData);
             toast.success(`เพิ่มสินค้าสำเร็จ`);
-            setForm(initialState);
+            setForm(productForm);
             setPictureFile(null);
             fetchProduct();
         } catch (err) {

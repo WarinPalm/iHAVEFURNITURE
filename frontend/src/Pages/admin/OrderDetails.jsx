@@ -7,10 +7,10 @@ import { toast } from 'react-toastify';
 
 const OrderDetails = () => {
     const location = useLocation();
-    const order = location.state;
-    const token = useEcomStore((state)=>state.token)
+    const order = location.state;//ดึงข้อมูลออเดอร์เมื่อกด รายละเอียดดูเพิ่มเติม
+    const token = useEcomStore((state)=>state.token) //เรียกใช้ token
     const navigate = useNavigate();
-    const formatDate = (dateString) => {
+    const formatDate = (dateString) => { //สำหรับอัพเดทข้อมูลของเวลา
         const date = new Date(dateString);
         const day = date.getDate().toString().padStart(2, '0');
         const month = (date.getMonth() + 1).toString().padStart(2, '0');

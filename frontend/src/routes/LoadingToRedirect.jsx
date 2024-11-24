@@ -17,7 +17,6 @@ const LoadingToRedirect = () => {
 
         }, 1000)
 
-
         return () => clearInterval(interval) // เคลียร์ interval ก่อนจะทำงานรอบใหม่
     }, []) 
 
@@ -25,10 +24,9 @@ const LoadingToRedirect = () => {
         return <Navigate to={'/'} />
     }
 
-
     return (
-        <div>
-            No Permission, Redirect in {count} 
+        <div className='container'>
+            <h1>No Permission, Redirect in {count}</h1>
         </div>
     )
 }

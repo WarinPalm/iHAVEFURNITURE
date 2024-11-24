@@ -10,6 +10,7 @@ const Navbar = () => {
     const [categories, setCategories] = useState([]);
     const categoriesNotBanner = categories.filter(category => category.name !== 'banner')
 
+    //สำหรับ search bar
     const handleSearch = (event) => {
         event.preventDefault();
         if (searchTerm) {
@@ -19,10 +20,12 @@ const Navbar = () => {
     };
     const Logout = useEcomStore((state) => state.actionLogout);
 
+    //สำหรับ logout 
     const handleLogout = () => {
         Logout();
         navigate('/');
     };
+    
     //ดึงหมวดหมู่
     const fetchCategories = async () => {
         try{

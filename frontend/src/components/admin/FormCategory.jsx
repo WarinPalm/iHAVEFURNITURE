@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { createCategory, editCategory, removeCategory } from '../../api/category';
+import { createCategory, editCategory, getAllCategory, removeCategory } from '../../api/category';
 import useEcomStore from '../../store/ecom_store';
 import { toast } from 'react-toastify';
 
@@ -10,16 +9,16 @@ const FormCategory = () => {
     const [name, setName] = useState(''); // สำหรับเพิ่มหมวดหมู่ใหม่
     const [currentEditCategory, setCurrentEditCategory] = useState(null); // เก็บข้อมูลหมวดหมู่ที่แก้ไข
     const categoriesNotBanner = categories.filter(category => category.name !== 'banner');
+    
     // ดึงข้อมูลหมวดหมู่
-    const fetchCategories = async () => {
-        try {
-            const res = await axios.get("http://localhost:3000/api/categories");
+    const fetchCategories = async ()=>{
+        try{
+            const res = await getAllCategory();
             setCategories(res.data);
-        } catch (error) {
-            console.error('Error fetching categories:', error);
-            toast.error('ไม่สามารถดึงข้อมูลหมวดหมู่ได้');
+        }catch(err){
+            console.error(err)
         }
-    };
+    }   
 
     useEffect(() => {
         fetchCategories();

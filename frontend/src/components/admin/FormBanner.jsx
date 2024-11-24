@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import useEcomStore from "../../store/ecom_store";
 import { createProduct, editProduct } from "../../api/Product";
 import { toast } from "react-toastify";
 
-const initialState = { name: "", description: "", price: "", stock: "", categoryId: 7 };
-
 const FormBanner = ({ currentEditProduct}) => {
-    const token = useEcomStore((state) => state.token);
-    const [form, setForm] = useState(initialState);
-    const [pictureFile, setPictureFile] = useState(null);
+    const productForm = { name: "", description: "", price: "", stock: "", categoryId: 7 }; //สร้างค่าในฟอร์ม
+    const token = useEcomStore((state) => state.token); //เรียกใช้โทเคน
+    const [form, setForm] = useState(productForm); //สร้างฟอร์มสำหรับส่งไปยัง backend
+    const [pictureFile, setPictureFile] = useState(null); //ตัวแปรสำหรับเก็บภาพ
     
     useEffect(() => {
         if (currentEditProduct) {
@@ -21,7 +19,7 @@ const FormBanner = ({ currentEditProduct}) => {
                 categoryId: currentEditProduct.categoryId,
             });
         } else {
-            setForm(initialState);
+            setForm(productForm);
             setPictureFile(null);
         }
     }, [currentEditProduct]);
@@ -35,9 +33,9 @@ const FormBanner = ({ currentEditProduct}) => {
         Object.keys(form).forEach(key => formData.append(key, form[key]));
         if (pictureFile) formData.append("picture", pictureFile);
         try {
-            const res = await createProduct(token, formData);
+            await createProduct(token, formData);
             toast.success(`เพิ่มแบนเนอร์สำเร็จ`);
-            setForm(initialState);
+            setForm(productForm);
             setPictureFile(null);
         } catch (err) {
             console.error(err);

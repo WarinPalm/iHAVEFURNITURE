@@ -3,8 +3,8 @@ import axios from "axios";
 import { getAllProducts } from "../api/Product";
 
 const HeroImage = () => {
-    const [banners, setBanners] = useState([]); 
-    const [currentIndex, setCurrentIndex] = useState(0); 
+    const [banners, setBanners] = useState([]); // ตัวแปรเก็บภาพแบนเนอร์
+    const [currentIndex, setCurrentIndex] = useState(0); //ให้ภาพที่ 1 แสดง
 
     const fetchBanners = async () => {
         try {
@@ -51,9 +51,7 @@ const HeroImage = () => {
                 </div>
                 <div className="btn-hero-image mt-3">
                     {banners.map((_, index) => (
-                        <button
-                            key={index}
-                            className={`btn btn-dark btn-banner mx-1 ${index === currentIndex ? "active" : ""}`}
+                        <button key={index} className={`btn btn-dark btn-banner mx-1 ${index === currentIndex ? "active" : ""}`}
                             onClick={() => handleButtonClick(index)}
                         ></button>
                     ))}

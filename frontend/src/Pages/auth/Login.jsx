@@ -13,11 +13,8 @@ const Login = () => {
 
     const [form, setForm] = useState({ email: "", password: "" });
 
-    const handleOnChange = (event) => {
-        setForm({
-            ...form,
-            [event.target.name]: event.target.value,
-        });
+    const handleOnChange = (e) => {
+        setForm({...form, [e.target.name]: e.target.value,});
     };
 
     const handleSubmit = async (e) => {

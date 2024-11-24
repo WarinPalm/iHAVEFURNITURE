@@ -3,54 +3,57 @@ import axios from 'axios';
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import FormCategory from '../../components/admin/FormCategory';
-import { deleteProduct } from '../../api/Product';
+import { deleteProduct, getAllProducts } from '../../api/Product';
 import useEcomStore from '../../store/ecom_store';
 import FormProduct from '../../components/admin/FormProduct';
+import { getAllCategory } from '../../api/category';
 
 function AdminProduct() {
-  const token = useEcomStore((state) => state.token);
+  const token = useEcomStore((state) => state.token); //เรียกใช้ token
 
   const location = useLocation();
-  const categoryNow = location.state?.categoryId || 0;
+  const categoryNow = location.state?.categoryId || 0; //เรียกใช้หมวดหมู่ปัจจุบันที่กดจาก Navbar หรือถ้าไม่มีให้ default เป็น สินค้าทั้งหมด
 
-  const [currentCategory, setCurrentCategory] = useState(categoryNow);
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [itemsPerPage] = useState(10);
-  const [categories, setCategories] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState(categoryNow); //กำหนดหมวดหมู่ปัจจุบัน
+  const [products, setProducts] = useState([]); //ตัวแปรเก็บสินค้า
+  const [filteredProducts, setFilteredProducts] = useState([]); //ตัวแปรเก็บสินค้าที่มีการกรอง
+  const [searchTerm, setSearchTerm] = useState(''); //สำหรับเก็บค่าที่ค้นหา
+  const [currentPage, setCurrentPage] = useState(1); //ตัวแปรกำหนดหน้าปัจจุุบัน (ให้เริ่มต้นที่หน้า 1)
+  const [totalPages, setTotalPages] = useState(0); //ตัวแปรจำนวนหน้า
+  const [itemsPerPage] = useState(10); //ให้มีหน้าละ 10 ชิ้น
+  const [categories, setCategories] = useState([]); //ตัวแปรเก็บหมวดหมู่
 
-  const [editProduct, setEditProduct] = useState(null);
-  const currentCategoryName = categories.find(category => category.id === currentCategory)?.name || '';
+  const [editProduct, setEditProduct] = useState(null); //ตัวแปรกำหนดสินค้าที่กำลังจะแก้ไข
+  const currentCategoryName = categories.find(category => category.id === currentCategory)?.name || ''; //ตัวแปรสำหรับแสดงชื่อหมวดหมู่ ณ ตอนนั้น
 
   // ดึงข้อมูลสินค้า
-  const fetchProduct = async () => {
-    try {
-      const res = await axios.get("http://localhost:3000/api/products");
-      setProducts(res.data.products.filter(product => product.categoryId !== 7));
-      setFilteredProducts(res.data.products.filter(product => product.categoryId === currentCategory));
-    } catch (error) {
-      console.error('Error fetching products:', error);
+  const fetchProducts = async ()=>{
+    try{
+        const res = await getAllProducts();
+        setProducts(res.data.products.filter(product => product.categoryId !== 7)); //เอาสินค้าทุกชิ้น ยกเว้น ตัวแบนเนอร์
+        setFilteredProducts(res.data.products.filter(product => product.categoryId === currentCategory)); // สำหรับสินค้าที่เฉพาะเจาะจงหมวดหมู่
+    }catch(err){
+        console.error(err)
     }
-  };
+}
   // ดึงข้อมูลหมวดหมู่
-  const fetchCategories = () => {
-    axios.get("http://localhost:3000/api/categories")
-      .then(res => setCategories(res.data))
-      .catch(error => console.error('Error Fetching Categories:', error));
-  };
-
+  const fetchCategories = async ()=>{
+    try{
+        const res = await getAllCategory();
+        setCategories(res.data);
+    }catch(err){
+        console.error(err)
+    }
+  }
 
   useEffect(() => {
     fetchCategories();
-  }, [categories]);
+  }, [categories]); //ให้หมวดหมู่มีการเปลี่ยนแปลง เมื่อมีหมวดหมู่ใหม่เพิ่มเข้ามา
+
   useEffect(() => {
-    fetchProduct();
+    fetchProducts();
     fetchCategories();
   }, []);
-
 
   // อัปเดต currentCategory เมื่อ categoryNow เปลี่ยน
   useEffect(() => {
@@ -67,15 +70,12 @@ function AdminProduct() {
       
       if (currentCategory === 0) {
         // กรณีแสดงสินค้าทั้งหมด
-        const allFiltered = products.filter((product) => matchesSearch(product));
+        const allFiltered = products.filter((product) => matchesSearch(product)); 
         setFilteredProducts(allFiltered);
-        setTotalPages(Math.ceil(allFiltered.length / itemsPerPage));
+        setTotalPages(Math.ceil(allFiltered.length / itemsPerPage)); //คำนวณจำนวนหน้า
       } else {
         // กรณีแสดงสินค้าตามหมวดหมู่
-        const categoryFiltered = products.filter(
-          (product) =>
-            product.categoryId === currentCategory && matchesSearch(product)
-        );
+        const categoryFiltered = products.filter((product) => product.categoryId === currentCategory && matchesSearch(product));
         setFilteredProducts(categoryFiltered);
         setTotalPages(Math.ceil(categoryFiltered.length / itemsPerPage));
       }
@@ -91,17 +91,18 @@ function AdminProduct() {
     try {
       await deleteProduct(token, id);
       toast.success("ลบสินค้าเรียบร้อยแล้ว");
-      fetchProduct();
+      fetchProducts();
     } catch (err) {
       toast.error(err)
     }
   };
 
+  //แสดงสินค้า
   const renderProducts = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
 
-    if (filteredProducts.length === 0) {
+    if (filteredProducts.length === 0) { //ถ้าไม่มีสินค้าในหมวดหมู่นั้น ให้แสดงว่าไม่มีสินค้า
       return (
         <tr>
           <td colSpan="7" className="text-center">
@@ -111,7 +112,7 @@ function AdminProduct() {
       );
     }
 
-    return filteredProducts.slice(startIndex, endIndex).map((product) => (
+    return filteredProducts.slice(startIndex, endIndex).map((product) => ( //ถ้่ามีสินค้าให้แสดงออกมา
       <tr key={product.id}>
         <td>{product.id}</td>
         <td>{product.name}</td>
@@ -126,20 +127,13 @@ function AdminProduct() {
         </td>
         <td className="text-center">{product.stock}</td>
         <td>
-          <button
-            className="btn btn-link text-primary w-100"
-            data-bs-toggle="modal"
-            data-bs-target="#formEditProductModal"
-            onClick={() => setEditProduct(product)}
-          >
+          <button className="btn btn-link text-primary w-100" data-bs-toggle="modal" data-bs-target="#formEditProductModal"
+            onClick={() => setEditProduct(product)}>
             <i className="bi bi-pencil-square"></i>
           </button>
         </td>
         <td>
-          <button
-            className="btn btn-link text-danger w-100"
-            onClick={() => handleDeleteProduct(product.id)}
-          >
+          <button className="btn btn-link text-danger w-100" onClick={() => handleDeleteProduct(product.id)}>
             <i className="bi bi-trash"></i>
           </button>
         </td>
@@ -147,63 +141,55 @@ function AdminProduct() {
     ));
   };
 
+  //สำหรับแสดงเลขหน้า
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    let startPage = Math.max(1, currentPage - 1); // เริ่มที่หน้าปัจจุบัน - 1
+    let startPage = Math.max(1, currentPage - 1); // เริ่มต้นที่หน้าปัจจุบัน - 1
     let endPage = Math.min(totalPages, currentPage + 1); // สิ้นสุดที่หน้าปัจจุบัน + 1
 
-    if (currentPage === 1) { // กรณีอยู่หน้าแรก
-      endPage = Math.min(totalPages, 3); // แสดง 1, 2, 3
-    } else if (currentPage === totalPages) { // กรณีอยู่หน้าสุดท้าย
-      startPage = Math.max(1, totalPages - 2); // แสดง totalPages - 2, totalPages - 1, totalPages
+    if (currentPage === 1) {
+    // ถ้าหน้าปัจจุบันคือหน้าแรก แสดง 1, 2, 3 (หรือถึง totalPages ถ้า < 3)
+    endPage = Math.min(totalPages, 3);
+    } else if (currentPage === totalPages) {
+    // ถ้าหน้าปัจจุบันคือหน้าสุดท้าย แสดง totalPages-2, totalPages-1, totalPages
+    startPage = Math.max(1, totalPages - 2);
     }
 
+    // สร้างปุ่มเลขหน้า
     for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(
+    pageNumbers.push(
         <button key={i} className={`btn ${i === currentPage ? 'btn-custom2' : 'btn-custom'} mx-1`}
-          onClick={() => setCurrentPage(i)}>
+        onClick={() => setCurrentPage(i)}>
           {i}
         </button>
-      );
+    );
     }
 
     return pageNumbers;
   };
+  
 
   return (
     <div>
       <div className="container mt-5">
 
         <div className="d-flex justify-content-between align-items-center mb-4">
-          {currentCategory === 0 ? <h1 className="fw-bold">สินค้า | สินค้าทั้งหมด </h1> :
+          {currentCategory === 0 ? <h1 className="fw-bold">สินค้า | สินค้าทั้งหมด </h1> : //ถ้าคลิกสินค้าทั้งหมดให้แสดงคำว่า สินค้าทั้งหมด
             <h1 className="fw-bold">สินค้า | {currentCategoryName}</h1>}
-          <input
-            type="text"
-            className="form-control w-25"
-            placeholder="ค้นหารหัสหรือชื่อสินค้า..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+          <input type="text" className="form-control w-25" placeholder="ค้นหารหัสหรือชื่อสินค้า..."
+            value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
         <div className="d-flex justify-content-start mb-3">
 
-          <button
-            className="btn btn-custom"
-            data-bs-toggle="modal"
-            data-bs-target="#formShowCategoriesModal">
+          <button className="btn btn-custom" data-bs-toggle="modal" data-bs-target="#formShowCategoriesModal">
             จัดการหมวดหมู่สินค้า
           </button>
-          <button
-            className='btn btn-custom ms-3'
-            data-bs-toggle="modal"
-            data-bs-target="#formCreateCategoryModal">
+          <button className='btn btn-custom ms-3' data-bs-toggle="modal" data-bs-target="#formCreateCategoryModal">
             เพิ่มหมวดหมู่
           </button>
-          <button
-            className='btn btn-custom ms-3'
-            data-bs-toggle="modal"
-            data-bs-target="#formCreateProductModal">
+          <button className='btn btn-custom ms-3' data-bs-toggle="modal" data-bs-target="#formCreateProductModal">
             เพิ่มสินค้า
           </button>
         </div>
@@ -252,7 +238,7 @@ function AdminProduct() {
       </div>
 
       <FormCategory />
-      <FormProduct currentEditProduct={editProduct} fetchProduct={fetchProduct} />
+      <FormProduct currentEditProduct={editProduct} fetchProduct={fetchProducts} />
 
     </div>
   );

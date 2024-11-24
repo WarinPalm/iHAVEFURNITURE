@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 const ProductModal = ({ currentImage, currentName, currentDetail, currentPrice, currentId , currentAmount}) => {
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(1); //เซ็ตจำนวนเริ่มต้นให้เท่ากับ 1
     const navigate = useNavigate();
     const token = useEcomStore((state) => state.token);
     

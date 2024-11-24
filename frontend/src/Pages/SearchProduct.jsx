@@ -101,7 +101,6 @@ const SearchProduct = () => {
                 </button>
             );
         }
-    
         return pageNumbers;
     };
 

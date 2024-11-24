@@ -9,7 +9,6 @@ const ProtectRouteUser = ({ element }) => {
     const user = useEcomStore((state)=>state.user)
     const token = useEcomStore((state)=>state.token)
 
-
     useEffect(()=>{
         if(user && token){
             // send req to backend
@@ -18,7 +17,6 @@ const ProtectRouteUser = ({ element }) => {
             .catch((err)=>setOk(false))
         }
     },[])
-
     return ok ?  element : <LoadingToRedirect />
 }
 

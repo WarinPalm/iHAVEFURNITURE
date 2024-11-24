@@ -4,9 +4,9 @@ import useEcomStore from '../../store/ecom_store';
 import { infoAboutMe } from '../../api/User';
 
 function UserInfo() {
-    const [user, setUser] = useState(null); 
-    const token = useEcomStore((state) => state.token);
-
+    const [user, setUser] = useState(''); //ตัวแปรเก็บข้อมูลผู้ใช้
+    const token = useEcomStore((state) => state.token); //เรียกใช้ token 
+ 
     const fetchAboutMe = async () => {
         try {
             const res = await infoAboutMe(token);

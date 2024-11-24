@@ -8,10 +8,11 @@ import axios from "axios";
 import { getAllProducts } from "../../api/Product";
 
 const HomeUser = () => {
-    const [currentCategory, setCurrentCategory] = useState(1);
-    const [products, setProducts] = useState([]);
+    const [currentCategory, setCurrentCategory] = useState(1); // เริ่มต้นที่หมวดหมู่โซฟา
+    const [products, setProducts] = useState([]); //ตัวแปรเก็บสินค้า
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(6);
+    const [itemsPerPage] = useState(6); //ให้สินค้าแสดง 6 ชิ้น
+
     //ส่งค่าไปให้ popup show product
     const [currentImage, setCurrentImage] = useState('');
     const [currentName, setCurrentName] = useState('');
@@ -33,10 +34,12 @@ const HomeUser = () => {
         fetchProducts();
     }, []);
 
+    //เซ็ต id ตอนคลิก หมวดหมู่ ให้สิน้ค
     const handleCategoryClick = (id) => {
         setCurrentCategory(id);
     };
 
+    //สำหรับเรียกตัวสินค้าให้มาแสดง 
     const renderProducts = () => {
         const filterProducts = products.filter(product => product.categoryId === currentCategory);
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -44,22 +47,11 @@ const HomeUser = () => {
     
         return filterProducts.slice(startIndex, endIndex).map(product => (
             <div className="col-4 mb-4 text-center" key={product.id}>
-                {product.stock === 0 ? (
-                    <div
-                        className="card card-hover"
-                        onClick={() => { toast.error('สินค้าหมด'); }}
-                    >
+                {product.stock === 0 ? ( //ถ้าสินค้าชิ้นนั้นหมด
+                    <div className="card card-hover" onClick={() => { toast.error('สินค้าหมด'); }}>
                         <div className="image-soldout">
-                            <img
-                                src={product.fullpath}
-                                className="product-image card-img-top"
-                                alt={product.name}
-                            />
-                            <img
-                                src="/image/Other/soldout.png"
-                                className="sold-out-image"
-                                alt="Sold Out"
-                            />
+                            <img src={product.fullpath} className="product-image card-img-top" alt={product.name}/>
+                            <img src="/image/Other/soldout.png" className="sold-out-image" alt="Sold Out"/>
                         </div>
                         <div className="card-body">
                             <h5 className="card-title">{product.name}</h5>
@@ -67,11 +59,8 @@ const HomeUser = () => {
                             <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
                         </div>
                     </div>
-                ) : (
-                    <div
-                        className="card card-hover"
-                        data-bs-toggle="modal"
-                        data-bs-target="#product-detail"
+                ) : ( //ถ้าสินค้ายังไม่หมด
+                    <div className="card card-hover" data-bs-toggle="modal" data-bs-target="#product-detail"
                         onClick={() => {
                             setCurrentImage(product.fullpath);
                             setCurrentName(product.name);
@@ -79,8 +68,7 @@ const HomeUser = () => {
                             setCurrentPrice(product.price);
                             setCurrentId(product.id);
                             setCurrentAmount(product.stock);
-                        }}
-                    >
+                        }}>
                         <img src={product.fullpath} className="card-img-top" alt={product.name} />
                         <div className="card-body">
                             <h5 className="card-title">{product.name}</h5>
@@ -93,31 +81,18 @@ const HomeUser = () => {
         ));
     };
     
-
+    //สำหรับเรียกตัวสินค้าแนะนำให้มาแสดง 
     const renderRecommendedProducts = () => {
-        const recomProduct = products
-            .slice()
-            .reverse()
-            .filter(product => product.categoryId !== 7)
-            .slice(0, 4); // กรองแล้วเลือกเฉพาะ 4 รายการแรกที่ไม่ใช่ category banner
+        // กรองแล้วเลือกเฉพาะ 4 รายการแรกที่ไม่ใช่ category banner
+        const recomProduct = products.slice().reverse().filter(product => product.categoryId !== 7).slice(0, 4); 
         return recomProduct.map((product, index) => (
             <div className="col-3 mb-4 text-center" key={product.id}>
-                {product.stock === 0 ? (
-                    <div
-                        className="card card-hover"
-                        onClick={() => { toast.error('สินค้าหมด'); }}
-                    >
+                
+                {product.stock === 0 ? ( //ถ้าสินค้าชิ้นนั้นหมด
+                    <div className="card card-hover"onClick={() => { toast.error('สินค้าหมด'); }}>
                         <div className="image-soldout">
-                            <img
-                                src={product.fullpath}
-                                className="product-image card-img-top"
-                                alt={product.name}
-                            />
-                            <img
-                                src="/image/Other/soldout.png"
-                                className="sold-out-image"
-                                alt="Sold Out"
-                            />
+                            <img src={product.fullpath} className="product-image card-img-top" alt={product.name}/>
+                            <img src="/image/Other/soldout.png" className="sold-out-image" alt="Sold Out"/>
                         </div>
                         <div className="card-body">
                             <h5 className="card-title">{product.name}</h5>
@@ -125,11 +100,8 @@ const HomeUser = () => {
                             <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
                         </div>
                     </div>
-                ) : (
-                    <div
-                        className="card card-hover"
-                        data-bs-toggle="modal"
-                        data-bs-target="#product-detail"
+                ) : ( //ถ้าสินค้ายังไม่หมด
+                    <div className="card card-hover" data-bs-toggle="modal" data-bs-target="#product-detail"
                         onClick={() => {
                             setCurrentImage(product.fullpath);
                             setCurrentName(product.name);
@@ -137,8 +109,7 @@ const HomeUser = () => {
                             setCurrentPrice(product.price);
                             setCurrentId(product.id);
                             setCurrentAmount(product.stock);
-                        }}
-                    >
+                        }}>
                         <img src={product.fullpath} className="card-img-top" alt={product.name} />
                         <div className="card-body">
                             <h5 className="card-title">{product.name}</h5>
