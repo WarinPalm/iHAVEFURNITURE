@@ -9,16 +9,14 @@ exports.create = async (req, res) => {
 
         // ตรวจสอบว่าชื่อสินค้าซ้ำหรือไม่
         const checkName = await prisma.product.findFirst({
-            where:{ name:name },
-            include:{
-                category: {
-                    where: { id: parseInt(categoryId) }
-                }
-            }
+            where:{ 
+                name:name,
+                categoryId: parseInt(categoryId)
+            } 
         });
         if(checkName){
            return res.status(400).json({ message: 'สินค้านี้มีอยู่แล้ว'});
-        }
+        };
 
         const product = await prisma.product.create({
             data:{
@@ -78,13 +76,15 @@ exports.update = async (req, res) => {
 
         // ตรวจสอบว่าชื่อสินค้าซ้ำหรือไม่
         const checkName = await prisma.product.findFirst({
-            where:{ name:name },
-            include:{
-                category: {
-                    where: { id: parseInt(categoryId) }
-                }
-            }
+            where:{ 
+                AND:[
+                    { id: { not: Number(req.params.id)} },
+                    { name:name }, 
+                    { categoryId: parseInt(categoryId) }
+                ]
+            } 
         });
+
         if(checkName){
            return res.status(400).json({ message: 'สินค้านี้มีอยู่แล้ว'});
         };
