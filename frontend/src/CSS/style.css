@@ -189,11 +189,19 @@ aside li {
     background-size: contain;
     background-repeat: no-repeat;
 }
-.my-team{
+/* about us */
+.my-team {
     border: 1px solid black;
-    border-radius: 5%;
-    min-height: 30vh;
+    border-radius: 10px;
 }
+
+.my-team img {
+    width: 100%; 
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
 .userprofile {
     width: 180px;
     height: 180px;
