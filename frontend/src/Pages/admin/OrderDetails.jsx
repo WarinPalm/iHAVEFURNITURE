@@ -82,12 +82,13 @@ const OrderDetails = () => {
                         <div className="card-body me-4">
                             <h1 className="card-title mt-3 mb-5">ใบเสร็จ</h1>
                             <h5 className="ms-4 mb-4">
-                                ลูกค้า: {order.userBy?.fName} {order.userBy?.lName}
+                                ชื่อลูกค้าที่สั่ง: {order.userBy?.fName} {order.userBy?.lName}
                             </h5>
-                            <h5 className="ms-4 mb-4">ที่อยู่: {order.userBy?.address || "ไม่มีข้อมูลที่อยู่"}</h5>
-                            <h5 className="ms-4 mb-4">เบอร์โทร: {order.userBy?.telNo}</h5>
+                            <h5 className="ms-4 mb-4">ที่อยู่ลูกค้า: {order.userBy?.address || "ไม่มีข้อมูลที่อยู่"}</h5>
+                            <h5 className="ms-4 mb-4">เบอร์โทรลูกค้า: {order.userBy?.telNo}</h5>
+                            <h5 className="ms-4 mb-4">วันที่ลูกค้าสั่งซื้อ: {formatDate(order.buyDate)}</h5>
                             <h5 className="ms-4 mb-4">
-                                วันที่ชำระเงิน: {order.transferDate ? order.transferDate : ("ยังไม่ได้ระบุวันที่")}
+                                วันที่ลูกค้าชำระเงิน: {order.transferDate ? order.transferDate : ("ยังไม่ได้ระบุวันที่")}
                             </h5>
 
 

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getAllCart, addProductToCart, deleteProduct, buyProducts } from '../../api/Cart'; // ใช้ addProductToCart สำหรับเพิ่มจำนวน
 import useEcomStore from '../../store/ecom_store';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]); //ตัวแปรเก็บข้อมูลสินค้าตะกร้า
     const cartItemInCart = cartItems.filter(item=> item.status === 'อยู่ในตะกร้า') //กรองแค่สินค้าที่มีสถานะ อยู่ในตะกร้า
@@ -84,36 +84,26 @@ const Cart = () => {
             <div key={index} className="card mb-3">
                 <div className="row">
                     <div className="col-4">
-                        <img
-                            src={item.product.fullPathImage} 
-                            className="img-fluid custom-cart-img"
-                            alt={item.product.name}
-                        />
+                        <img src={item.product.fullPathImage} className="img-fluid custom-cart-img" alt={item.product.name}/>
                     </div>
                     <div className="col-8">
                         <div className="card-body">
                             <h5 className="card-title">{item.product.name}</h5>
                             <p className="card-text">{item.product.description}</p>
-                            <p className="card-text text-muted">Price: ฿{item.product.price}</p>
+                            <p className="card-text text-muted">ราคา: ฿{item.product.price}</p>
                             <div className="d-flex align-items-center mb-3 justify-content-between">
                                 <div className="col-6 d-flex align-items-center">
-                                    <button
-                                        className="btn btn-custom me-2"
-                                        onClick={() => handleQuantityChange(item.id, 'decrease')}
-                                    >
+                                    <button className="btn btn-custom me-2" onClick={() => handleQuantityChange(item.id, 'decrease')}>
                                         -
                                     </button>
                                     <span className="m-2">{item.quantity}</span>
-                                    <button
-                                        className="btn btn-custom ms-2"
-                                        onClick={() => handleQuantityChange(item.id, 'increase')}
-                                    >
+                                    <button className="btn btn-custom ms-2" onClick={() => handleQuantityChange(item.id, 'increase')}>
                                         +
                                     </button>
                                 </div>
                                 <div className="col-4 text-end me-4">
                                     <button className="btn btn-danger" onClick={() => handleRemoveItem(item.id)}>
-                                        Remove
+                                        เอาออก
                                     </button>
                                 </div>
                             </div>
@@ -141,7 +131,7 @@ const Cart = () => {
                                     ฿{cartItemInCart.reduce((sum, item) => sum + item.totalPrice, 0)}
                                 </span>
                             </div>
-                            <button className="col-12 mt-3 btn btn-custom" onClick={buyProduct}>BUY</button>
+                            <button className="col-12 mt-3 btn btn-custom" onClick={buyProduct}>ดำเนินการสั่งซื้อ</button>
                         </div>
                     </div>
                 </div>

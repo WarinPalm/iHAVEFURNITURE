@@ -186,7 +186,7 @@ function AdminProduct() {
               <th>ราคา (บาท)</th>
               <th>รูปภาพ</th>
               <th>จำนวนสินค้าในร้าน</th>
-              <th>แก้</th>
+              <th>แก้ไข</th>
               <th>ลบ</th>
             </tr>
           </thead>

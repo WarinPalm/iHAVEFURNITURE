@@ -32,7 +32,7 @@ const BillOrder = () => {
             <div className="row">
                 <h1 className="mt-5 mb-5">ธุรกรรม</h1>
                 {orders.length ===0?(<h2>ไม่มีรายการชำระเงิน</h2>):''}
-                {orders.map((order, index) => (
+                {orders.slice().reverse().map((order, index) => (
                     <>
                     <div
                         className="card mb-5 card-bill card-hover"

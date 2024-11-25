@@ -15,8 +15,37 @@ const PaymentDetail = () => {
     const navigate = useNavigate();
     const order = location.state?.order;
 
-    
+    // Update เวลาปัจจุบัน
+    useEffect(() => {
+        const updateCurrentTime = () => {
+            const now = new Date();
+            const formattedDateTime = now.toLocaleString('th-TH', {
+                timeZone: 'Asia/Bangkok',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+            });
+            setNotificationDateTime(formattedDateTime);
+        };
 
+        const intervalId = setInterval(updateCurrentTime, 1000);
+
+        return () => clearInterval(intervalId); // ล้าง interval
+    }, []);
+
+    const formatDate = (dateString) => { //สำหรับอัพเดทข้อมูลของเวลา
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = (date.getFullYear() + 543);
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const seconds = date.getSeconds().toString().padStart(2, '0');
+        return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    };
     // จัดการอัปโหลดไฟล์และแสดงภาพตัวอย่าง
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -109,13 +138,15 @@ const PaymentDetail = () => {
 
                                 <h1 className="card-title mt-3 mb-5">ใบเสร็จ</h1>
                                 <h5 className="ms-4 mb-4">
-                                    ลูกค้า: {order.userBy?.fName} {order.userBy?.lName}
+                                    ชื่อลูกค้า: {order.userBy?.fName} {order.userBy?.lName}
                                 </h5>
                                 <h5 className="ms-4 mb-4">ที่อยู่: {order.userBy?.address}</h5>
                                 <h5 className="ms-4 mb-4">เบอร์โทร: {order.userBy?.telNo}</h5>
-                                
+                                <h5 className="ms-4 mb-4">
+                                    วันที่สั่งซื้อ: {formatDate(order.buyDate)}
+                                </h5>
                                 <h5 className="ms-4 mb-4">สถานะ: {order.status}</h5>
-
+                                
                                 {/* โซนแสดงสินค้า */}
                                 <div className="card card-bill mt-5">
                                     <div className="card-body me-5">

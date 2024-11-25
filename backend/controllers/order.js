@@ -9,7 +9,7 @@ exports.readOrder = async (req,res) => {
                 id: true,
                 status: true,
                 netPrice: true,
-                createdAt: true,
+                buyDate : true,
                 userBy: {
                     select: {
                         fName: true,
@@ -68,18 +68,20 @@ exports.orderPayment = async (req,res) =>{
         const { transferDate , proofDate } = req.body;
         const { id } = req.params;
 
+        // ตรวจสอบว่ามีรายการสั่งซื้อหรือไม่
         const order = await prisma.order.findFirst({
             where: { id: Number(id) , status: 'รอการชำระเงิน' },
         });
-
         if(!order){
             return res.status(400).json({ message : 'ไม่พบรายการสั่งซื้อ' });
         };
 
+        // ตรวจสอบว่ามีการอัปโหลดไฟล์หลักฐานการโอนหรือไม่
         if (!req.file) {
             return res.status(400).json({ message: 'กรุณาอัปโหลดไฟล์หลักฐานการโอน' });
-        }
+        };
 
+        // อัปเดตสถานะการชำระเงินเป็น รอการตรวจสอบ
         const payment = await prisma.order.update({
             where: { id: Number(id) },
             data:{
@@ -106,7 +108,7 @@ exports.historyOrder = async (req,res) => {
                 id: true,
                 status: true,
                 netPrice: true,
-                createdAt: true,
+                buyDate : true,
                 userBy: {
                     select: {
                         fName: true,

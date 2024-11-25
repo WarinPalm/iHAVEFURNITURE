@@ -32,7 +32,7 @@ const History = () => {
             <div className="row">
                 <h1 className="mt-5 mb-5">ประวัติการสั่งซื้อ</h1>
                 {orderHistory.length ===0?(<h2>ไม่มีรายการชำระเงิน</h2>):''}
-                {orderHistory.map((history, index) => (
+                {orderHistory.slice().reverse().map((history, index) => (
                     <div
                         className="card mb-5 card-bill card-hover"
                         key={index}

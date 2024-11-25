@@ -40,7 +40,8 @@ function AboutUs() {
                 <div className="my-team">
                   <img className="img-fluid" src="/image/Other/por.jpg" alt="" />
                 </div>
-                <h2 className="text-center mt-3">Project Manager, Back-End Developer</h2>
+                <h2 className="text-center mt-3">Project Manager</h2>
+                <h2 className="text-center">Back-End Developer</h2>
                 <h2 className="text-center">(Admin & Customer)</h2>
                 <hr />
                 <p className='text-center'>เวงซัว แต</p>
@@ -52,7 +53,8 @@ function AboutUs() {
                 <div className="my-team">
                   <img className="img-fluid" src="/image/Other/jom.jpg" alt="" />
                 </div>
-                <h2 className="text-center mt-3">UX &  UI Designer, Graphic Designer</h2>
+                <h2 className="text-center mt-3">UX &  UI Designer</h2>
+                <h2 className="text-center ">Graphic Designer</h2>
                 <hr />
                 <p className='text-center'>จอมปราชญ์ ร้กโลก</p>
                 <p className='text-center'>65111398</p>
