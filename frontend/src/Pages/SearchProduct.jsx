@@ -112,8 +112,8 @@ const SearchProduct = () => {
 
             <section className="list-product">
                 <div className="container text-center">
-                    <div className="col-4 pt-5">
-                        <h1>Search Results for "{searchTerm}"</h1>
+                    <div className="col-12 pt-5">
+                        <h1>ผลการค้นหาของ: "{searchTerm}"</h1>
                     </div>
                     <div className="row mt-3 pt-5">
                         <div className="col-12 row-gap-2">
