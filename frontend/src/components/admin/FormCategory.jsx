@@ -30,8 +30,11 @@ const FormCategory = () => {
         if (!name) {
             return toast.warning('กรุณากรอกชื่อหมวดหมู่');
         }
+        // ถ้าชื่อเกี่ยวข้องกับ "banner" ให้แปลงเป็น "banner" พิมพ์เล็กทั้งหมด
+        const formattedName = name.toLowerCase().includes('banner') ? 'banner' : name;
+
         try {
-            await createCategory(token, { name }); //เรียกใช้ createCategory จากเส้น API
+            await createCategory(token, { name: formattedName }); //เรียกใช้ createCategory จากเส้น API
             toast.success('เพิ่มหมวดหมู่สำเร็จ');
             setName('');
             fetchCategories();
@@ -79,7 +82,8 @@ const FormCategory = () => {
                         </div>
                         <div className="modal-body">
                             <ul className="list-group">
-                                {categoriesNotBanner.map((category) => (
+                                {categoriesNotBanner.length ===0 ?(<p className='text-center'>ไม่พบหมวดหมู่</p>)
+                                : categoriesNotBanner.map((category) => (
                                     <li key={category.id} className="list-group-item d-flex justify-content-between align-items-center">
                                         <span>{category.name}</span>
                                         <div>
@@ -93,6 +97,7 @@ const FormCategory = () => {
                                         </div>
                                     </li>
                                 ))}
+                                
                             </ul>
                         </div>
                     </div>

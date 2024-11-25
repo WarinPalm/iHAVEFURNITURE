@@ -49,6 +49,15 @@ function UserData() {
 
   //สำหรับการแสดงข้อมูลผู้ใช้
   const renderCustomers = () => {
+    if (filteredCustomers.length === 0) { //ถ้าไม่มีผู้ใช้ 
+      return (
+        <tr>
+          <td colSpan="6" className="text-center">
+            ไม่พบผู้ใช้
+          </td>
+        </tr>
+      );
+    }
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = Math.min(startIndex + itemsPerPage, customers.length);
 

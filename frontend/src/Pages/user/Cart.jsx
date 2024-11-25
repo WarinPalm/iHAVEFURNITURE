@@ -17,7 +17,6 @@ const Cart = () => {
             setCartItems(res.data.cart);
         } catch (error) {
             console.error('Error fetching cart items:', error);
-            toast.error('ไม่สามารถดึงข้อมูลตะกร้าได้');
         }
     };
     //สำหรับการสั่งซื้อเพื่อชำระเงิน

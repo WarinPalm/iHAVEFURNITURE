@@ -2,14 +2,46 @@ import React, { useState, useEffect } from "react";
 import useEcomStore from "../../store/ecom_store";
 import { createProduct, editProduct } from "../../api/Product";
 import { toast } from "react-toastify";
+import { getAllCategory } from "../../api/category";
 
-const FormBanner = ({ currentEditProduct, fetchBanner}) => {
-    const productForm = { name: "", description: "", price: "", stock: "", categoryId: 7 }; //สร้างค่าในฟอร์ม
+const FormBanner = ({ currentEditProduct, fetchBanner }) => {
     const token = useEcomStore((state) => state.token); //เรียกใช้โทเคน
-    const [form, setForm] = useState(productForm); //สร้างฟอร์มสำหรับส่งไปยัง backend
     const [pictureFile, setPictureFile] = useState(null); //ตัวแปรสำหรับเก็บภาพ
     const [previewImage, setPreviewImage] = useState(null); // URL ของภาพตัวอย่าง
+    const [bannerCategoryId, setBannerCategoryId] = useState(null); // เก็บ id ของหมวดหมู่ banner
+
+    // ดึงข้อมูลหมวดหมู่
+    const fetchCategories = async () => {
+        try {
+            const res = await getAllCategory();
+            // ค้นหา category ที่ชื่อว่า "banner"
+            const bannerCategory = res.data.find(category => category.name.toLowerCase() === 'banner');
+            if (bannerCategory) {
+                setBannerCategoryId(bannerCategory.id); // ตั้งค่า id ของ banner
+            } else {
+                console.error("ไม่พบหมวดหมู่ banner");
+            }
+        } catch (err) {
+            console.error("Error fetching categories:", err);
+        }
+    };
+    useEffect(() => {
+        if (bannerCategoryId) {
+            setForm((prevForm) => ({ ...prevForm, categoryId: bannerCategoryId }));
+        }
+    }, [bannerCategoryId]); //อัพเดทค่าให้ categoryId ให้ไปตรงกับหมวดหมู่ banner
+
+    // สร้างค่าเริ่มต้นของฟอร์ม (ใช้ bannerCategoryId ที่ตั้งไว้)
+    const productForm = { name: "", description: "", price: "", stock: "", categoryId:bannerCategoryId};
     
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+
+    const [form, setForm] = useState(productForm); //สร้างฟอร์มสำหรับส่งไปยัง backend
+
+
     useEffect(() => {
         if (currentEditProduct) { //ตอนคลิ๊ก edit ให้มีข้อมูลก่อนหน้า
             setForm({
@@ -40,7 +72,7 @@ const FormBanner = ({ currentEditProduct, fetchBanner}) => {
             setPreviewImage(null);
         }
     };
-    
+
     //สำหรับสร้างแบนเนอร์
     const handleCreateSubmit = async e => {
         e.preventDefault(); //กันรีเฟรช
@@ -62,7 +94,7 @@ const FormBanner = ({ currentEditProduct, fetchBanner}) => {
     //สำหรับแก้ไขแบนเนอร์
     const handleEditSubmit = async e => {
         e.preventDefault(); //กันรีเฟรช
-        if (!currentEditProduct) return; 
+        if (!currentEditProduct) return;
         const formData = new FormData();
         Object.keys(form).forEach(key => formData.append(key, form[key])); //เอาข้อมูล ฟอร์มแต่ละตัวเข้าไปใน formdata
         if (pictureFile) formData.append("picture", pictureFile); //ยัดรูปเข้าไปอย่างสุดท้าย
@@ -89,8 +121,8 @@ const FormBanner = ({ currentEditProduct, fetchBanner}) => {
             <div className="mb-3">
                 <label htmlFor="picture" className="form-label">รูปภาพ</label>
                 <input type="file" className="form-control" id="picture" onChange={handleFileChange} />
-                {/* สำหรับแสดงภาพตัวอย่าง */}
-                {previewImage && (<img src={previewImage} alt="Preview" className="img-thumbnail mt-3" style={{ maxWidth: '300px' }}/>)}
+                {/* สำหรับแสดงภาพตัวอย่าง} */}
+                {previewImage && (<img src={previewImage} alt="Preview" className="img-thumbnail mt-3" style={{ maxWidth: '300px' }} />)}
             </div>
             <button type="submit" className="btn btn-primary">{isEdit ? "บันทึกการเปลี่ยนแปลง" : "บันทึก"}</button>
         </form>

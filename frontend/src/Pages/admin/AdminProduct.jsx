@@ -24,15 +24,15 @@ function AdminProduct() {
   const [editProduct, setEditProduct] = useState(null); //ตัวแปรกำหนดสินค้าที่กำลังจะแก้ไข
 
   // ดึงข้อมูลสินค้า
-  const fetchProducts = async ()=>{
-    try{
-        const res = await getAllProducts();
-        setProducts(res.data.products.filter(product => product.category?.name.toLowerCase() !== 'banner')); //เอาสินค้าทุกชิ้น ยกเว้น ตัวแบนเนอร์
-        setFilteredProducts(res.data.products.filter(product => product.category?.name === currentCategory)); // สำหรับสินค้าที่เฉพาะเจาะจงหมวดหมู่
-    }catch(err){
-        console.error(err)
+  const fetchProducts = async () => {
+    try {
+      const res = await getAllProducts();
+      setProducts(res.data.products.filter(product => product.category?.name.toLowerCase() !== 'banner')); //เอาสินค้าทุกชิ้น ยกเว้น ตัวแบนเนอร์
+      setFilteredProducts(res.data.products.filter(product => product.category?.name === currentCategory)); // สำหรับสินค้าที่เฉพาะเจาะจงหมวดหมู่
+    } catch (err) {
+      console.error(err)
     }
-}
+  }
 
   useEffect(() => {
     fetchProducts();
@@ -50,10 +50,10 @@ function AdminProduct() {
       const matchesSearch = (product) =>
         product.id.toString().toLowerCase().includes(searchTerm.toLowerCase()) || // ค้นหา id
         product.name.toLowerCase().includes(searchTerm.toLowerCase()); // ค้นหาชื่อ
-      
+
       if (currentCategory === 0) {
         // กรณีแสดงสินค้าทั้งหมด
-        const allFiltered = products.filter((product) => matchesSearch(product)); 
+        const allFiltered = products.filter((product) => matchesSearch(product));
         setFilteredProducts(allFiltered);
         setTotalPages(Math.ceil(allFiltered.length / itemsPerPage)); //คำนวณจำนวนหน้า
       } else {
@@ -108,7 +108,11 @@ function AdminProduct() {
             style={{ width: '50px', height: 'auto', objectFit: 'cover' }}
           />
         </td>
-        <td className="text-center">{product.stock}</td>
+        <td className="text-center">
+          {product.stock === 0 ? (
+            <p style={{ color: "red" }}>สินค้าหมด</p>
+          ) : (product.stock)} </td>
+
         <td>
           <button className="btn btn-link text-primary w-100" data-bs-toggle="modal" data-bs-target="#formEditProductModal"
             onClick={() => setEditProduct(product)}>
@@ -131,26 +135,26 @@ function AdminProduct() {
     let endPage = Math.min(totalPages, currentPage + 1); // สิ้นสุดที่หน้าปัจจุบัน + 1
 
     if (currentPage === 1) {
-    // ถ้าหน้าปัจจุบันคือหน้าแรก แสดง 1, 2, 3 (หรือถึง totalPages ถ้า < 3)
-    endPage = Math.min(totalPages, 3);
+      // ถ้าหน้าปัจจุบันคือหน้าแรก แสดง 1, 2, 3 (หรือถึง totalPages ถ้า < 3)
+      endPage = Math.min(totalPages, 3);
     } else if (currentPage === totalPages) {
-    // ถ้าหน้าปัจจุบันคือหน้าสุดท้าย แสดง totalPages-2, totalPages-1, totalPages
-    startPage = Math.max(1, totalPages - 2);
+      // ถ้าหน้าปัจจุบันคือหน้าสุดท้าย แสดง totalPages-2, totalPages-1, totalPages
+      startPage = Math.max(1, totalPages - 2);
     }
 
     // สร้างปุ่มเลขหน้า
     for (let i = startPage; i <= endPage; i++) {
-    pageNumbers.push(
+      pageNumbers.push(
         <button key={i} className={`btn ${i === currentPage ? 'btn-custom2' : 'btn-custom'} mx-1`}
-        onClick={() => setCurrentPage(i)}>
+          onClick={() => setCurrentPage(i)}>
           {i}
         </button>
-    );
+      );
     }
 
     return pageNumbers;
   };
-  
+
 
   return (
     <div>

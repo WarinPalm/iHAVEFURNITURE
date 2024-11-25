@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import useEcomStore from "../../store/ecom_store";
 
 const HomeAdmin = () => {
-    const token = useEcomStore((state)=>{state.token}) //เรียกใช้ token
+    const token = useEcomStore((state) => { state.token }) //เรียกใช้ token
     const [banner, setBanner] = useState([]) //ตัวแปรเก็บแบนเนอร์
     const [editBanner, setEditBanner] = useState(null); //ตัวแปรกำหนดแบนเนอร์ที่กำลังจะแก้ไข
 
@@ -15,7 +15,7 @@ const HomeAdmin = () => {
     const fetchBanner = async () => {
         try {
             const res = await getAllProducts();
-            setBanner(res.data.products.filter(product => product.category?.name.toLowerCase()=== 'banner')); //เอาเฉพาะสินค้าที่มีหมวดหมู่แบนเนอร์
+            setBanner(res.data.products.filter(product => product.category?.name.toLowerCase() === 'banner')); //เอาเฉพาะสินค้าที่มีหมวดหมู่แบนเนอร์
         } catch (error) {
             console.error(error);
         }
@@ -39,8 +39,8 @@ const HomeAdmin = () => {
         <>
             <HeroImage />
             <div className="container mt-5">
-                <button className="btn btn-primary mb-4"data-bs-toggle="modal" 
-                data-bs-target="#formCreateBanner">เพิ่มแบนเนอร​์</button>
+                <button className="btn btn-primary mb-4" data-bs-toggle="modal"
+                    data-bs-target="#formCreateBanner">เพิ่มแบนเนอร​์</button>
 
                 <table className="table table-bordered text-center mb-5">
                     <thead>
@@ -52,7 +52,8 @@ const HomeAdmin = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {banner.map((banner, index) => (
+                        {banner.length === 0 ? (<tr><td colSpan="4">ไม่มีแบนเนอร์ที่ใช้ ณ ตอนนี้</td></tr>) 
+                        : banner.map((banner, index) => (
                             <tr key={banner.id}>
                                 <td>{index + 1}</td>
                                 <td>
@@ -61,26 +62,27 @@ const HomeAdmin = () => {
                                             width: "300px",
                                             height: "auto",
                                             borderRadius: "5px",
-                                        }}/>
+                                        }} />
                                 </td>
                                 <td>
-                                    <button className="btn btn-link text-primary" data-bs-toggle="modal" 
-                                    data-bs-target="#formEditBanner"
-                                    onClick={()=>setEditBanner(banner)}>
+                                    <button className="btn btn-link text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#formEditBanner"
+                                        onClick={() => setEditBanner(banner)}>
                                         <i className="bi bi-pencil-square"></i>
                                     </button>
                                 </td>
                                 <td>
-                                    <button className="btn btn-link text-danger" onClick={()=>{handleDeleteBanner(banner.id)}}>
+                                    <button className="btn btn-link text-danger" onClick={() => { handleDeleteBanner(banner.id) }}>
                                         <i className="bi bi-trash"></i>
                                     </button>
                                 </td>
                             </tr>
                         ))}
+
                     </tbody>
                 </table>
             </div>
-            <FormBanner currentEditProduct={editBanner} fetchBanner={fetchBanner}/>
+            <FormBanner currentEditProduct={editBanner} fetchBanner={fetchBanner} />
         </>
     );
 };

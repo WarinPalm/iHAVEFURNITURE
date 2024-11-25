@@ -22,11 +22,11 @@ const HomeUser = () => {
     const [currentAmount, setCurrentAmount] = useState('');
 
     //ดึงข้อมูลสินค้า
-    const fetchProducts = async ()=>{
-        try{
+    const fetchProducts = async () => {
+        try {
             const res = await getAllProducts();
             setProducts(res.data.products);
-        }catch(err){
+        } catch (err) {
             console.error(err)
         }
     }
@@ -41,17 +41,22 @@ const HomeUser = () => {
 
     //สำหรับเรียกตัวสินค้าให้มาแสดง 
     const renderProducts = () => {
+
         const filterProducts = products.filter(product => product.category?.name === currentCategory);
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, filterProducts.length);
-    
+        if (filterProducts.length === 0) { //ถ้าไม่มีสินค้า
+            return (
+                <h2 className="text-center mt-5 mb-5">ไม่พบสินค้าในหมวดหมู่ "{currentCategory}"</h2>
+            );
+        }
         return filterProducts.slice(startIndex, endIndex).map(product => (
             <div className="col-4 mb-4 text-center" key={product.id}>
                 {product.stock === 0 ? ( //ถ้าสินค้าชิ้นนั้นหมด
                     <div className="card card-hover" onClick={() => { toast.error('สินค้าหมด'); }}>
                         <div className="image-soldout">
-                            <img src={product.fullpath} className="product-image card-img-top" alt={product.name}/>
-                            <img src="/image/Other/soldout.png" className="sold-out-image" alt="Sold Out"/>
+                            <img src={product.fullpath} className="product-image card-img-top" alt={product.name} />
+                            <img src="/image/Other/soldout.png" className="sold-out-image" alt="Sold Out" />
                         </div>
                         <div className="card-body">
                             <h5 className="card-title">{product.name}</h5>
@@ -80,19 +85,24 @@ const HomeUser = () => {
             </div>
         ));
     };
-    
+
     //สำหรับเรียกตัวสินค้าแนะนำให้มาแสดง 
     const renderRecommendedProducts = () => {
         // กรองแล้วเลือกเฉพาะ 4 รายการแรกที่ไม่ใช่ category banner
-        const recomProduct = products.slice().reverse().filter(product => product.category?.name !== 'banner').slice(0, 4); 
+        const recomProduct = products.slice().reverse().filter(product => product.category?.name !== 'banner').slice(0, 4);
+        if (recomProduct.length === 0) { //ถ้าไม่มีสินค้าแนะนำ
+            return (
+                <h2 className="text-center mt-5 mb-5">ไม่พบสินค้าแนะนำ</h2>
+            );
+        }
         return recomProduct.map((product, index) => (
             <div className="col-3 mb-4 text-center" key={product.id}>
-                
+
                 {product.stock === 0 ? ( //ถ้าสินค้าชิ้นนั้นหมด
-                    <div className="card card-hover"onClick={() => { toast.error('สินค้าหมด'); }}>
+                    <div className="card card-hover" onClick={() => { toast.error('สินค้าหมด'); }}>
                         <div className="image-soldout">
-                            <img src={product.fullpath} className="product-image card-img-top" alt={product.name}/>
-                            <img src="/image/Other/soldout.png" className="sold-out-image" alt="Sold Out"/>
+                            <img src={product.fullpath} className="product-image card-img-top" alt={product.name} />
+                            <img src="/image/Other/soldout.png" className="sold-out-image" alt="Sold Out" />
                         </div>
                         <div className="card-body">
                             <h5 className="card-title">{product.name}</h5>
