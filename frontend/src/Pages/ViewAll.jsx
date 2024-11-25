@@ -7,14 +7,13 @@ import { getAllCategory } from "../api/category";
 import { getAllProducts } from "../api/Product";
 const ViewAll = () => {
     const location = useLocation();
-    const categoryNow = location.state?.categoryName || 'โซฟา'; //ดึงค่าหมวดหมู่ล่าสุดที่มาจาก home
+    const categoryNow = location.state?.categoryName || 'โซฟา'; //ดึงค่าหมวดหมู่ล่าสุดที่มาจาก home 
 
-    const [currentCategory, setCurrentCategory] = useState(categoryNow); // default category id == sofa
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(12);
-    const [products, setProducts] = useState([]);
-    const [totalPages, setTotalPages] = useState(0);
-    const [categories, setCategories] = useState([]);
+    const [currentCategory, setCurrentCategory] = useState(categoryNow); //หากคลิ้กที่หมวดหมู่ไหน ให้แสดงแค่หมวดหมู่นั้น
+    const [currentPage, setCurrentPage] = useState(1); 
+    const [itemsPerPage] = useState(12); //ให้แสดงสินค้าหน้าละ 12 ชิ้น
+    const [products, setProducts] = useState([]); //ตัวแปรเก็บสินค้า
+    const [totalPages, setTotalPages] = useState(0); //เก็บจำนวนหน้าทั้งหมด
     
     // ส่งค่าไปให้ popup show product
     const [currentImage, setCurrentImage] = useState('');
@@ -34,19 +33,11 @@ const ViewAll = () => {
             console.error(err)
         }
     }
-     //ดึงหมวดหมู่
-     const fetchCategories = async () => {
-        try{
-            const res = await getAllCategory();
-            setCategories(res.data);
-        }catch(err){
-            console.error(err)
-        }
-    };
+
     useEffect(() => {
         fetchProducts();
-        fetchCategories();
     }, []);
+    
     // อัปเดต currentCategory เมื่อ categoryNow เปลี่ยนแปลง
     useEffect(() => {
         setCurrentCategory(categoryNow);

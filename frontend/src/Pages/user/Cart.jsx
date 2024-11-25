@@ -28,19 +28,18 @@ const Cart = () => {
         }
         //หากมีสินค้าอยู่ในตะกร้าแล้ว ให้สามารถกด buy ได้
         try {
-            await buyProducts(token);
+            await buyProducts(token); //เรียกใช้ buyproducts จากเส้น API
             toast.success('สั่งซื้อสินค้าสำเร็จ');
             navigate('../billorder');
         } catch (err) {
-            console.error('Error:', err.response?.data || err.message);
             toast.error('ไม่สามารถสั่งซื้อสินค้าได้ โปรดใส่ข้อมูลให้ครบ');
             navigate('../userinfo');
         }
     };
     
     useEffect(() => {
-        fetchCartItems();
-    }, [cartItems]);
+        fetchCartItems(); 
+    }, [cartItems]); //ให้เ
 
     const handleQuantityChange = async (id, action) => {
         // หา item ปัจจุบัน

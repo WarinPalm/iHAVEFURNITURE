@@ -6,53 +6,36 @@ import FormCategory from '../../components/admin/FormCategory';
 import { deleteProduct, getAllProducts } from '../../api/Product';
 import useEcomStore from '../../store/ecom_store';
 import FormProduct from '../../components/admin/FormProduct';
-import { getAllCategory } from '../../api/category';
 
 function AdminProduct() {
   const token = useEcomStore((state) => state.token); //เรียกใช้ token
 
   const location = useLocation();
-  const categoryNow = location.state?.categoryId || 0; //เรียกใช้หมวดหมู่ปัจจุบันที่กดจาก Navbar หรือถ้าไม่มีให้ default เป็น สินค้าทั้งหมด
+  const categoryNow = location.state?.categoryName || 0; //ดึงค่าหมวดหมู่ล่าสุดที่มาจาก navbar แต่ถ้าไม่่มีให้ 0 หรือก็คือ all product 
 
-  const [currentCategory, setCurrentCategory] = useState(categoryNow); //กำหนดหมวดหมู่ปัจจุบัน
+  const [currentCategory, setCurrentCategory] = useState(categoryNow); //หากคลิ้กที่หมวดหมู่ไหน ให้แสดงแค่หมวดหมู่นั้น
   const [products, setProducts] = useState([]); //ตัวแปรเก็บสินค้า
   const [filteredProducts, setFilteredProducts] = useState([]); //ตัวแปรเก็บสินค้าที่มีการกรอง
   const [searchTerm, setSearchTerm] = useState(''); //สำหรับเก็บค่าที่ค้นหา
   const [currentPage, setCurrentPage] = useState(1); //ตัวแปรกำหนดหน้าปัจจุุบัน (ให้เริ่มต้นที่หน้า 1)
   const [totalPages, setTotalPages] = useState(0); //ตัวแปรจำนวนหน้า
   const [itemsPerPage] = useState(10); //ให้มีหน้าละ 10 ชิ้น
-  const [categories, setCategories] = useState([]); //ตัวแปรเก็บหมวดหมู่
 
   const [editProduct, setEditProduct] = useState(null); //ตัวแปรกำหนดสินค้าที่กำลังจะแก้ไข
-  const currentCategoryName = categories.find(category => category.id === currentCategory)?.name || ''; //ตัวแปรสำหรับแสดงชื่อหมวดหมู่ ณ ตอนนั้น
 
   // ดึงข้อมูลสินค้า
   const fetchProducts = async ()=>{
     try{
         const res = await getAllProducts();
-        setProducts(res.data.products.filter(product => product.categoryId !== 7)); //เอาสินค้าทุกชิ้น ยกเว้น ตัวแบนเนอร์
-        setFilteredProducts(res.data.products.filter(product => product.categoryId === currentCategory)); // สำหรับสินค้าที่เฉพาะเจาะจงหมวดหมู่
+        setProducts(res.data.products.filter(product => product.category?.name.toLowerCase() !== 'banner')); //เอาสินค้าทุกชิ้น ยกเว้น ตัวแบนเนอร์
+        setFilteredProducts(res.data.products.filter(product => product.category?.name === currentCategory)); // สำหรับสินค้าที่เฉพาะเจาะจงหมวดหมู่
     }catch(err){
         console.error(err)
     }
 }
-  // ดึงข้อมูลหมวดหมู่
-  const fetchCategories = async ()=>{
-    try{
-        const res = await getAllCategory();
-        setCategories(res.data);
-    }catch(err){
-        console.error(err)
-    }
-  }
-
-  useEffect(() => {
-    fetchCategories();
-  }, [categories]); //ให้หมวดหมู่มีการเปลี่ยนแปลง เมื่อมีหมวดหมู่ใหม่เพิ่มเข้ามา
 
   useEffect(() => {
     fetchProducts();
-    fetchCategories();
   }, []);
 
   // อัปเดต currentCategory เมื่อ categoryNow เปลี่ยน
@@ -75,7 +58,7 @@ function AdminProduct() {
         setTotalPages(Math.ceil(allFiltered.length / itemsPerPage)); //คำนวณจำนวนหน้า
       } else {
         // กรณีแสดงสินค้าตามหมวดหมู่
-        const categoryFiltered = products.filter((product) => product.categoryId === currentCategory && matchesSearch(product));
+        const categoryFiltered = products.filter((product) => product.category?.name === currentCategory && matchesSearch(product));
         setFilteredProducts(categoryFiltered);
         setTotalPages(Math.ceil(categoryFiltered.length / itemsPerPage));
       }
@@ -106,7 +89,7 @@ function AdminProduct() {
       return (
         <tr>
           <td colSpan="7" className="text-center">
-            ไม่พบสินค้าในหมวดหมู่ "{currentCategoryName}"
+            ไม่พบสินค้าในหมวดหมู่ "{currentCategory}"
           </td>
         </tr>
       );
@@ -175,7 +158,7 @@ function AdminProduct() {
 
         <div className="d-flex justify-content-between align-items-center mb-4">
           {currentCategory === 0 ? <h1 className="fw-bold">สินค้า | สินค้าทั้งหมด </h1> : //ถ้าคลิกสินค้าทั้งหมดให้แสดงคำว่า สินค้าทั้งหมด
-            <h1 className="fw-bold">สินค้า | {currentCategoryName}</h1>}
+            <h1 className="fw-bold">สินค้า | {currentCategory}</h1>}
           <input type="text" className="form-control w-25" placeholder="ค้นหารหัสหรือชื่อสินค้า..."
             value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -194,7 +177,7 @@ function AdminProduct() {
           </button>
         </div>
 
-        <table className="table table-bordered">
+        <table className="table table-bordered text-center">
           <thead>
             <tr>
               <th>รหัสสินค้า</th>

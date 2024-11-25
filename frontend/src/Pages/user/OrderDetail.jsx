@@ -47,9 +47,6 @@ const OrderDetail = () => {
                 </h5>
                 <h5 className="ms-4 mb-4">ที่อยู่: {history.userBy?.address}</h5>
                 <h5 className="ms-4 mb-4">เบอร์โทร: {history.userBy?.telNo}</h5>
-                <h5 className="ms-4 mb-4">
-                  วันที่สั่งซื้อ: {new Date(history.createdAt).toLocaleString()}
-                </h5>
                 <h5 className="ms-4 mb-4">สถานะ: {history.status}</h5>
 
                 {/* โซนแสดงสินค้า */}

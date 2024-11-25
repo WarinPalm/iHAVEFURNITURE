@@ -15,26 +15,7 @@ const PaymentDetail = () => {
     const navigate = useNavigate();
     const order = location.state?.order;
 
-    // Update เวลาปัจจุบัน
-    useEffect(() => {
-        const updateCurrentTime = () => {
-            const now = new Date();
-            const formattedDateTime = now.toLocaleString('th-TH', {
-                timeZone: 'Asia/Bangkok',
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-            });
-            setNotificationDateTime(formattedDateTime);
-        };
-
-        const intervalId = setInterval(updateCurrentTime, 1000);
-
-        return () => clearInterval(intervalId); // ล้าง interval
-    }, []);
+    
 
     // จัดการอัปโหลดไฟล์และแสดงภาพตัวอย่าง
     const handleFileChange = (e) => {
@@ -132,9 +113,7 @@ const PaymentDetail = () => {
                                 </h5>
                                 <h5 className="ms-4 mb-4">ที่อยู่: {order.userBy?.address}</h5>
                                 <h5 className="ms-4 mb-4">เบอร์โทร: {order.userBy?.telNo}</h5>
-                                <h5 className="ms-4 mb-4">
-                                    วันที่สั่งซื้อ: {new Date(order.createdAt).toLocaleString()}
-                                </h5>
+                                
                                 <h5 className="ms-4 mb-4">สถานะ: {order.status}</h5>
 
                                 {/* โซนแสดงสินค้า */}

@@ -11,8 +11,8 @@ const Navbar = () => {
     const categoriesNotBanner = categories.filter(category => category.name !== 'banner')
 
     //สำหรับ search bar
-    const handleSearch = (event) => {
-        event.preventDefault();
+    const handleSearch = (e) => {
+        e.preventDefault();
         if (searchTerm) {
             navigate(`../user/searchProduct?query=${searchTerm}`);
             setSearchTerm('');

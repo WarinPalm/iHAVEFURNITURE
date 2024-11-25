@@ -10,6 +10,7 @@ const OrderDetails = () => {
     const order = location.state;//ดึงข้อมูลออเดอร์เมื่อกด รายละเอียดดูเพิ่มเติม
     const token = useEcomStore((state)=>state.token) //เรียกใช้ token
     const navigate = useNavigate();
+    
     const formatDate = (dateString) => { //สำหรับอัพเดทข้อมูลของเวลา
         const date = new Date(dateString);
         const day = date.getDate().toString().padStart(2, '0');

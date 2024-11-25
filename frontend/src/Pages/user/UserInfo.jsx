@@ -19,9 +19,11 @@ function UserInfo() {
 
     useEffect(() => {
         fetchAboutMe();
-    }, [user]);
+    }, [user]); //เมื่อข้อมูลผู้ใช้มีการเปลี่ยนแปลงให้เรียก fetch อีกรอบ
 
+    //สำหรับแสดงข้อมูลโปรไฟล์
     const renderUserInfo = () => {
+        //ถ้ายังไม่ได้กรอกข้อมูลอะไรเลย
         if (!user) {
             return <h4 className="text-danger">ยังไม่ได้กรอกข้อมูลส่วนตัว</h4>;
         }

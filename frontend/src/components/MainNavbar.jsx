@@ -6,8 +6,8 @@ const MainNavbar = () => {
     const navigate = useNavigate();
     
 
-    const handleSearch = (event) => {
-        event.preventDefault(); // ป้องกันการส่งแบบฟอร์ม
+    const handleSearch = (e) => {
+        e.preventDefault(); // ป้องกันการส่งแบบฟอร์ม
         if (searchTerm) {
             navigate(`/searchProduct?query=${searchTerm}`); // เปลี่ยน path ไปที่หน้า searchProduct
             setSearchTerm(''); // ล้างค่าใน input หลังค้นหา

@@ -94,7 +94,7 @@ const NavbarAdmin = () => {
                                         to='../admin/adminproduct'
                                         key={category.id}
                                         className={`dropdown-item `}
-                                        state={{ categoryId: category.id }}
+                                        state={{ categoryName: category.name }}
                                     >
                                         <li>{category.name}</li>
                                     </Link>
