@@ -120,12 +120,10 @@ const ViewAll = () => {
         let startPage = Math.max(1, currentPage - 1); // เริ่มต้นที่หน้าปัจจุบัน - 1
         let endPage = Math.min(totalPages, currentPage + 1); // สิ้นสุดที่หน้าปัจจุบัน + 1
     
-        if (currentPage === 1) {
-        // ถ้าหน้าปัจจุบันคือหน้าแรก แสดง 1, 2, 3 (หรือถึง totalPages ถ้า < 3)
-        endPage = Math.min(totalPages, 3);
-        } else if (currentPage === totalPages) {
-        // ถ้าหน้าปัจจุบันคือหน้าสุดท้าย แสดง totalPages-2, totalPages-1, totalPages
-        startPage = Math.max(1, totalPages - 2);
+        if (currentPage === 1) {// กรณีอยู่หน้าแรก
+            endPage = Math.min(totalPages, 3);// แสดง 1, 2, 3
+        } else if (currentPage === totalPages) {// กรณีอยู่หน้าสุดท้าย
+            startPage = Math.max(1, totalPages - 2); // แสดง totalPages - 2, totalPages - 1, totalPages
         }
     
         // สร้างปุ่มเลขหน้า

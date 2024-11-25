@@ -129,7 +129,7 @@ const SearchProduct = () => {
                                     <button className="btn btn-custom mx-2" 
                                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                                     disabled={currentPage === 1}>
-                                        Previous Page
+                                        ก่อนหน้า
                                     </button>
 
                                     {renderPageNumbers()}
@@ -137,7 +137,7 @@ const SearchProduct = () => {
                                     <button className="btn btn-custom mx-2" 
                                     onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                      disabled={currentPage === totalPages}>
-                                        Next Page
+                                        ถัดไป
                                     </button>
                                 </>
                             )}
