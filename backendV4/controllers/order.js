@@ -42,6 +42,8 @@ exports.readOrder = async (req,res) => {
         if(order.length === 0){
             return res.status(400).json({ message : 'ไม่มีรายการสั่งซื้อ' });
         }
+
+        
         
         // เพิ่ม fullPathImage ให้กับสินค้าแต่ละรายการ
         const orderWithImages = order.map(orderItem => ({

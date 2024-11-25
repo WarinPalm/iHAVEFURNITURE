@@ -39,8 +39,8 @@ model Product {
   sold        Int?       @default(0)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  category    Category?  @relation(fields: [categoryId], references: [id])
-  categoryId  Int?
+  category    Category  @relation(fields: [categoryId], references: [id] , onDelete: Cascade)
+  categoryId  Int
 }
 
 model Category {
@@ -53,7 +53,7 @@ model Category {
 
 model Cartitem {
   id         Int      @id @default(autoincrement())
-  product    Product  @relation(fields: [prodId], references: [id])
+  product    Product  @relation(fields: [prodId], references: [id] , onDelete: Cascade)
   prodId     Int
   quantity   Int
   totalPrice Float

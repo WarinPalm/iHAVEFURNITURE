@@ -146,6 +146,10 @@ exports.listItemCart = async (req,res) => {
             }
         });
 
+        if(cart.length <= 0){
+            return res.status(400).json({message: 'ไม่มีสินค้าในตะกร้าของคุณ'});
+        };
+
         // เพิ่ม fullPathImage ให้กับสินค้าแต่ละรายการ
         const cartWithImages = cart.map(item => ({
             ...item,
