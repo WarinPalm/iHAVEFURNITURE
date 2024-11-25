@@ -74,6 +74,7 @@ model Order {
   proofPicture String?
   proofDate    String?
   status       String     @default("รอการชำระเงิน")
+  buyDate      String?    
   userBy       User       @relation(fields: [userById], references: [id])
   userById     Int
   createdAt    DateTime   @default(now())
