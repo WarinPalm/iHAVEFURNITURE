@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-
 import HeroImage from "../HeroImage";
 import axios from 'axios';
-import { deleteProduct } from '../../api/Product';
+import { deleteProduct, getAllProducts } from '../../api/Product';
 import FormBanner from "../../components/admin/FormBanner";
 import { toast } from "react-toastify";
 import useEcomStore from "../../store/ecom_store";
 
 const HomeAdmin = () => {
-    const token = useEcomStore((state)=>{state.token})
-    const [banner, setBanner] = useState([])
-    const [editBanner, setEditBanner] = useState(null);
+    const token = useEcomStore((state)=>{state.token}) //เรียกใช้ token
+    const [banner, setBanner] = useState([]) //ตัวแปรเก็บแบนเนอร์
+    const [editBanner, setEditBanner] = useState(null); //ตัวแปรกำหนดแบนเนอร์ที่กำลังจะแก้ไข
 
     // ดึงข้อมูลแบบเนอร์
     const fetchBanner = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/api/products");
-            setBanner(res.data.products.filter(product => product.categoryId === 7)); //เอาเฉพาะสินค้าที่มีหมวดหมู่แบนเนอร์
+            const res = await getAllProducts();
+            setBanner(res.data.products.filter(product => product.category?.name.toLowerCase()=== 'banner')); //เอาเฉพาะสินค้าที่มีหมวดหมู่แบนเนอร์
         } catch (error) {
             console.error(error);
         }
@@ -25,8 +23,8 @@ const HomeAdmin = () => {
 
     useEffect(() => {
         fetchBanner();
-    }, [banner]);
-    
+    }, []);
+
     // ลบ banner
     const handleDeleteBanner = async (id) => {
         try {
@@ -58,15 +56,12 @@ const HomeAdmin = () => {
                             <tr key={banner.id}>
                                 <td>{index + 1}</td>
                                 <td>
-                                    <img
-                                        src={banner.fullpath}
-                                        alt={banner.name}
+                                    <img src={banner.fullpath} alt={banner.name}
                                         style={{
                                             width: "300px",
                                             height: "auto",
                                             borderRadius: "5px",
-                                        }}
-                                    />
+                                        }}/>
                                 </td>
                                 <td>
                                     <button className="btn btn-link text-primary" data-bs-toggle="modal" 
@@ -85,7 +80,7 @@ const HomeAdmin = () => {
                     </tbody>
                 </table>
             </div>
-            <FormBanner currentEditProduct={editBanner}/>
+            <FormBanner currentEditProduct={editBanner} fetchBanner={fetchBanner}/>
         </>
     );
 };

@@ -3,14 +3,14 @@ import { fetchAllUser } from '../../api/Admin';
 import useEcomStore from '../../store/ecom_store';
 
 function UserData() {
-  const [customers, setCustomers] = useState([]);
-  const [filteredCustomers, setFilteredCustomers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const token = useEcomStore((state) => state.token);
+  const [customers, setCustomers] = useState([]); //ตัวแปรเก็บข้อมูลลูกค้า
+  const [filteredCustomers, setFilteredCustomers] = useState([]); //ตัวแปรเก็บลูกค้าที่ค้นหา
+  const [searchTerm, setSearchTerm] = useState(''); //เก็บค่าค้นหา
+  const token = useEcomStore((state) => state.token); //เรียกใช้ token
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(20);
-  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1); //ใช้กำหนดหน้าปัจจุบัน
+  const [itemsPerPage] = useState(20); //แสดง 20 ข้อมูล / หน้า
+  const [totalPages, setTotalPages] = useState(0); //จำนวนหน้าทั้งหมดที่ต้องมี
 
   // ฟิลเตอร์ลูกค้าตามคำค้นหา
   useEffect(() => {
@@ -30,8 +30,7 @@ function UserData() {
   // ดึงข้อมูลลูกค้า
   const customerInfo = async () => {
     try {
-      const res = await fetchAllUser(token);
-      console.log(res.data);
+      const res = await fetchAllUser(token); //ดึงข้อมูลลูกค้า โดยต้องเป็นแอดมินเท่านั้นถึงจะดูได้ โดยใช้ token ในการเช็ค admin
       setCustomers(res.data);
     } catch (err) {
       console.error('Error fetching user info:', err);
@@ -42,13 +41,13 @@ function UserData() {
     customerInfo();
   }, []);
 
+  //คำนวณจำนวนหน้า
   useEffect(() => {
     const pages = Math.ceil(customers.length / itemsPerPage);
-    console.log("Total Pages:", pages); // ตรวจสอบจำนวนหน้าที่คำนวณได้
     setTotalPages(pages);
-  }, [customers, itemsPerPage]);
+  }, [customers, itemsPerPage]);//จะทำใหม่อีกรอบหากจำนวนผู้ใช้มีการเปลี่ยนแปลง
 
-
+  //สำหรับการแสดงข้อมูลผู้ใช้
   const renderCustomers = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = Math.min(startIndex + itemsPerPage, customers.length);

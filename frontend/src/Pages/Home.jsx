@@ -7,7 +7,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { getAllProducts } from "../api/Product";
 const Home = () => {
-    const [currentCategory, setCurrentCategory] = useState(1); // เริ่มต้นที่หมวดหมู่โซฟา
+
+    const [currentCategory, setCurrentCategory] = useState('โซฟา'); // เริ่มต้นที่หมวดหมู่โซฟา
     const [products, setProducts] = useState([]); //ตัวแปรเก็บสินค้า
     const [currentPage, setCurrentPage] = useState(1); 
     const [itemsPerPage] = useState(6); //ให้สินค้าแสดง 6 ชิ้น
@@ -33,14 +34,14 @@ const Home = () => {
         fetchProducts();
     }, []);
 
-    //เซ็ต id ตอนคลิก หมวดหมู่ ให้สิน้ค
-    const handleCategoryClick = (id) => { 
-        setCurrentCategory(id);
+    //เซ็ตชื่อหมวดหมู่สินค้าตอนคลิก 
+    const handleCategoryClick = (name) => { 
+        setCurrentCategory(name);
     };
 
     //สำหรับเรียกตัวสินค้าให้มาแสดง 
     const renderProducts = () => {
-        const filterProducts = products.filter(product => product.categoryId === currentCategory);
+        const filterProducts = products.filter(product => product.category?.name === currentCategory);
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, filterProducts.length);
     
@@ -83,7 +84,7 @@ const Home = () => {
     //สำหรับเรียกตัวสินค้าแนะนำให้มาแสดง 
     const renderRecommendedProducts = () => {
         // กรองแล้วเลือกเฉพาะ 4 รายการแรกที่ไม่ใช่ category banner
-        const recomProduct = products.slice().reverse().filter(product => product.categoryId !== 7).slice(0, 4); 
+        const recomProduct = products.slice().reverse().filter(product => product.category?.name !== 'banner').slice(0, 4); 
         return recomProduct.map((product, index) => (
             <div className="col-3 mb-4 text-center" key={product.id}>
                 {product.stock === 0 ? ( //ถ้าสินค้าชิ้นนั้นหมด

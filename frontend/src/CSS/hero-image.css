@@ -17,13 +17,13 @@
 
 .btn-hero-image {
     display: flex;
-    justify-content: center; /* จัดปุ่มให้เรียงกลางแนวนอน */
+    justify-content: center; 
     position: absolute; /* ใช้ absolute positioning เพื่อจัดตำแหน่ง */
-    bottom: 10px; /* เปลี่ยนเป็น 10px เพื่อเพิ่มช่องว่างจากด้านล่าง */
+    bottom: 10px;
     left: 50%; /* ตำแหน่งแนวนอนตรงกลาง */
     transform: translateX(-50%); /* เลื่อนปุ่มให้ตรงกลางคอนเทนเนอร์ */
-    padding: 10px;/* เพิ่มช่องว่างรอบ ๆ ปุ่ม */
-    flex-wrap: wrap; /* อนุญาตให้ปุ่มสามารถแสดงในหลายแถวได้ */
+    padding: 10px;
+    flex-wrap: wrap; /* ปุ่มสามารถแสดงในหลายแถวได้ */
 }
 
 .btn-hero-image button {
@@ -34,7 +34,7 @@
     width: 30px; 
     height: 30px;
     border-radius: 50%;
-    border-width: 2px; /* ลดความหนาของเส้นขอบ */
+    border-width: 2px; 
     border-color: white;
     background-color: transparent;
     cursor: pointer;

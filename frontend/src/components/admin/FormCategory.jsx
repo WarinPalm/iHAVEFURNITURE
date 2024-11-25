@@ -9,7 +9,7 @@ const FormCategory = () => {
     const [name, setName] = useState(''); // สำหรับเพิ่มหมวดหมู่ใหม่
     const [currentEditCategory, setCurrentEditCategory] = useState(null); // เก็บข้อมูลหมวดหมู่ที่แก้ไข
     const categoriesNotBanner = categories.filter(category => category.name !== 'banner');
-    
+
     // ดึงข้อมูลหมวดหมู่
     const fetchCategories = async ()=>{
         try{
@@ -31,7 +31,7 @@ const FormCategory = () => {
             return toast.warning('กรุณากรอกชื่อหมวดหมู่');
         }
         try {
-            await createCategory(token, { name });
+            await createCategory(token, { name }); //เรียกใช้ createCategory จากเส้น API
             toast.success('เพิ่มหมวดหมู่สำเร็จ');
             setName('');
             fetchCategories();
@@ -43,7 +43,7 @@ const FormCategory = () => {
     // ลบหมวดหมู่
     const handleRemove = async (id) => {
         try {
-            await removeCategory(token, id);
+            await removeCategory(token, id); //เรียกใช้ removeCategory จากเส้น API
             fetchCategories();
             toast.success('ลบหมวดหมู่สำเร็จ');
         } catch (err) {
@@ -56,7 +56,7 @@ const FormCategory = () => {
         e.preventDefault();
         if (!currentEditCategory) return;
         try {
-            await editCategory(token, currentEditCategory.id, { name: currentEditCategory.name });
+            await editCategory(token, currentEditCategory.id, { name: currentEditCategory.name }); //เรียกใช้ editCategory จากเส้น API
             toast.success('แก้ไขหมวดหมู่สำเร็จ');
             fetchCategories();
             setCurrentEditCategory(null); 
@@ -83,18 +83,11 @@ const FormCategory = () => {
                                     <li key={category.id} className="list-group-item d-flex justify-content-between align-items-center">
                                         <span>{category.name}</span>
                                         <div>
-                                            <button
-                                                className="btn btn-sm btn-primary me-2"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#formEditCategoryModal"
-                                                onClick={() => setCurrentEditCategory(category)}
-                                            >
+                                            <button className="btn btn-sm btn-primary me-2" data-bs-toggle="modal"
+                                                data-bs-target="#formEditCategoryModal" onClick={() => setCurrentEditCategory(category)} >
                                                 แก้ไข
                                             </button>
-                                            <button
-                                                className="btn btn-sm btn-danger"
-                                                onClick={() => handleRemove(category.id)}
-                                            >
+                                            <button className="btn btn-sm btn-danger" onClick={() => handleRemove(category.id)} >
                                                 ลบ
                                             </button>
                                         </div>
@@ -117,15 +110,8 @@ const FormCategory = () => {
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
                                     <label htmlFor="categoryName" className="form-label">ชื่อหมวดหมู่</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="categoryName"
-                                        placeholder="เพิ่มชื่อหมวดหมู่"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        required
-                                    />
+                                    <input type="text" className="form-control" id="categoryName" placeholder="เพิ่มชื่อหมวดหมู่"
+                                        value={name} onChange={(e) => setName(e.target.value)} required />
                                 </div>
                                 <button type="submit" className="btn btn-primary">เพิ่มหมวดหมู่</button>
                             </form>
@@ -149,11 +135,7 @@ const FormCategory = () => {
                                 <form onSubmit={handleEditSubmit}>
                                     <div className="mb-3">
                                         <label htmlFor="editCategoryName" className="form-label">ชื่อหมวดหมู่</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="editCategoryName"
-                                            value={currentEditCategory.name}
+                                        <input type="text" className="form-control" id="editCategoryName"  value={currentEditCategory.name}
                                             onChange={(e) =>
                                                 setCurrentEditCategory({ ...currentEditCategory, name: e.target.value })
                                             }

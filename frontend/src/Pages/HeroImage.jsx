@@ -10,13 +10,13 @@ const HeroImage = () => {
         try {
             const res = await getAllProducts();
             //เอาแค่ product ที่มีหมวดหมู่เป็น banner
-            const bannerProducts = res.data.products.filter(product => product.categoryId === 7);
+            const bannerProducts = res.data.products.filter(product => product.category?.name.toLowerCase() == 'banner');
+
             setBanners(bannerProducts);
         } catch (error) {
             console.error("Error fetching banners:", error);
         }
     };
-
     useEffect(() => {
         fetchBanners();
     }, []);
@@ -51,7 +51,7 @@ const HeroImage = () => {
                 </div>
                 <div className="btn-hero-image mt-3">
                     {banners.map((_, index) => (
-                        <button key={index} className={`btn btn-dark btn-banner mx-1 ${index === currentIndex ? "active" : ""}`}
+                        <button key={index}className={`btn btn-dark btn-banner mx-1 ${index === currentIndex ? "active" : ""}`}
                             onClick={() => handleButtonClick(index)}
                         ></button>
                     ))}

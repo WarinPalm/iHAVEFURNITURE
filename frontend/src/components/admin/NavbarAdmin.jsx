@@ -4,10 +4,10 @@ import useEcomStore from '../../store/ecom_store';
 import { getAllCategory } from '../../api/category';
 
 const NavbarAdmin = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
     
-    const [categories, setCategories] = useState([]);
-    const categoriesNotBanner = categories.filter(category => category.name !== 'banner');
+    const [categories, setCategories] = useState([]); //ตัวแปรเก็บหมวดหมู่
+    const categoriesNotBanner = categories.filter(category => category.name !== 'banner'); //เอาหมวดหมู่ทุกหมวดหมู่ที่ไม่ใช่ แบนเนอร์
 
     const Logout = useEcomStore((state) => state.actionLogout);
 

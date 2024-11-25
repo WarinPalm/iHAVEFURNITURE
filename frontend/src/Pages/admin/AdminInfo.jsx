@@ -7,6 +7,7 @@ function AdminInfo() {
     const [user, setUser] = useState(''); //ตัวแปรเก็บข้อมูลผู้ใช้
     const token = useEcomStore((state) => state.token); //เรียกใช้ token 
 
+    //ดึงข้อมูลผู้ใช้
     const fetchAboutMe = async () => {
         try {
             const res = await infoAboutMe(token);

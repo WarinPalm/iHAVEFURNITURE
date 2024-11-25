@@ -22,26 +22,26 @@ const OrderDetails = () => {
     };
     // การอนุมัติคำสั่งซื้อ
     const approveOrder = async (statusOrder) =>{
-        if(statusOrder == 'ไม่อนุมัติคำสั่งซื้อ'){
+        if(statusOrder == 'ไม่อนุมัติคำสั่งซื้อ'){ //ถ้าไม่อนุมัติคำสั่งซื้อ
             try{
-                await changeStatusOrder(token, order.id, {status:statusOrder})
+                await changeStatusOrder(token, order.id, {status:statusOrder}) //ให้อัพเดทผ่าน changeStatusOrder จากเส้น API
                 toast.success('ไม่อนุมัติคำสั่งซื้อสำเร็จ')
-                navigate('../orderuser', { state: { orderStatus: "รอการตรวจสอบ" }})
+                navigate('../orderuser', { state: { orderStatus: "รอการตรวจสอบ" }}) //พาไปหน้าหลักของรายการที่ลูกค้าสั่ง
             }catch(err){
                 console.error(err)
                 toast.error('ทำรายการไม่สำเร็จ')
-                navigate('../orderuser', { state: { orderStatus: "รอการตรวจสอบ" }})
+                navigate('../orderuser', { state: { orderStatus: "รอการตรวจสอบ" }}) //พาไปหน้าหลักของรายการที่ลูกค้าสั่ง
             }
         }
-        else{
+        else{ //ถ้าอนุมัติคำสั่งซื้อ
             try{
-                await changeStatusOrder(token, order.id, {status:statusOrder})
+                await changeStatusOrder(token, order.id, {status:statusOrder}) //ให้อัพเดทผ่าน changeStatusOrder จากเส้น API
                 toast.success('อนุมัติคำสั่งซื้อสำเร็จ')
-                navigate('../orderuser', { state: { orderStatus: "รอการตรวจสอบ" }})
+                navigate('../orderuser', { state: { orderStatus: "รอการตรวจสอบ" }}) //พาไปหน้าหลักของรายการที่ลูกค้าสั่ง
             }catch(err){
                 console.error(err)
                 toast.error('ทำรายการไม่สำเร็จ')
-                navigate('../orderuser', { state: { orderStatus: "รอการตรวจสอบ" }})
+                navigate('../orderuser', { state: { orderStatus: "รอการตรวจสอบ" }}) //พาไปหน้าหลักของรายการที่ลูกค้าสั่ง
             }
         }
         
@@ -126,12 +126,12 @@ const OrderDetails = () => {
                             <button className="btn btn-custom">ย้อนกลับ</button>
                         </Link>
                         {
-                            order.status === 'รอการตรวจสอบ'?(
+                            order.status === 'รอการตรวจสอบ'?( //ถ้าเป็นคำสั่งซื้อที่ต้องรอการตรวจสอบ จะให้แสดงปุ่ม อนุมัติกับไม่อนุมัติ
                             <div> 
                                 <button className="btn btn-danger me-3" onClick={()=> approveOrder('ไม่อนุมัติการสั่งซื้อ')}>ไม่อนุมัติ</button>
                                 <button className="btn btn-success" onClick={()=> approveOrder('อนุมัติการสั่งซื้อ')}>อนุมัติ</button>
                             </div>
-                            ):''
+                            ):'' // แต่ถ้าไม่ใช่สถานะ รอการตรวจสอบ แอดมินจะได้แค่ดูเฉยๆ
                         }
                        
                     </div>

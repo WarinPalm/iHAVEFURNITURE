@@ -7,7 +7,7 @@ import { getAllCategory } from "../api/category";
 import { getAllProducts } from "../api/Product";
 const ViewAll = () => {
     const location = useLocation();
-    const categoryNow = location.state?.categoryId || 1; //ดึงค่าหมวดหมู่ล่าสุดที่มาจาก home
+    const categoryNow = location.state?.categoryName || 'โซฟา'; //ดึงค่าหมวดหมู่ล่าสุดที่มาจาก home
 
     const [currentCategory, setCurrentCategory] = useState(categoryNow); // default category id == sofa
     const [currentPage, setCurrentPage] = useState(1);
@@ -55,14 +55,14 @@ const ViewAll = () => {
 
     useEffect(() => {
         // คำนวณจำนวนหน้าทั้งหมดตามสินค้าที่กรองแล้ว
-        const filterProducts = products.filter(product => product.categoryId === currentCategory);
+        const filterProducts = products.filter(product => product.category?.name === currentCategory);
         const pages = Math.ceil(filterProducts.length / itemsPerPage); //คำนวณจำนวนหน้า
         setTotalPages(pages);
     }, [products, currentCategory, itemsPerPage]);
 
     const renderProducts = () => {
         // กรองสินค้าตามหมวดหมู่ที่เลือก
-        const filteredProducts = products.filter(product => product.categoryId === currentCategory);
+        const filteredProducts = products.filter(product => product.category?.name === currentCategory);
     
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
@@ -74,7 +74,7 @@ const ViewAll = () => {
         }
         return filteredProducts.slice(startIndex, endIndex).map((product, index) => (
             <div className="col-3 mb-4 text-center" key={product.id}>
-                {product.stock === 0 ? (
+                {product.stock === 0 ? ( //ถ้าสินค้าหมด
                     <div
                         className="card card-hover"
                         onClick={() => { toast.error('สินค้าหมด'); }}
@@ -97,7 +97,7 @@ const ViewAll = () => {
                             <h5 className="mt-4 text-start" style={{ marginLeft: '-20px' }}>฿{product.price}</h5>
                         </div>
                     </div>
-                ) : (
+                ) : ( //ถ้าสินค้ายังไม่หมด
                     <div
                         className="card card-hover"
                         data-bs-toggle="modal"
@@ -158,7 +158,7 @@ const ViewAll = () => {
 
             <section className="list-product">
                 <div className="container text-center">
-                    <h1 className="text-start mt-5">หมวดหมู่: {categories.find(category => category.id === currentCategory)?.name || ''}</h1>
+                    <h1 className="text-start mt-5">หมวดหมู่: {currentCategory}</h1>
                     <hr className="mt-5 mb-5"/>
                     <div className="row mt-3 pt-5">
                         <div className="col-12 row-gap-2">

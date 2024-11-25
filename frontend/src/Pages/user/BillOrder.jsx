@@ -5,13 +5,14 @@ import { fetchOrders } from '../../api/Order';
 import { toast } from 'react-toastify';
 
 const BillOrder = () => {
-    const navigate = useNavigate();
-    const token = useEcomStore((state) => state.token);
-    const [orders, setOrders] = useState([]);
+    const navigate = useNavigate(); 
+    const token = useEcomStore((state) => state.token); //เรียกใช้ token
+    const [orders, setOrders] = useState([]); //ตัวแปรเก็บออเดอร์ของผู้ใช้
 
+    //สำหรับดึงข้อมูลออเดอร์ที่เราสั่ง
     const fetchOrder = async () => {
         try {
-            const res = await fetchOrders(token);
+            const res = await fetchOrders(token); 
             setOrders(res.data.order);
         } catch (err) {
             console.error(err);

@@ -47,8 +47,8 @@
 
 /* เปลี่ยนสีพื้นหลังและข้อความเมื่อ hover */
 .dropdown-menu .dropdown-item:hover {
-    background-color: #3A3129; /* เปลี่ยนสีพื้นหลังตามที่ต้องการ */
-    color: white; /* เปลี่ยนสีข้อความตามที่ต้องการ */
+    background-color: #3A3129;
+    color: white; 
 }
 .dropdown-item.active{
     background-color: #3A3129;

@@ -95,7 +95,7 @@ const MainNavbar = () => {
                                         to='../viewall'
                                         key={category.id}
                                         className={`dropdown-item`}
-                                        state={{ categoryId: category.id }}
+                                        state={{ categoryName: category.name }}
                                     >
                                         <li>{category.name}</li>
                                     </Link>

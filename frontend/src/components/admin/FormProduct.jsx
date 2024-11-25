@@ -11,6 +11,7 @@ const FormProduct = ({ currentEditProduct, fetchProduct}) => {
     const [pictureFile, setPictureFile] = useState(null); //ตัวแปรสำหรับเก็บภาพ
     const [categories, setCategories] = useState([]); //ตัวแปรเก็บหมวดหมู่
     const categoriesNotBanner = categories.filter(category => category.name !== 'banner'); //เอาหมวดหมู่ทุกอันยกเว้น แบนเนอร์
+    const [previewImage, setPreviewImage] = useState(null); // URL ของภาพตัวอย่าง
 
     // ดึงข้อมูลหมวดหมู่
     const fetchCategories = async ()=>{
@@ -41,45 +42,61 @@ const FormProduct = ({ currentEditProduct, fetchProduct}) => {
         }
     }, [currentEditProduct]);
 
-    const handleOnChange = e => setForm({ ...form, [e.target.name]: e.target.value });
-    const handleFileChange = e => setPictureFile(e.target.files[0]);
+    const handleOnChange = e => setForm({ ...form, [e.target.name]: e.target.value }); //ให้ข้อมูลอัพเดทตาม ข้อมูลที่ใส่
 
+    // จัดการอัปโหลดไฟล์และแสดงภาพตัวอย่าง
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setPictureFile(file);
+
+        // สร้าง URL ของภาพตัวอย่าง
+        if (file) {
+            const previewUrl = URL.createObjectURL(file);
+            setPreviewImage(previewUrl);
+        } else {
+            setPreviewImage(null);
+        }
+    };
+
+    //สำหรับสร้างสินค้า
     const handleCreateSubmit = async e => {
-        e.preventDefault();
+        e.preventDefault(); //กันรีเฟรช
         const formData = new FormData();
-        Object.keys(form).forEach(key => formData.append(key, form[key]));
-        if (pictureFile) formData.append("picture", pictureFile);
+        Object.keys(form).forEach(key => formData.append(key, form[key])); //เอาข้อมูล ฟอร์มแต่ละตัวเข้าไปใน formdata
+        if (pictureFile) formData.append("picture", pictureFile); //ยัดรูปเข้าไปอย่างสุดท้าย
         try {
-            await createProduct(token, formData);
+            await createProduct(token, formData); //เรียกใช้ createProduct จากเส้น API
             toast.success(`เพิ่มสินค้าสำเร็จ`);
-            setForm(productForm);
-            setPictureFile(null);
-            fetchProduct();
+            setForm(productForm); //เมื่อแก้ไขเสร็จให้เป็นค่าฟอร์มเดิม
+            setPictureFile(null); //เมื่อแก้ไขเสร็จให้เป็นค่าว่าง
+            fetchProduct(); //เรียกใช้งาน fetch เพื่ออัพเดทข้อมูลใหม่ที่เพิ่งเข้าไป 
         } catch (err) {
             console.error(err);
             toast.error("ไม่สามารถเพิ่มสินค้าได้");
         }
     };
 
+    //สำหรับแก้ไขสินค้า
     const handleEditSubmit = async e => {
-        e.preventDefault();
+        e.preventDefault(); //กันรีเฟรช
         if (!currentEditProduct) return;
         const formData = new FormData();
-        Object.keys(form).forEach(key => formData.append(key, form[key]));
-        if (pictureFile) formData.append("picture", pictureFile);
+        Object.keys(form).forEach(key => formData.append(key, form[key])); //เอาข้อมูล ฟอร์มแต่ละตัวเข้าไปใน formdata
+        if (pictureFile) formData.append("picture", pictureFile); //ยัดรูปเข้าไปอย่างสุดท้าย
         try {
-            await editProduct(token, currentEditProduct.id, formData);
+            await editProduct(token, currentEditProduct.id, formData); //เรียกใช้ editProduct จากเส้น API
             toast.success(`แก้ไขสินค้าสำเร็จ`);
-            setForm(initialState);
-            setPictureFile(null);
-            fetchProduct();
+            setForm(productForm); //เมื่อแก้ไขเสร็จให้เป็นค่าฟอร์มเดิม
+            setPictureFile(null); //เมื่อแก้ไขเสร็จให้เป็นค่าว่าง
+            fetchProduct(); //เรียกใช้งาน fetch เพื่ออัพเดทข้อมูลใหม่ที่เพิ่งเข้าไป 
         } catch (err) {
             console.error(err);
             toast.error("ไม่สามารถแก้ไขสินค้าได้");
         }
     };
 
-    const renderForm = (isEdit = false) => (
+    //สำหรับการสร้างฟอร์ม popup
+    const renderForm = (isEdit = false) => ( //เช็คว่าเป็น edit รึป่าว
         <form onSubmit={isEdit ? handleEditSubmit : handleCreateSubmit} encType="multipart/form-data">
             <div className="mb-3">
                 <label htmlFor="name" className="form-label">ชื่อสินค้า</label>
@@ -109,7 +126,9 @@ const FormProduct = ({ currentEditProduct, fetchProduct}) => {
             <div className="mb-3">
                 <label htmlFor="picture" className="form-label">รูปภาพ</label>
                 <input type="file" className="form-control" id="picture" onChange={handleFileChange} />
-                {pictureFile && <small className="text-muted">อัปโหลดไฟล์ใหม่เพื่อเปลี่ยนรูปภาพ</small>}
+                {/* สำหรับแสดงภาพตัวอย่าง */}
+                {previewImage && (<img src={previewImage} alt="Preview" className="img-thumbnail mt-3 " style={{ maxWidth: '300px' }}/>)}
+
             </div>
             <button type="submit" className="btn btn-primary">{isEdit ? "บันทึกการเปลี่ยนแปลง" : "บันทึก"}</button>
         </form>

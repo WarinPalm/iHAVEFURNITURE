@@ -5,10 +5,11 @@ import useEcomStore from '../../store/ecom_store';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 const Cart = () => {
-    const [cartItems, setCartItems] = useState([]); 
-    const cartItemInCart = cartItems.filter(item=> item.status === 'อยู่ในตะกร้า')
-    const token = useEcomStore((state) => state.token);
+    const [cartItems, setCartItems] = useState([]); //ตัวแปรเก็บข้อมูลสินค้าตะกร้า
+    const cartItemInCart = cartItems.filter(item=> item.status === 'อยู่ในตะกร้า') //กรองแค่สินค้าที่มีสถานะ อยู่ในตะกร้า
+    const token = useEcomStore((state) => state.token); //เรียกใช้ token
     const navigate = useNavigate();
+
     // ดึงข้อมูลสินค้าในตะกร้า
     const fetchCartItems = async () => {
         try {
@@ -19,11 +20,13 @@ const Cart = () => {
             toast.error('ไม่สามารถดึงข้อมูลตะกร้าได้');
         }
     };
+    //สำหรับการสั่งซื้อเพื่อชำระเงิน
     const buyProduct = async () => {
         if(cartItems.length ===0){ //ในกรณ๊ที่ไม่มีสินค้าในตะกร้า
             toast.error('ยังไม่มีสินค้าในตะกร้า');
             return;
         }
+        //หากมีสินค้าอยู่ในตะกร้าแล้ว ให้สามารถกด buy ได้
         try {
             await buyProducts(token);
             toast.success('สั่งซื้อสินค้าสำเร็จ');
