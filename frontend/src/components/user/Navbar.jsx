@@ -41,7 +41,7 @@ const Navbar = () => {
 
     return (
         <div style={{ position: 'sticky', top: "0", zIndex: "100"}}>
-            <nav className="my-nav" style={{height:"6vh"}}>
+            <nav className="my-nav">
             <div className="container nav-content">
                 <h1 className="h1-text m-0">iHAVEFurniture</h1>
 

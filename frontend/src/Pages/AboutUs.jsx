@@ -68,7 +68,7 @@ function AboutUs() {
                 <div className="my-team">
                   <img className="img-fluid" src="/image/Other/vee.jpg" alt="" />
                 </div>
-                <h2 className="text-center mt-3">ยืนแอ็ค</h2>
+                <h2 className="text-center mt-3">Supply Unit</h2>
                 <hr />
                 <p className='text-center'>เทพประทาน จันทร์ปัญญา</p>
                 <p className='text-center'>65112056</p>
